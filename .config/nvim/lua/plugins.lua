@@ -5,6 +5,20 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  -- language syntax
+  use { 'sheerun/vim-polyglot' }
+
+  -- lsp plugins
+  use { 'neovim/nvim-lspconfig' }
+  use { 'onsails/lspkind-nvim' }
+  use { 'hrsh7th/nvim-compe' }
+  use { 'glepnir/lspsaga.nvim' }
+
+  -- snippets
+  use { 'rafamadriz/friendly-snippets' }
+  use { 'hrsh7th/vim-vsnip' }
+  use { 'hrsh7th/vim-vsnip-integ' }
+
   -- Finder
   use {
     'nvim-telescope/telescope.nvim',
@@ -49,6 +63,7 @@ return require('packer').startup(function()
   -- f motion
   use { 'rhysd/clever-f.vim' }
 
+  -- terminal
   use {
     'voldikss/vim-floaterm',
     config = function()
@@ -81,6 +96,7 @@ return require('packer').startup(function()
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-repeat' }
 
+  -- fast move
   -- https://tyru.hatenablog.com/entry/2020/04/26/110000
   use {
     'tyru/columnskip.vim',
