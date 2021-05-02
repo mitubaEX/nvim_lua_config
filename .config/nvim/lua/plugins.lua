@@ -17,7 +17,7 @@ return require('packer').startup(function()
             i = {
       	      ["<c-p>"] = actions.preview_scrolling_up,
       	      ["<c-n>"] = actions.preview_scrolling_down,
-      
+
       	      ["<C-j>"] = actions.move_selection_next,
       	      ["<C-k>"] = actions.move_selection_previous,
             },
@@ -27,6 +27,17 @@ return require('packer').startup(function()
           },
         }
       }
+    end,
+  }
+
+  -- color
+  use {
+    'morhetz/gruvbox' ,
+    config = function()
+      vim.api.nvim_command('set termguicolors')
+      vim.api.nvim_command('syntax enable')
+
+      vim.api.nvim_command('colorscheme gruvbox')
     end,
   }
 end)

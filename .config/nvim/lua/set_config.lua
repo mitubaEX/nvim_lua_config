@@ -1,3 +1,6 @@
+-- basic
+vim.api.nvim_command('set confirm')
+
 -- clipboard
 vim.api.nvim_command('set clipboard+=unnamedplus')
 
