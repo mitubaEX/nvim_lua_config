@@ -29,3 +29,7 @@ vim.api.nvim_command('set expandtab')
 
 -- visual mode
 vim.api.nvim_command('set virtualedit=block')
+
+-- wilder
+vim.api.nvim_command('set wildmode=list:longest,full')
+vim.api.nvim_command('set wildignorecase')

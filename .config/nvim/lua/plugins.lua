@@ -27,17 +27,95 @@ return require('packer').startup(function()
           },
         }
       }
+
+      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = false })
     end,
   }
 
   -- color
   use {
-    'morhetz/gruvbox' ,
+    'morhetz/gruvbox',
     config = function()
       vim.api.nvim_command('set termguicolors')
       vim.api.nvim_command('syntax enable')
 
       vim.api.nvim_command('colorscheme gruvbox')
     end,
+  }
+
+  -- f motion
+  use { 'rhysd/clever-f.vim' }
+
+  use {
+    'voldikss/vim-floaterm',
+    config = function()
+      vim.api.nvim_set_var('floaterm_gitcommit', 'floaterm')
+      vim.api.nvim_set_var('floaterm_wintitle', 0)
+      vim.api.nvim_set_var('floaterm_autoclose', 1)
+      vim.api.nvim_set_var('floaterm_width', 0.8)
+      vim.api.nvim_set_var('floaterm_height', 0.8)
+
+      vim.api.nvim_set_keymap('n', '<Leader>[', ':FloatermToggle<CR>', { noremap = true, silent = false })
+    end,
+  }
+
+  -- yank highlight
+  use { 'machakann/vim-highlightedyank' }
+
+  -- jk accelerated
+  use {
+    'rhysd/accelerated-jk',
+    config = function()
+      vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
+      vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
+    end
+  }
+
+  -- surround
+  -- add: ysiw(
+  -- replace: cs(]
+  -- delete: ds(
+  use { 'tpope/vim-surround' }
+  use { 'tpope/vim-repeat' }
+
+  -- https://tyru.hatenablog.com/entry/2020/04/26/110000
+  use {
+    'tyru/columnskip.vim',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
+    end
+  }
+
+  -- text obj
+  use {
+    'bkad/CamelCaseMotion',
+    config = function()
+      vim.api.nvim_set_keymap('', 'w', '<Plug>CamelCaseMotion_w', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('', 'e', '<Plug>CamelCaseMotion_e', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('o', 'iw', '<Plug>CamelCaseMotion_iw', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('x', 'iw', '<Plug>CamelCaseMotion_iw', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('o', 'ie', '<Plug>CamelCaseMotion_ie', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('x', 'ie', '<Plug>CamelCaseMotion_ie', { noremap = false, silent = true })
+    end
+  }
+
+  -- auto pairs
+  use { 'jiangmiao/auto-pairs' }
+
+  -- toggle comment
+  -- gcc: toggle comment
+  use {
+    'terrortylor/nvim-comment',
+    config = function()
+      require('nvim_comment').setup()
+    end
   }
 end)
