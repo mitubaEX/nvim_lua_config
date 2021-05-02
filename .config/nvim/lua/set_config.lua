@@ -1,5 +1,6 @@
 -- basic
 vim.api.nvim_command('set confirm')
+vim.api.nvim_command('set hidden')
 
 -- clipboard
 vim.api.nvim_command('set clipboard+=unnamedplus')
