@@ -134,4 +134,18 @@ return require('packer').startup(function()
       require('nvim_comment').setup()
     end
   }
+
+  -- wilder
+  use {
+    'gelguy/wilder.nvim',
+    config = function()
+      vim.api.nvim_command([[
+        call wilder#enable_cmdline_enter()
+        set wildcharm=<Tab>
+        cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+        cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+        call wilder#set_option('modes', ['/', '?', ':'])
+      ]])
+    end
+  }
 end)

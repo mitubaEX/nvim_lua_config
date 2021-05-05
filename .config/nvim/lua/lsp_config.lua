@@ -32,8 +32,10 @@ require'compe'.setup {
     vsnip = true;
   };
 }
-vim.api.nvim_command('inoremap <silent><expr> <C-Space> compe#complete()')
-vim.api.nvim_command('inoremap <silent><expr> <CR>      compe#confirm("<CR>")')
+vim.api.nvim_command([[
+  inoremap <silent><expr> <C-Space> compe#complete()
+  inoremap <silent><expr> <CR>      compe#confirm("<CR>")
+]])
 
 -- lspsaga
 local saga = require 'lspsaga'
