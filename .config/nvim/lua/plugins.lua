@@ -49,6 +49,26 @@ return require('packer').startup(function()
     end,
   }
 
+  -- file tree
+  use {
+    'kyazdani42/nvim-tree.lua',
+    config = function()
+      vim.api.nvim_command([[
+        let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+        let g:nvim_tree_gitignore = 1 "0 by default
+        let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+        let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+        let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+        let g:nvim_tree_show_icons = {
+          \ 'git': 1,
+          \ 'folders': 1,
+          \ 'files': 1,
+          \ }
+      ]])
+      vim.api.nvim_set_keymap('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
+    end
+  }
+
   -- color
   use {
     'morhetz/gruvbox',
@@ -165,6 +185,19 @@ return require('packer').startup(function()
   }
   use {
     'romgrk/nvim-treesitter-context',
+  }
+
+  -- git
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('gitsigns').setup {
+        current_line_blame = true,
+      }
+    end
   }
 
 end)
