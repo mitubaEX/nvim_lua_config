@@ -148,4 +148,23 @@ return require('packer').startup(function()
       ]])
     end
   }
+
+  -- nvim-treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        highlight = {
+          enable = true,
+        },
+        indent = {
+          enable = true
+        },
+      }
+    end
+  }
+  use {
+    'romgrk/nvim-treesitter-context',
+  }
+
 end)
