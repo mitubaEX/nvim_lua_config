@@ -16,3 +16,9 @@ my lua config
 ```
 
 Enjoy!
+
+## Uninstallation
+
+```
+sh remove.sh
+```
