@@ -27,7 +27,19 @@ return require('packer').startup(function()
     -- your statusline
     config = function()
       local gl = require('galaxyline')
-      local colors = require('galaxyline.theme').default
+      local colors = {
+        bg = '#3B3837',
+        fg = '#bbc2cf',
+        yellow = '#ECBE7B',
+        cyan = '#008080',
+        darkblue = '#081633',
+        green = '#98be65',
+        orange = '#FF8800',
+        violet = '#a9a1e1',
+        magenta = '#c678dd',
+        blue = '#51afef';
+        red = '#ec5f67';
+      }
       local condition = require('galaxyline.condition')
       local gls = gl.section
       gl.short_line_list = {'NvimTree','vista','dbui','packer'}
@@ -64,6 +76,7 @@ return require('packer').startup(function()
           GitBranch = {
             provider = 'GitBranch',
             separator = ' ',
+            separator_highlight = {'NONE',colors.bg},
             condition = condition.check_git_workspace,
             highlight = {colors.violet,colors.bg,'bold'},
           }
@@ -123,14 +136,13 @@ return require('packer').startup(function()
               return true
             end,
             icon = ' LSP:',
-            highlight = {colors.cyan,colors.bg,'bold'}
+            highlight = {colors.fg,colors.bg,'bold'}
           }
         },
         {
           BufferType = {
             provider = 'FileTypeName',
             icon = '|ft:',
-            separator_highlight = {'NONE',colors.bg},
             highlight = {colors.blue,colors.bg,'bold'}
           }
         }
@@ -160,6 +172,7 @@ return require('packer').startup(function()
             provider = 'DiffAdd',
             condition = condition.hide_in_width,
             separator = ' ',
+            separator_highlight = {'NONE',colors.bg},
             icon = '  ',
             highlight = {colors.green,colors.bg},
           }
