@@ -199,5 +199,20 @@ return require('packer').startup(function()
       }
     end
   }
+  use {
+    'sindrets/diffview.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      vim.api.nvim_set_keymap('n', '<C-g>d', ':DiffviewOpen<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<C-g>D', ':DiffviewClose<CR>', { noremap = true, silent = false })
+    end
+  }
+  use {
+    'lambdalisue/gina.vim',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
+    end
+  }
 
 end)
