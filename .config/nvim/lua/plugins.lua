@@ -439,6 +439,14 @@ return require('packer').startup(function()
     end
   }
 
+  -- close buffer
+  use {
+    'Asheq/close-buffers.vim',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
+    end
+  }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use { 'mitubaEX/toggle_rspec_file.nvim' }
