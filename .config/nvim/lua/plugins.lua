@@ -251,7 +251,7 @@ return require('packer').startup(function()
         }
       }
 
-      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = false })
@@ -423,5 +423,9 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
     end
   }
+
+  -- my util plugins
+  use { 'mitubaEX/blame_open.nvim' }
+  use { 'mitubaEX/toggle_rspec_file.nvim' }
 
 end)
