@@ -424,6 +424,14 @@ return require('packer').startup(function()
     end
   }
 
+  -- line move
+  use {
+    'nacro90/numb.nvim',
+    config = function()
+      require('numb').setup()
+    end
+  }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use { 'mitubaEX/toggle_rspec_file.nvim' }
