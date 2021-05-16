@@ -423,6 +423,13 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
     end
   }
+  use {
+    'pwntester/octo.nvim',
+    requires = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require("octo").setup()
+    end
+  }
 
   -- line move
   use {
