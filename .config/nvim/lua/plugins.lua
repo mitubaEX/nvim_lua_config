@@ -13,6 +13,7 @@ return require('packer').startup(function()
   use { 'onsails/lspkind-nvim' }
   use { 'hrsh7th/nvim-compe' }
   use { 'glepnir/lspsaga.nvim' }
+  use { 'folke/lua-dev.nvim' }
 
   -- snippets
   use { 'rafamadriz/friendly-snippets' }
@@ -21,207 +22,64 @@ return require('packer').startup(function()
 
   -- status line
   use {
-    'glepnir/galaxyline.nvim',
-    branch = 'main',
+    'hoob3rt/lualine.nvim',
     requires = { {'kyazdani42/nvim-web-devicons'}, {'ryanoasis/vim-devicons'} },
     -- your statusline
     config = function()
-      local gl = require('galaxyline')
-      local colors = {
-        bg = '#3B3837',
-        fg = '#bbc2cf',
-        yellow = '#ECBE7B',
-        cyan = '#008080',
-        darkblue = '#081633',
-        green = '#98be65',
-        orange = '#FF8800',
-        violet = '#a9a1e1',
-        magenta = '#c678dd',
-        blue = '#51afef';
-        red = '#ec5f67';
-      }
-      local condition = require('galaxyline.condition')
-      local gls = gl.section
-      gl.short_line_list = {'NvimTree','vista','dbui','packer'}
+      require('lualine').setup{
+        options = {
+          theme = 'iceberg_dark',
+          icons_enabled = true,
+        },
+        sections = {
+          lualine_a = { {'mode', upper = true} },
+          lualine_b = { {'branch', icon = ''} },
+          lualine_c = {
+            {'filename', file_status = true, path = 1, separator = ''},
+            { 'diff', separator = '', icon = '✏️ :' }, {
+              -- Lsp server name .
+              -- ref: https://gist.github.com/shadmansaleh/cd526bc166237a5cbd51429cc1f6291b
+              function ()
+                local msg = 'No Active Lsp'
+                local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
+                local clients = vim.lsp.get_active_clients()
+                if next(clients) == nil then return msg end
 
-      gls.left = {
-        {
-          ViMode = {
-            provider = function()
-              -- auto change color according the vim mode
-              local mode_color = {n = colors.red, i = colors.green,v=colors.blue,
-                [''] = colors.blue,V=colors.blue,
-                c = colors.magenta,no = colors.red,s = colors.orange,
-                S=colors.orange,[''] = colors.orange,
-                ic = colors.yellow,R = colors.violet,Rv = colors.violet,
-                cv = colors.red,ce=colors.red, r = colors.cyan,
-                rm = colors.cyan, ['r?'] = colors.cyan,
-              ['!']  = colors.red,t = colors.red}
-              vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color[vim.fn.mode()])
-              return '  '
-            end,
-            highlight = {colors.red,colors.bg,'bold'},
-          },
-        },
-        {
-          GitIcon = {
-            provider = function() return '  ' end,
-            condition = condition.check_git_workspace,
-            separator_highlight = {'NONE',colors.bg},
-            highlight = {colors.violet,colors.bg,'bold'},
-          }
-        },
+                client_table = {}
+                for _, client in ipairs(clients) do
+                  local filetypes = client.config.filetypes
+                  if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                    table.insert(client_table,  client.name)
+                  end
+                end
 
-        {
-          GitBranch = {
-            provider = 'GitBranch',
-            separator = ' ',
-            separator_highlight = {'NONE',colors.bg},
-            condition = condition.check_git_workspace,
-            highlight = {colors.violet,colors.bg,'bold'},
-          }
-        },
-        {
-          FileIcon = {
-            provider = 'FileIcon',
-            condition = condition.buffer_not_empty,
-            highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.bg},
-          },
-        },
-        {
-          FileName = {
-            provider = 'FileName',
-            condition = condition.buffer_not_empty,
-            highlight = {colors.magenta,colors.bg,'bold'}
-          }
-        },
-        {
-          DiagnosticError = {
-            provider = 'DiagnosticError',
-            icon = '  ',
-            highlight = {colors.red,colors.bg}
-          }
-        },
-        {
-          DiagnosticWarn = {
-            provider = 'DiagnosticWarn',
-            icon = '  ',
-            highlight = {colors.yellow,colors.bg},
-          }
-        },
-        {
-          DiagnosticHint = {
-            provider = 'DiagnosticHint',
-            icon = '  ',
-            highlight = {colors.cyan,colors.bg},
-          }
-        },
-        {
-          DiagnosticInfo = {
-            provider = 'DiagnosticInfo',
-            icon = '  ',
-            highlight = {colors.blue,colors.bg},
-          }
-        },
-      }
-      gls.mid = {
-        {
-          ShowLspClient = {
-            provider = 'GetLspClient',
-            condition = function ()
-              local tbl = {['dashboard'] = true,['']=true}
-              if tbl[vim.bo.filetype] then
-                return false
-              end
-              return true
-            end,
-            icon = ' LSP:',
-            highlight = {colors.fg,colors.bg,'bold'}
-          }
-        },
-        {
-          BufferType = {
-            provider = 'FileTypeName',
-            icon = '|ft:',
-            highlight = {colors.blue,colors.bg,'bold'}
-          }
-        }
-      }
+                if table.getn(client_table) > 0 then
+                  return '[' .. table.concat(client_table, ',') .. ']'
+                end
 
-      gls.right = {
-        {
-          FileEncode = {
-            provider = 'FileEncode',
-            condition = condition.hide_in_width,
-            separator = ' ',
-            separator_highlight = {'NONE',colors.bg},
-            highlight = {colors.green,colors.bg,'bold'}
-          }
+                return msg
+              end,
+              icon = '⚙️ :',
+              color = {fg = '#a69ded'},
+              separator = ''
+            }, {'diagnostics', sources = {'nvim_lsp'}, icon = '🚦:'}, {
+              function ()
+                return vim.b.vista_nearest_method_or_function
+              end,
+              icon = 'ƒ:'
+          }},
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location'  },
         },
-        {
-          FileFormat = {
-            provider = 'FileFormat',
-            condition = condition.hide_in_width,
-            separator = ' ',
-            separator_highlight = {'NONE',colors.bg},
-            highlight = {colors.green,colors.bg,'bold'}
-          }
+        inactive_sections = {
+          lualine_a = {  },
+          lualine_b = {  },
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {  },
+          lualine_z = {  },
         },
-        {
-          DiffAdd = {
-            provider = 'DiffAdd',
-            condition = condition.hide_in_width,
-            separator = ' ',
-            separator_highlight = {'NONE',colors.bg},
-            icon = '  ',
-            highlight = {colors.green,colors.bg},
-          }
-        },
-        {
-          DiffModified = {
-            provider = 'DiffModified',
-            condition = condition.hide_in_width,
-            icon = ' 柳',
-            highlight = {colors.orange,colors.bg},
-          }
-        },
-        {
-          DiffRemove = {
-            provider = 'DiffRemove',
-            condition = condition.hide_in_width,
-            icon = '  ',
-            highlight = {colors.red,colors.bg},
-          }
-        },
-        {
-          LineInfo = {
-            provider = 'LineColumn',
-            separator_highlight = {'NONE',colors.bg},
-            separator = ' ',
-            highlight = {colors.fg,colors.bg},
-          },
-        },
-        {
-          PerCent = {
-            provider = 'LinePercent',
-            separator = ' ',
-            separator_highlight = {'NONE',colors.bg},
-            highlight = {colors.fg,colors.bg,'bold'},
-          }
-        },
-        {
-          ScrollBar = {
-            provider = 'ScrollBar',
-            highlight = {colors.fg,colors.bg,'bold'},
-          }
-        },
-      }
-
-      gls.short_line_right[1] = {
-        BufferIcon = {
-          provider= 'BufferIcon',
-          highlight = {colors.fg,colors.bg}
-        }
       }
     end,
     -- some optional icons
@@ -236,6 +94,9 @@ return require('packer').startup(function()
       local actions = require('telescope.actions')
       require('telescope').setup{
         defaults = {
+          -- please install fzy
+          file_sorter = require'telescope.sorters'.get_fzy_sorter,
+          generic_sorter = require'telescope.sorters'.get_fzy_sorter,
           mappings = {
             i = {
       	      ["<c-p>"] = actions.preview_scrolling_up,
@@ -248,7 +109,13 @@ return require('packer').startup(function()
       	      ["<esc>"] = actions.close,
             },
           },
-        }
+        },
+        pickers = {
+          -- Your special builtin config goes in here
+          buffers = {
+            sort_lastused = true,
+          },
+        },
       }
 
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
@@ -280,12 +147,14 @@ return require('packer').startup(function()
 
   -- color
   use {
-    'morhetz/gruvbox',
+    'navarasu/onedark.nvim',
     config = function()
       vim.api.nvim_command('set termguicolors')
       vim.api.nvim_command('syntax enable')
 
-      vim.api.nvim_command('colorscheme gruvbox')
+      vim.api.nvim_set_var('onedark_style', 'deep')
+
+      vim.api.nvim_command('colorscheme onedark')
     end,
   }
 
@@ -325,6 +194,10 @@ return require('packer').startup(function()
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-repeat' }
 
+  -- html tag
+  use { 'AndrewRadev/tagalong.vim' }
+  use { 'alvan/vim-closetag' }
+
   -- fast move
   -- https://tyru.hatenablog.com/entry/2020/04/26/110000
   use {
@@ -338,6 +211,32 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
     end
   }
+
+  -- skip definitions
+  use { 'mitubaEX/jumpy.vim' }
+
+  -- move line
+  use { 'matze/vim-move' }
+
+  -- edit multiple word
+  use { 'mg979/vim-visual-multi' }
+
+  -- grep define
+  use { 'pechorin/any-jump.vim' }
+
+  use { 'AndrewRadev/linediff.vim' }
+
+  -- highlight
+  use { 't9md/vim-quickhl' }
+
+  use { 'itchyny/vim-cursorword' }
+
+  -- indent line
+  use { 'Yggdroot/indentLine' }
+
+  -- <Leader>r<word obj> replace word
+  use { 'kana/vim-operator-user' }
+  use { 'kana/vim-operator-replace' }
 
   -- text obj
   use {
@@ -419,31 +318,60 @@ return require('packer').startup(function()
   use {
     'lambdalisue/gina.vim',
     config = function()
+      vim.api.nvim_set_keymap('n', '<C-g>g', ':Gina grep<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
     end
   }
   use {
-    'pwntester/octo.nvim',
-    requires = { 'nvim-telescope/telescope.nvim' },
-    config = function()
-      require("octo").setup()
-    end
+    'tpope/vim-fugitive',
+    requires = { 'tpope/vim-rhubarb' },
   }
+  -- use {
+  --   'pwntester/octo.nvim',
+  --   requires = { 'nvim-telescope/telescope.nvim' },
+  --   config = function()
+  --     require("octo").setup()
+  --   end
+  -- }
 
   -- line move
-  use {
-    'nacro90/numb.nvim',
-    config = function()
-      require('numb').setup()
-    end
-  }
+  -- use {
+  --   'nacro90/numb.nvim',
+  --   config = function()
+  --     require('numb').setup()
+  --   end
+  -- }
 
   -- close buffer
   use {
     'Asheq/close-buffers.vim',
     config = function()
       vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
+    end
+  }
+
+  -- test
+  use {
+    'vim-test/vim-test',
+    config = function()
+      vim.api.nvim_set_var('test#ruby#rspec#options', [[{
+          'nearest': '--backtrace',
+          'file':    '--format documentation',
+          'suite':   '--tag ~slow',
+        }]])
+      vim.api.nvim_set_var('test#strategy', 'neovim')
+
+      vim.api.nvim_set_keymap('n', '<Leader>q', ':TestFile<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>Q', ':TestNearest<CR>', { noremap = true, silent = true })
+    end
+  }
+
+  -- hop(easymotion)
+  use { 'phaazon/hop.nvim',
+    config = function()
+      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5, create_hl_autocmd = false, winblend = 0 }
+      vim.api.nvim_set_keymap('n', '<Leader>e', ':HopWord<CR>', { noremap = true, silent = true })
     end
   }
 

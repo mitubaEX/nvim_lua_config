@@ -6,6 +6,11 @@ require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.pyright.setup{}
 
+-- LSP config (the mappings used in the default file don't quite work right)
+vim.api.nvim_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gl', ':lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+
 -- lsp compe
 vim.api.nvim_command('set completeopt=menuone,noselect')
 require'compe'.setup {
