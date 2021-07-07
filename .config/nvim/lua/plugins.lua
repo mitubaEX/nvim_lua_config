@@ -291,9 +291,6 @@ return require('packer').startup(function()
       }
     end
   }
-  use {
-    'romgrk/nvim-treesitter-context',
-  }
 
   -- git
   use {
