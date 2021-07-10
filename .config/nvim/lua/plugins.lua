@@ -158,7 +158,7 @@ return require('packer').startup(function()
       vim.api.nvim_command('set termguicolors')
       vim.api.nvim_command('syntax enable')
 
-      vim.api.nvim_set_var('onedark_style', 'deep')
+      vim.g.onedark_style = 'deep'
 
       vim.api.nvim_command('colorscheme onedark')
     end,
@@ -171,11 +171,11 @@ return require('packer').startup(function()
   use {
     'voldikss/vim-floaterm',
     config = function()
-      vim.api.nvim_set_var('floaterm_gitcommit', 'floaterm')
-      vim.api.nvim_set_var('floaterm_wintitle', 0)
-      vim.api.nvim_set_var('floaterm_autoclose', 1)
-      vim.api.nvim_set_var('floaterm_width', 0.8)
-      vim.api.nvim_set_var('floaterm_height', 0.8)
+      vim.g.floaterm_gitcommit = 'floaterm'
+      vim.g.floaterm_wintitle = 0
+      vim.g.floaterm_autoclose = 1
+      vim.g.floaterm_width = 0.8
+      vim.g.floaterm_height = 0.8
 
       vim.api.nvim_set_keymap('n', '<Leader>[', ':FloatermToggle<CR>', { noremap = true, silent = false })
     end,
@@ -225,7 +225,7 @@ return require('packer').startup(function()
   use {
     'matze/vim-move',
     config = function()
-      vim.api.nvim_set_var('move_key_modifier', 'C')
+      vim.g.move_key_modifier = 'C'
     end
   }
 
@@ -236,7 +236,7 @@ return require('packer').startup(function()
   use {
     'pechorin/any-jump.vim',
     config = function()
-      vim.api.nvim_set_var('any_jump_disable_default_keybindings', '1')
+      vim.g.any_jump_disable_default_keybindings = '1'
       vim.api.nvim_set_keymap('n', '<Leader>a', ':AnyJump<CR>', { noremap = true, silent = false })
     end
   }
