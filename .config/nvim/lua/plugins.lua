@@ -14,6 +14,12 @@ return require('packer').startup(function()
   use { 'hrsh7th/nvim-compe' }
   use { 'glepnir/lspsaga.nvim' }
   use { 'folke/lua-dev.nvim' }
+  use {
+    'folke/lsp-trouble.nvim',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>LspTroubleToggle<CR>', { noremap = true, silent = false })
+    end
+  }
 
   -- snippets
   use { 'rafamadriz/friendly-snippets' }
@@ -216,18 +222,37 @@ return require('packer').startup(function()
   use { 'mitubaEX/jumpy.vim' }
 
   -- move line
-  use { 'matze/vim-move' }
+  use {
+    'matze/vim-move',
+    config = function()
+      vim.api.nvim_set_var('move_key_modifier', 'C')
+    end
+  }
 
   -- edit multiple word
   use { 'mg979/vim-visual-multi' }
 
   -- grep define
-  use { 'pechorin/any-jump.vim' }
+  use {
+    'pechorin/any-jump.vim',
+    config = function()
+      vim.api.nvim_set_var('any_jump_disable_default_keybindings', '1')
+      vim.api.nvim_set_keymap('n', '<Leader>a', ':AnyJump<CR>', { noremap = true, silent = false })
+    end
+  }
 
   use { 'AndrewRadev/linediff.vim' }
 
   -- highlight
-  use { 't9md/vim-quickhl' }
+  use {
+    't9md/vim-quickhl',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
+      vim.api.nvim_set_keymap('x', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
+      vim.api.nvim_set_keymap('x', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
+    end
+  }
 
   use { 'itchyny/vim-cursorword' }
 
@@ -236,7 +261,13 @@ return require('packer').startup(function()
 
   -- <Leader>r<word obj> replace word
   use { 'kana/vim-operator-user' }
-  use { 'kana/vim-operator-replace' }
+  use {
+    'kana/vim-operator-replace',
+    config = function()
+      vim.api.nvim_set_keymap('v', 'p', '<Plug>(operator-replace)', { noremap = false, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>r', '<Plug>(operator-replace)', { noremap = false, silent = true })
+    end
+  }
 
   -- text obj
   use {
@@ -316,8 +347,9 @@ return require('packer').startup(function()
     'lambdalisue/gina.vim',
     config = function()
       vim.api.nvim_set_keymap('n', '<C-g>g', ':Gina grep<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
+      -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
     end
   }
   use {
