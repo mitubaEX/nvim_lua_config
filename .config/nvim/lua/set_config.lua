@@ -1,34 +1,33 @@
 -- basic
-vim.api.nvim_command('set confirm')
-vim.api.nvim_command('set hidden')
+vim.opt.confirm = true
+vim.opt.hidden = true
 
 -- clipboard
-vim.api.nvim_command('set clipboard+=unnamedplus')
+vim.opt.clipboard = vim.opt.clipboard + 'unnamedplus'
 
 -- inifinite undo
-vim.api.nvim_command('set undofile')
-vim.api.nvim_command('set undodir=$HOME/.vim/undodir')
+vim.opt.undofile = true
+vim.opt.undodir = '$HOME/.vim/undodir'
 
 -- right vsplit
-vim.api.nvim_command('set splitright')
+vim.opt.splitright = true
 
 -- search
-vim.api.nvim_command('set hlsearch')
-vim.api.nvim_command('set ignorecase')
-vim.api.nvim_command('set smartcase')
-vim.api.nvim_command('set smartindent')
-vim.api.nvim_command('set incsearch')
-vim.api.nvim_command('set inccommand=split')
-vim.api.nvim_command('set nolazyredraw')
-vim.api.nvim_command('set magic')
+vim.opt.hlsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.incsearch = true
+vim.opt.inccommand = 'split'
+vim.opt.magic = true
 
 -- tab
-vim.api.nvim_command('set tabstop=2')
-vim.api.nvim_command('set shiftwidth=2')
-vim.api.nvim_command('set expandtab')
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
 
 -- visual mode
-vim.api.nvim_command('set virtualedit=block')
+vim.opt.virtualedit = 'block'
 
-vim.api.nvim_command('set backspace=indent,eol,start')
-vim.api.nvim_command('set whichwrap=b,s,<,>,[,],h,l')
+vim.opt.backspace = 'indent,eol,start'
+vim.opt.whichwrap = 'b,s,<,>,[,],h,l'
