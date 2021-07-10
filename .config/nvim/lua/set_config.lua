@@ -29,3 +29,6 @@ vim.api.nvim_command('set expandtab')
 
 -- visual mode
 vim.api.nvim_command('set virtualedit=block')
+
+vim.api.nvim_command('set backspace=indent,eol,start')
+vim.api.nvim_command('set whichwrap=b,s,<,>,[,],h,l')
