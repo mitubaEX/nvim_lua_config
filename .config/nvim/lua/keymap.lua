@@ -25,3 +25,9 @@ vim.api.nvim_set_keymap('n', '<Esc><Esc>', ':noh<CR>', { noremap = true, silent 
 
 -- insert new line without entering insert mode
 vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>', { noremap = true, silent = false })
+
+-- pbcopy filename
+-- only filename
+vim.api.nvim_set_keymap('n', '<Leader>c', ':!echo "%:t" | pbcopy<CR>', { noremap = false, silent = false })
+-- relative path
+vim.api.nvim_set_keymap('n', '<Leader>C', ':!echo "%" | pbcopy<CR>', { noremap = false, silent = false })

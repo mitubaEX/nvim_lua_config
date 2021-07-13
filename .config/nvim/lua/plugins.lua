@@ -6,7 +6,13 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- language syntax
-  use { 'sheerun/vim-polyglot' }
+  use {
+    'sheerun/vim-polyglot',
+    config = function()
+      vim.g.vim_markdown_conceal_code_blocks = 0
+      vim.g.vim_markdown_conceal = 0
+    end
+  }
 
   -- lsp plugins
   use { 'neovim/nvim-lspconfig' }
@@ -350,6 +356,14 @@ return require('packer').startup(function()
       -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
+      vim.api.nvim_command([[
+        function! s:gGrepCurrentWordQuery() abort
+          let cword = expand('<cword>')
+          execute 'Gina grep ' . cword
+        endfunction
+        command! -nargs=* GGrepCurrentWordQuery call s:gGrepCurrentWordQuery()
+        nmap <Leader>g :GGrepCurrentWordQuery<CR>
+      ]])
     end
   }
   use {
@@ -406,6 +420,11 @@ return require('packer').startup(function()
 
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
-  use { 'mitubaEX/toggle_rspec_file.nvim' }
+  use {
+    'mitubaEX/toggle_rspec_file.nvim',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
+    end
+  }
 
 end)

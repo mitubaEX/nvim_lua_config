@@ -1,8 +1,8 @@
 -- lspconfig
- require'lspconfig'.tsserver.setup{
-   -- filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'}
-   settings = {documentFormatting = false}
- }
+ -- require'lspconfig'.tsserver.setup{
+ --   -- filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'}
+ --   settings = {documentFormatting = false}
+ -- }
 require'lspconfig'.solargraph.setup{
   init_options = {codeAction = false},
   filetypes = {"ruby", "rakefile", "rspec"},
@@ -99,6 +99,8 @@ require'lspconfig'.sumneko_lua.setup(luadev)
 vim.api.nvim_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'gl', ':lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<Leader>W', ':lua vim.lsp.buf.formatting_sync(nil, 100)<CR>', { noremap = true, silent = false })
 
 -- commented options are defaults
 require('lspkind').init({

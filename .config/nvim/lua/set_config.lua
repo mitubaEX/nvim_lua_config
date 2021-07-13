@@ -6,8 +6,8 @@ vim.opt.hidden = true
 vim.opt.clipboard = vim.opt.clipboard + 'unnamedplus'
 
 -- inifinite undo
-vim.opt.undofile = true
-vim.opt.undodir = '$HOME/.vim/undodir'
+vim.api.nvim_command('set undofile')
+vim.api.nvim_command('set undodir=$HOME/.vim/undodir')
 
 -- right vsplit
 vim.opt.splitright = true
