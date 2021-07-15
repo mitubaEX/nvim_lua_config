@@ -356,14 +356,7 @@ return require('packer').startup(function()
       -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
-      vim.api.nvim_command([[
-        function! s:gGrepCurrentWordQuery() abort
-          let cword = expand('<cword>')
-          execute 'Gina grep ' . cword
-        endfunction
-        command! -nargs=* GGrepCurrentWordQuery call s:gGrepCurrentWordQuery()
-        nmap <Leader>g :GGrepCurrentWordQuery<CR>
-      ]])
+      vim.api.nvim_set_keymap('n', '<Leader>g', ':Gina grep expand("<cword>")<CR>', { noremap = false, silent = false })
     end
   }
   use {
