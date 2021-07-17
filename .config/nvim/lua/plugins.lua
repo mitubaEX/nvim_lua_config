@@ -142,7 +142,7 @@ return require('packer').startup(function()
     'vijaymarupudi/nvim-fzf' },
     config = function()
       require'fzf-lua'.setup {
-         grep = { rg_opts = "--hidden" }
+         grep = { rg_opts = "--hidden --files-with-matches" }
       }
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
