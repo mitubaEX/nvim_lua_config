@@ -130,13 +130,25 @@ return require('packer').startup(function()
         },
       }
 
-      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
+      -- vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
+      -- vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = false })
     end,
   }
-
+  use { 'ibhagwan/fzf-lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional for icons
+    'vijaymarupudi/nvim-fzf' },
+    config = function()
+      require'fzf-lua'.setup {
+         grep = { rg_opts = "--hidden" }
+      }
+      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
+    end
+  }
   -- file tree
   use {
     'kyazdani42/nvim-tree.lua',
@@ -356,7 +368,7 @@ return require('packer').startup(function()
       -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>g', ':Gina grep expand("<cword>")<CR>', { noremap = false, silent = false })
+      -- vim.api.nvim_set_keymap('n', '<Leader>g', ':Gina grep expand("<cword>")<CR>', { noremap = false, silent = false })
     end
   }
   use {
