@@ -99,43 +99,43 @@ return require('packer').startup(function()
   }
 
   -- Finder
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
-    config = function()
-      local actions = require('telescope.actions')
-      require('telescope').setup{
-        defaults = {
-          -- please install fzy
-          file_sorter = require'telescope.sorters'.get_fzy_sorter,
-          generic_sorter = require'telescope.sorters'.get_fzy_sorter,
-          mappings = {
-            i = {
-      	      ["<c-p>"] = actions.preview_scrolling_up,
-      	      ["<c-n>"] = actions.preview_scrolling_down,
-
-      	      ["<C-j>"] = actions.move_selection_next,
-      	      ["<C-k>"] = actions.move_selection_previous,
-            },
-            n = {
-      	      ["<esc>"] = actions.close,
-            },
-          },
-        },
-        pickers = {
-          -- Your special builtin config goes in here
-          buffers = {
-            sort_lastused = true,
-          },
-        },
-      }
-
-      -- vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
-      -- vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = false })
-    end,
-  }
+--   use {
+--     'nvim-telescope/telescope.nvim',
+--     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+--     config = function()
+--       local actions = require('telescope.actions')
+--       require('telescope').setup{
+--         defaults = {
+--           -- please install fzy
+--           file_sorter = require'telescope.sorters'.get_fzy_sorter,
+--           generic_sorter = require'telescope.sorters'.get_fzy_sorter,
+--           mappings = {
+--             i = {
+--       	      ["<c-p>"] = actions.preview_scrolling_up,
+--       	      ["<c-n>"] = actions.preview_scrolling_down,
+--
+--       	      ["<C-j>"] = actions.move_selection_next,
+--       	      ["<C-k>"] = actions.move_selection_previous,
+--             },
+--             n = {
+--       	      ["<esc>"] = actions.close,
+--             },
+--           },
+--         },
+--         pickers = {
+--           -- Your special builtin config goes in here
+--           buffers = {
+--             sort_lastused = true,
+--           },
+--         },
+--       }
+--
+--       -- vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
+--       vim.api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
+--       -- vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
+--       vim.api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = false })
+--     end,
+--   }
   use { 'ibhagwan/fzf-lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional for icons
