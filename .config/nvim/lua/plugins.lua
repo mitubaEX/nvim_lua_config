@@ -141,12 +141,9 @@ return require('packer').startup(function()
       'kyazdani42/nvim-web-devicons', -- optional for icons
     'vijaymarupudi/nvim-fzf' },
     config = function()
-      require'fzf-lua'.setup {
-         grep = { rg_opts = "--hidden --files-with-matches" }
-      }
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
+      -- vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
     end
   }
   -- file tree
@@ -368,7 +365,7 @@ return require('packer').startup(function()
       -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
-      -- vim.api.nvim_set_keymap('n', '<Leader>g', ':Gina grep expand("<cword>")<CR>', { noremap = false, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>g', ':Gina grep expand("<cword>")<CR>', { noremap = false, silent = false })
     end
   }
   use {
