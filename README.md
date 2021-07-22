@@ -3,9 +3,13 @@ my lua config
 
 ## Requirements
 
-- Neovim nightly
+- Neovim 0.5
 
 ## Installation
+
+```
+sh setup.sh
+```
 
 - Please install [packer.nvim](https://github.com/wbthomason/packer.nvim)
 - Launch Neovim and execute bellow command.
