@@ -142,7 +142,11 @@ return require('packer').startup(function()
     'vijaymarupudi/nvim-fzf' },
     config = function()
       require'fzf-lua'.setup {
-         grep = { rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'" }
+         grep = { rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'" },
+         fzf_binds           = {             -- fzf '--bind=' options
+           'ctrl-n:preview-page-down',
+           'ctrl-p:preview-page-up',
+         },
       }
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
