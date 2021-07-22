@@ -141,9 +141,12 @@ return require('packer').startup(function()
       'kyazdani42/nvim-web-devicons', -- optional for icons
     'vijaymarupudi/nvim-fzf' },
     config = function()
+      require'fzf-lua'.setup {
+         grep = { rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'" }
+      }
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
-      -- vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
     end
   }
   -- file tree
@@ -365,7 +368,6 @@ return require('packer').startup(function()
       -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>g', ':Gina grep expand("<cword>")<CR>', { noremap = false, silent = false })
     end
   }
   use {
@@ -405,9 +407,9 @@ return require('packer').startup(function()
       --     'file':    '--format documentation',
       --     'suite':   '--tag ~slow',
       --   }]])
-      -- vim.api.nvim_set_var('test#strategy', 'neovim')
+      vim.api.nvim_set_var('test#strategy', 'neovim')
 
-      vim.api.nvim_set_keymap('n', '<Leader>q', ':FloatermNew bin/rspec %<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader>q', ':TestFile<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<Leader>Q', ':TestNearest<CR>', { noremap = true, silent = true })
     end
   }
