@@ -378,6 +378,13 @@ return require('packer').startup(function()
     'tpope/vim-fugitive',
     requires = { 'tpope/vim-rhubarb' },
   }
+  use {
+    'tyru/open-browser-github.vim',
+    requires = { 'tyru/open-browser.vim' },
+    config = function()
+      vim.api.nvim_set_keymap('n', '<C-g>o', '::OpenGithubFile<CR>', { noremap = true, silent = false })
+    end
+  }
   -- use {
   --   'pwntester/octo.nvim',
   --   requires = { 'nvim-telescope/telescope.nvim' },
