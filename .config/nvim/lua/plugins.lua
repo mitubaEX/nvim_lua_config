@@ -338,10 +338,6 @@ return require('packer').startup(function()
     end
   }
   use {
-    'tpope/vim-fugitive',
-    requires = { 'tpope/vim-rhubarb' },
-  }
-  use {
     'tyru/open-browser-github.vim',
     requires = { 'tyru/open-browser.vim' },
     config = function()
