@@ -372,6 +372,9 @@ return require('packer').startup(function()
     end
   }
 
+  -- bookmark
+  use { 'MattesGroeger/vim-bookmarks' }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {
