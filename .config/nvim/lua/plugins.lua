@@ -375,6 +375,9 @@ return require('packer').startup(function()
   -- bookmark
   use { 'MattesGroeger/vim-bookmarks' }
 
+  -- plantuml
+  use { 'weirongxu/plantuml-previewer.vim' }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {

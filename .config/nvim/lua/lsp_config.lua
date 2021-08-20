@@ -21,6 +21,7 @@ require'lspconfig'.flow.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.pyright.setup{}
+require'lspconfig'.gopls.setup{}
 
 -- efm
 local eslint = {
