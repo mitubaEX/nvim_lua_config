@@ -378,6 +378,31 @@ return require('packer').startup(function()
   -- plantuml
   use { 'weirongxu/plantuml-previewer.vim' }
 
+  -- barbar
+  use {
+    'romgrk/barbar.nvim',
+    requires = {'kyazdani42/nvim-web-devicons'},
+    config = function()
+      local map = vim.api.nvim_set_keymap
+      local opts = { noremap = true, silent = true }
+
+      -- Move to previous/next
+      map('n', 'gp', ':BufferPrevious<CR>', opts)
+      map('n', 'gn', ':BufferNext<CR>', opts)
+      -- Goto buffer in position...
+      map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
+      map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
+      map('n', '<A-3>', ':BufferGoto 3<CR>', opts)
+      map('n', '<A-4>', ':BufferGoto 4<CR>', opts)
+      map('n', '<A-5>', ':BufferGoto 5<CR>', opts)
+      map('n', '<A-6>', ':BufferGoto 6<CR>', opts)
+      map('n', '<A-7>', ':BufferGoto 7<CR>', opts)
+      map('n', '<A-8>', ':BufferGoto 8<CR>', opts)
+      map('n', '<A-9>', ':BufferGoto 9<CR>', opts)
+      map('n', '<A-0>', ':BufferLast<CR>', opts)
+    end
+  }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {
