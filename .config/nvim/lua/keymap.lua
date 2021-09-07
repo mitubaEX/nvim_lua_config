@@ -7,7 +7,7 @@ vim.api.nvim_set_keymap('n', '<Leader>w', ':w<CR>', { noremap = true, silent = f
 vim.api.nvim_set_keymap('i', 'jj', '<ESC>', { noremap = true, silent = true })
 
 -- tab
-vim.api.nvim_set_keymap('n', '<tab>', 'gt', { noremap = true, silent = false })
+-- vim.api.nvim_set_keymap('n', '<tab>', 'gt', { noremap = true, silent = false })
 
 -- move previous buffer
 vim.api.nvim_set_keymap('n', '<Leader>n', ':b #<CR>', { noremap = true, silent = false })
