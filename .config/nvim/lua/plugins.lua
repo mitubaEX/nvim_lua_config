@@ -403,6 +403,12 @@ return require('packer').startup(function()
     end
   }
 
+  -- vim-rails
+  use {
+    'tpope/vim-rails',
+    requires = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
+  }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {
