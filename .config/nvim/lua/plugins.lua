@@ -414,6 +414,13 @@ return require('packer').startup(function()
     requires = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
   }
 
+  use {
+    'lukas-reineke/headlines.nvim',
+    config = function()
+      require('headlines').setup()
+    end,
+  }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {
