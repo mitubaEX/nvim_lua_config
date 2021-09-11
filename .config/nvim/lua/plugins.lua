@@ -104,21 +104,59 @@ return require('packer').startup(function()
   }
 
   -- Finder
-  use { 'ibhagwan/fzf-lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional for icons
-    'vijaymarupudi/nvim-fzf' },
+  -- use { 'ibhagwan/fzf-lua',
+  --   requires = {
+  --     'kyazdani42/nvim-web-devicons', -- optional for icons
+  --   'vijaymarupudi/nvim-fzf' },
+  --   config = function()
+  --     require'fzf-lua'.setup {
+  --        grep = { rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'" },
+  --        fzf_binds           = {             -- fzf '--bind=' options
+  --          'ctrl-n:preview-page-down',
+  --          'ctrl-p:preview-page-up',
+  --        },
+  --     }
+  --     vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
+  --     vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
+  --     vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
+  --   end
+  -- }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} },
     config = function()
-      require'fzf-lua'.setup {
-         grep = { rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'" },
-         fzf_binds           = {             -- fzf '--bind=' options
-           'ctrl-n:preview-page-down',
-           'ctrl-p:preview-page-up',
-         },
+      local actions = require('telescope.actions')
+      -- Global remapping
+      ------------------------------
+      require('telescope').setup{
+        defaults = {
+          mappings = {
+            i = {
+      	      ["<c-p>"] = actions.cycle_history_prev,
+      	      ["<c-n>"] = actions.cycle_history_next,
+
+      	      ["<c-u>"] = actions.preview_scrolling_up,
+              ["<c-d>"] = actions.preview_scrolling_down,
+
+      	      ["<C-j>"] = actions.move_selection_next,
+      	      ["<C-k>"] = actions.move_selection_previous,
+            },
+            n = {
+      	      ["<esc>"] = actions.close,
+            },
+          }
+        },
+        pickers = {
+          -- Your special builtin config goes in here
+          buffers = {
+            sort_lastused = true,
+          },
+        },
       }
-      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
+
+      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
     end
   }
   -- file tree
