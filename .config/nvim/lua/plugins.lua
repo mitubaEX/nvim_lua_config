@@ -16,8 +16,13 @@ return require('packer').startup(function()
 
   -- lsp plugins
   use { 'neovim/nvim-lspconfig' }
-  use { 'onsails/lspkind-nvim' }
-  use { 'hrsh7th/nvim-compe' }
+  use {
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/cmp-buffer",
+    }
+  }
   use { 'glepnir/lspsaga.nvim' }
   use { 'folke/lua-dev.nvim' }
   use {
