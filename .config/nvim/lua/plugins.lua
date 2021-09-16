@@ -137,6 +137,9 @@ return require('packer').startup(function()
       ------------------------------
       require('telescope').setup{
         defaults = {
+          -- please install fzy
+          file_sorter = require'telescope.sorters'.get_fzy_sorter,
+          generic_sorter = require'telescope.sorters'.get_fzy_sorter,
           mappings = {
             i = {
       	      ["<c-p>"] = actions.cycle_history_prev,
@@ -198,6 +201,19 @@ return require('packer').startup(function()
       vim.api.nvim_command('colorscheme onedark')
     end,
   }
+--   use {
+--     "projekt0n/github-nvim-theme",
+--     after = "lualine.nvim",
+--     config = function()
+--       vim.api.nvim_command('set termguicolors')
+--       vim.api.nvim_command('syntax enable')
+--
+--       require("github-theme").setup({
+--         theme_style = "dark_default"
+--         -- your github config
+--       })
+--     end
+--   }
 
   -- f motion
   use { 'rhysd/clever-f.vim' }
