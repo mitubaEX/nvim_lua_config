@@ -174,6 +174,7 @@ return require('packer').startup(function()
   use {
     'kyazdani42/nvim-tree.lua',
     config = function()
+      require'nvim-tree'.setup {}
       vim.api.nvim_command([[
         let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
         let g:nvim_tree_gitignore = 1 "0 by default
@@ -203,17 +204,15 @@ return require('packer').startup(function()
     end,
   }
 --   use {
---     "projekt0n/github-nvim-theme",
---     after = "lualine.nvim",
+--     'folke/tokyonight.nvim',
 --     config = function()
 --       vim.api.nvim_command('set termguicolors')
 --       vim.api.nvim_command('syntax enable')
 --
---       require("github-theme").setup({
---         theme_style = "dark_default"
---         -- your github config
---       })
---     end
+--       vim.g.tokyonight_style = 'night'
+--
+--       vim.api.nvim_command('colorscheme tokyonight')
+--     end,
 --   }
 
   -- f motion
