@@ -38,6 +38,7 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>LspTroubleToggle<CR>', { noremap = true, silent = false })
     end
   }
+  use { 'simrat39/symbols-outline.nvim' }
 
   -- snippets
   use { 'rafamadriz/friendly-snippets' }

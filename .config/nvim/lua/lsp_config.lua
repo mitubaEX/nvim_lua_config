@@ -1,8 +1,8 @@
 -- lspconfig
- -- require'lspconfig'.tsserver.setup{
- --   -- filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'}
- --   settings = {documentFormatting = false}
- -- }
+ require'lspconfig'.tsserver.setup{
+   filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
+   settings = {documentFormatting = false}
+ }
 require'lspconfig'.solargraph.setup{
   init_options = {codeAction = false},
   filetypes = {"ruby", "rakefile", "rspec"},
