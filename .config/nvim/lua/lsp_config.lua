@@ -205,14 +205,3 @@ cmp.setup({
     },
   },
 })
-
--- lspsaga
-local saga = require 'lspsaga'
-saga.init_lsp_saga()
-
-vim.api.nvim_set_keymap('n', 'ga', ':Lspsaga code_action<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'ga', ':Lspsaga range_code_action<CR>', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('n', 'gr', ':Lspsaga rename<CR>', { noremap = true, silent = true })

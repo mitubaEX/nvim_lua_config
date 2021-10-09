@@ -30,7 +30,6 @@ return require('packer').startup(function()
       "f3fora/cmp-spell",
     }
   }
-  use { 'glepnir/lspsaga.nvim' }
   use { 'folke/lua-dev.nvim' }
   use {
     'folke/lsp-trouble.nvim',
