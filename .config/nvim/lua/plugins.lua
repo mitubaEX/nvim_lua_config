@@ -506,6 +506,14 @@ return require('packer').startup(function()
       }
     end
   }
+  -- filetype
+  use {
+    'nathom/filetype.nvim',
+    config = function()
+      vim.g.did_load_filetypes = 1
+    end
+  }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {
