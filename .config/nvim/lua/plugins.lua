@@ -251,8 +251,8 @@ return require('packer').startup(function()
   use { 'tpope/vim-repeat' }
 
   -- html tag
-  use { 'AndrewRadev/tagalong.vim' }
-  use { 'alvan/vim-closetag' }
+  -- use { 'AndrewRadev/tagalong.vim' }
+  -- use { 'alvan/vim-closetag' }
 
   -- fast move
   -- https://tyru.hatenablog.com/entry/2020/04/26/110000
@@ -437,9 +437,6 @@ return require('packer').startup(function()
     end
   }
 
-  -- bookmark
-  use { 'MattesGroeger/vim-bookmarks' }
-
   -- plantuml
   use { 'weirongxu/plantuml-previewer.vim' }
 
@@ -476,6 +473,7 @@ return require('packer').startup(function()
 
   use {
     'lukas-reineke/headlines.nvim',
+    ft = 'markdown',
     config = function()
       require('headlines').setup()
     end,
