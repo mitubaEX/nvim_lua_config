@@ -37,7 +37,7 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>LspTroubleToggle<CR>', { noremap = true, silent = false })
     end
   }
-  use { 'simrat39/symbols-outline.nvim' }
+  -- use { 'simrat39/symbols-outline.nvim' }
 
   -- snippets
   use { 'rafamadriz/friendly-snippets' }
@@ -235,13 +235,13 @@ return require('packer').startup(function()
   use { 'machakann/vim-highlightedyank' }
 
   -- jk accelerated
-  use {
-    'rhysd/accelerated-jk',
-    config = function()
-      vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
-      vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
-    end
-  }
+  -- use {
+  --   'rhysd/accelerated-jk',
+  --   config = function()
+  --     vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
+  --     vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
+  --   end
+  -- }
 
   -- surround
   -- add: ysiw(
@@ -468,6 +468,7 @@ return require('packer').startup(function()
   -- vim-rails
   use {
     'tpope/vim-rails',
+    ft = 'ruby',
     requires = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
   }
 
@@ -479,30 +480,30 @@ return require('packer').startup(function()
     end,
   }
 
-  use {
-    "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    config = function()
-      require("todo-comments").setup {
-        signs = true, -- show icons in the signs column
-        sign_priority = 8, -- sign priority
-        -- keywords recognized as todo comments
-        keywords = {
-          FIX = {
-            icon = " ", -- icon used for the sign, and in search results
-            color = "error", -- can be a hex color, or a named color (see below)
-            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-            -- signs = false, -- configure signs for some keywords individually
-          },
-          TODO = { icon = " ", color = "info" },
-          HACK = { icon = " ", color = "warning" },
-          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        },
-      }
-    end
-  }
+  -- use {
+  --   "folke/todo-comments.nvim",
+  --   requires = "nvim-lua/plenary.nvim",
+  --   config = function()
+  --     require("todo-comments").setup {
+  --       signs = true, -- show icons in the signs column
+  --       sign_priority = 8, -- sign priority
+  --       -- keywords recognized as todo comments
+  --       keywords = {
+  --         FIX = {
+  --           icon = " ", -- icon used for the sign, and in search results
+  --           color = "error", -- can be a hex color, or a named color (see below)
+  --           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+  --           -- signs = false, -- configure signs for some keywords individually
+  --         },
+  --         TODO = { icon = " ", color = "info" },
+  --         HACK = { icon = " ", color = "warning" },
+  --         WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+  --         PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+  --         NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+  --       },
+  --     }
+  --   end
+  -- }
   -- filetype
   use {
     'nathom/filetype.nvim',
