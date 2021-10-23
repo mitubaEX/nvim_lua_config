@@ -131,55 +131,17 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
 -- lsp compe
 vim.api.nvim_command('set completeopt=menuone,noselect')
 local cmp = require'cmp'
-local icons = {
-  Class = " ",
-  Color = " ",
-  Constant = "ﲀ ",
-  Constructor = " ",
-  Enum = "練",
-  EnumMember = " ",
-  Event = " ",
-  Field = " ",
-  File = "",
-  Folder = " ",
-  Function = " ",
-  Interface = "ﰮ ",
-  Keyword = " ",
-  Method = " ",
-  Module = " ",
-  Operator = "",
-  Property = " ",
-  Reference = " ",
-  Snippet = " ",
-  Struct = " ",
-  Text = " ",
-  TypeParameter = " ",
-  Unit = "塞",
-  Value = " ",
-  Variable = " ",
-}
-
 cmp.setup({
   formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = icons[vim_item.kind]
-      vim_item.menu = ({
-        nvim_lsp = "(LSP)",
-        emoji = "(Emoji)",
-        path = "(Path)",
-        calc = "(Calc)",
-        cmp_tabnine = "(Tabnine)",
-        vsnip = "(Snippet)",
-        luasnip = "(Snippet)",
-        buffer = "(Buffer)",
-      })[entry.source.name]
-      vim_item.dup = ({
-        buffer = 1,
-        path = 1,
-        nvim_lsp = 0,
-      })[entry.source.name] or 0
-      return vim_item
-    end,
+    format = require('lspkind').cmp_format({
+      with_text = true,
+      menu = {
+        nvim_lsp = '[LSP]',
+        buffer = '[Buf]',
+        luasnip = '[LSnip]',
+        nvim_lua = '[Lua]',
+      },
+    }),
   },
   snippet = {
     expand = function(args)

@@ -28,6 +28,7 @@ return require('packer').startup(function()
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
       "f3fora/cmp-spell",
+      "onsails/lspkind-nvim",
     }
   }
   use { 'folke/lua-dev.nvim' }
