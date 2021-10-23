@@ -46,7 +46,7 @@ return require('packer').startup(function()
 
   -- status line
   use {
-    'hoob3rt/lualine.nvim',
+    'nvim-lualine/lualine.nvim',
     requires = { {'kyazdani42/nvim-web-devicons'}, {'ryanoasis/vim-devicons'} },
     -- your statusline
     config = function()
@@ -133,6 +133,21 @@ return require('packer').startup(function()
     requires = { {'nvim-lua/plenary.nvim'} },
     config = function()
       local actions = require('telescope.actions')
+      local mappings = {
+        i = {
+          ["<c-p>"] = actions.cycle_history_prev,
+          ["<c-n>"] = actions.cycle_history_next,
+
+          ["<c-u>"] = actions.preview_scrolling_up,
+          ["<c-d>"] = actions.preview_scrolling_down,
+
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+        },
+        n = {
+          ["<esc>"] = actions.close,
+        },
+      }
       -- Global remapping
       ------------------------------
       require('telescope').setup{
@@ -140,26 +155,15 @@ return require('packer').startup(function()
           -- please install fzy
           file_sorter = require'telescope.sorters'.get_fzy_sorter,
           generic_sorter = require'telescope.sorters'.get_fzy_sorter,
-          mappings = {
-            i = {
-      	      ["<c-p>"] = actions.cycle_history_prev,
-      	      ["<c-n>"] = actions.cycle_history_next,
-
-      	      ["<c-u>"] = actions.preview_scrolling_up,
-              ["<c-d>"] = actions.preview_scrolling_down,
-
-      	      ["<C-j>"] = actions.move_selection_next,
-      	      ["<C-k>"] = actions.move_selection_previous,
-            },
-            n = {
-      	      ["<esc>"] = actions.close,
-            },
-          }
+          mappings = mappings,
         },
         pickers = {
           -- Your special builtin config goes in here
           buffers = {
-            sort_lastused = true,
+            prompt_title = '✨ Search Buffers ✨',
+            mappings = mappings,
+            sort_mru = true,
+            preview_title = false,
           },
         },
       }
