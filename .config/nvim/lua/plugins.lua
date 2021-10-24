@@ -87,12 +87,7 @@ return require('packer').startup(function()
               icon = '⚙️ :',
               color = {fg = '#a69ded'},
               separator = ''
-            }, {'diagnostics', sources = {'nvim_lsp'}, icon = '🚦:'}, {
-              function ()
-                return vim.b.vista_nearest_method_or_function
-              end,
-              icon = 'ƒ:'
-          }},
+            }, {'diagnostics', sources = {'nvim_lsp'}, icon = '🚦:'}},
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
           lualine_y = { 'progress' },
           lualine_z = { 'location'  },
@@ -196,17 +191,17 @@ return require('packer').startup(function()
   }
 
   -- color
-  use {
-    'navarasu/onedark.nvim',
-    config = function()
-      vim.api.nvim_command('set termguicolors')
-      vim.api.nvim_command('syntax enable')
-
-      vim.g.onedark_style = 'deep'
-
-      vim.api.nvim_command('colorscheme onedark')
-    end,
-  }
+--   use {
+--     'navarasu/onedark.nvim',
+--     config = function()
+--       vim.api.nvim_command('set termguicolors')
+--       vim.api.nvim_command('syntax enable')
+--
+--       vim.g.onedark_style = 'deep'
+--
+--       vim.api.nvim_command('colorscheme onedark')
+--     end,
+--   }
 --   use {
 --     'folke/tokyonight.nvim',
 --     config = function()
@@ -218,6 +213,16 @@ return require('packer').startup(function()
 --       vim.api.nvim_command('colorscheme tokyonight')
 --     end,
 --   }
+  use {
+    'marko-cerovac/material.nvim',
+    config = function()
+      vim.api.nvim_command('set termguicolors')
+      vim.api.nvim_command('syntax enable')
+
+      vim.g.material_style = "deep ocean"
+      vim.api.nvim_command('colorscheme material')
+    end,
+  }
 
   -- f motion
   use { 'rhysd/clever-f.vim' }
@@ -312,7 +317,27 @@ return require('packer').startup(function()
   use { 'itchyny/vim-cursorword' }
 
   -- indent line
-  use { 'Yggdroot/indentLine' }
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function ()
+      vim.opt.termguicolors = true
+      vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
+
+      require("indent_blankline").setup {
+        char = "",
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+        },
+        space_char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+        },
+        show_trailing_blankline_indent = false,
+      }
+    end
+  }
 
   -- <Leader>r<word obj> replace word
   use { 'kana/vim-operator-user' }
