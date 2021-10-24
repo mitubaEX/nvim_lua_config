@@ -260,9 +260,12 @@ return require('packer').startup(function()
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-repeat' }
 
-  -- html tag
-  -- use { 'AndrewRadev/tagalong.vim' }
-  -- use { 'alvan/vim-closetag' }
+  use {
+    'windwp/nvim-ts-autotag',
+    config = function ()
+      require('nvim-ts-autotag').setup()
+    end
+  }
 
   -- fast move
   -- https://tyru.hatenablog.com/entry/2020/04/26/110000
