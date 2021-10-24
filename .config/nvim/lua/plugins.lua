@@ -53,7 +53,7 @@ return require('packer').startup(function()
     config = function()
       require('lualine').setup{
         options = {
-          theme = 'iceberg_dark',
+          theme = 'material-nvim',
           icons_enabled = true,
         },
         sections = {
@@ -363,7 +363,12 @@ return require('packer').startup(function()
   }
 
   -- auto pairs
-  use { 'jiangmiao/auto-pairs' }
+  use {
+    'windwp/nvim-autopairs',
+    config = function ()
+      require('nvim-autopairs').setup{}
+    end
+  }
 
   -- toggle comment
   -- gcc: toggle comment
