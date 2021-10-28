@@ -29,6 +29,7 @@ return require('packer').startup(function()
       "hrsh7th/cmp-emoji",
       "f3fora/cmp-spell",
       "onsails/lspkind-nvim",
+      "hrsh7th/cmp-cmdline",
     }
   }
   use { 'folke/lua-dev.nvim' }
@@ -223,6 +224,7 @@ return require('packer').startup(function()
       vim.api.nvim_command('colorscheme material')
     end,
   }
+  use 'folke/lsp-colors.nvim'
 
   -- f motion
   use { 'rhysd/clever-f.vim' }
@@ -260,12 +262,14 @@ return require('packer').startup(function()
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-repeat' }
 
+  -- jsx
   use {
     'windwp/nvim-ts-autotag',
     config = function ()
       require('nvim-ts-autotag').setup()
     end
   }
+  use { 'neoclide/vim-jsx-improve' }
 
   -- fast move
   -- https://tyru.hatenablog.com/entry/2020/04/26/110000
@@ -383,18 +387,18 @@ return require('packer').startup(function()
   }
 
   -- wilder
-  use {
-    'gelguy/wilder.nvim',
-    config = function()
-      vim.api.nvim_command([[
-        call wilder#enable_cmdline_enter()
-        set wildcharm=<Tab>
-        cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-        cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-        call wilder#set_option('modes', ['/', '?', ':'])
-      ]])
-    end
-  }
+  -- use {
+  --   'gelguy/wilder.nvim',
+  --   config = function()
+  --     vim.api.nvim_command([[
+  --       call wilder#enable_cmdline_enter()
+  --       set wildcharm=<Tab>
+  --       cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+  --       cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+  --       call wilder#set_option('modes', ['/', '?', ':'])
+  --     ]])
+  --   end
+  -- }
 
   -- nvim-treesitter
   use {

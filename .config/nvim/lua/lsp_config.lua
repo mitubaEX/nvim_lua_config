@@ -185,3 +185,9 @@ require("nvim-autopairs.completion.cmp").setup({
     tex = '{'
   }
 })
+
+cmp.setup.cmdline(':', {
+  sources = {
+    { name = 'cmdline' }
+  }
+})
