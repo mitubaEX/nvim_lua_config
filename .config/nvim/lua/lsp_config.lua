@@ -191,3 +191,9 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   }
 })
+
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
