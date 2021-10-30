@@ -28,6 +28,6 @@ vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>', { noremap = true, silent = f
 
 -- pbcopy filename
 -- only filename
-vim.api.nvim_set_keymap('n', '<Leader>c', ':!echo "%:t" | pbcopy<CR>', { noremap = false, silent = false })
+vim.api.nvim_set_keymap('n', '<Leader>c', ':!echo -n "%:t" | pbcopy<CR>', { noremap = false, silent = false })
 -- relative path
-vim.api.nvim_set_keymap('n', '<Leader>C', ':!echo "%" | pbcopy<CR>', { noremap = false, silent = false })
+vim.api.nvim_set_keymap('n', '<Leader>C', ':!echo -n "%" | pbcopy<CR>', { noremap = false, silent = false })
