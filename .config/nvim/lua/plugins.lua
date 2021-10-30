@@ -167,7 +167,7 @@ return require('packer').startup(function()
 
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>Telescope grep_string<CR>', { noremap = true, silent = false })
     end
   }
   -- file tree
@@ -176,7 +176,6 @@ return require('packer').startup(function()
     config = function()
       require'nvim-tree'.setup {}
       vim.api.nvim_command([[
-        let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
         let g:nvim_tree_gitignore = 1 "0 by default
         let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
         let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
