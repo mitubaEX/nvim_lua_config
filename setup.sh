@@ -3,5 +3,5 @@ mkdir -p $HOME/.config/nvim
 ln -sf $(pwd)/.config/nvim/init.lua $HOME/.config/nvim/init.lua
 
 # lua
-mkdir -p $HOME/.config/nvim/lua
+mkdir -p $HOME/.config/nvim/lua/lsp
 find .config -type f | xargs -I% ln -sf $(pwd)/% $HOME/%
