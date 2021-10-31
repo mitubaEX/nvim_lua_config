@@ -413,7 +413,12 @@ return require('packer').startup(function(use)
       }
     end
   }
-
+  use {
+    'lewis6991/spellsitter.nvim',
+    config = function()
+      require('spellsitter').setup()
+    end
+  }
   -- git
   use {
     'lewis6991/gitsigns.nvim',
@@ -564,6 +569,14 @@ return require('packer').startup(function(use)
     'nathom/filetype.nvim',
     config = function()
       vim.g.did_load_filetypes = 1
+    end
+  }
+
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function ()
+      require'alpha'.setup(require'alpha.themes.startify'.opts)
     end
   }
 
