@@ -1,7 +1,7 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
@@ -32,6 +32,7 @@ return require('packer').startup(function()
       "hrsh7th/cmp-cmdline",
     }
   }
+ 	use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
   use { 'folke/lua-dev.nvim' }
   use {
     'folke/lsp-trouble.nvim',
@@ -71,7 +72,7 @@ return require('packer').startup(function()
                 local clients = vim.lsp.get_active_clients()
                 if next(clients) == nil then return msg end
 
-                client_table = {}
+                local client_table = {}
                 for _, client in ipairs(clients) do
                   local filetypes = client.config.filetypes
                   if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
@@ -103,8 +104,6 @@ return require('packer').startup(function()
         },
       }
     end,
-    -- some optional icons
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
 
   -- Finder
