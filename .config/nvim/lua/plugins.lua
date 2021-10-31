@@ -168,6 +168,7 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>Telescope grep_string<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
     end
   }
   -- file tree
