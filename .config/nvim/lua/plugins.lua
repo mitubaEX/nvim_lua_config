@@ -455,7 +455,8 @@ return require('packer').startup(function()
   use {
     'Asheq/close-buffers.vim',
     config = function()
-      vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
+      -- vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
     end
   }
 
