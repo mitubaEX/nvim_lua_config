@@ -42,19 +42,30 @@ $ npm install -g flow-typed@2.6.2
 
 install commands
 
+```
 $ brew install ninja
+```
+
 Please install bellow command of web page.
 https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
 
-trouble Shoot
+### Trouble Shoot
 > FormulaUnavailableError: No available formula with the name "/usr/local/opt/avr-gcc@7/.brew/avr-gcc@7.rb".
+
+```
 $ brew install avr-gcc@7
+```
 
 ## diagnostic
+use [mattn/efm-langserver](https://github.com/mattn/efm-langserver)
 ref: https://qiita.com/hrsh7th@github/items/7b9670adf3d8328fe2d8
+
+```
 $ brew install efm-langserver
+```
 
 ## srb
 
+```
 $ gem install sorbet
-
+```

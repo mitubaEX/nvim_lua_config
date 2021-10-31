@@ -106,24 +106,6 @@ return require('packer').startup(function(use)
     end,
   }
 
-  -- Finder
-  -- use { 'ibhagwan/fzf-lua',
-  --   requires = {
-  --     'kyazdani42/nvim-web-devicons', -- optional for icons
-  --   'vijaymarupudi/nvim-fzf' },
-  --   config = function()
-  --     require'fzf-lua'.setup {
-  --        grep = { rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'" },
-  --        fzf_binds           = {             -- fzf '--bind=' options
-  --          'ctrl-n:preview-page-down',
-  --          'ctrl-p:preview-page-up',
-  --        },
-  --     }
-  --     vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>lua require("fzf-lua").files()<CR>', { noremap = true, silent = false })
-  --     vim.api.nvim_set_keymap('n', ';', '<cmd>lua require("fzf-lua").buffers()<CR>', { noremap = true, silent = false })
-  --     vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("fzf-lua").grep_cword()<CR>', { noremap = true, silent = false })
-  --   end
-  -- }
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} },
@@ -244,15 +226,6 @@ return require('packer').startup(function(use)
 
   -- yank highlight
   use { 'machakann/vim-highlightedyank' }
-
-  -- jk accelerated
-  -- use {
-  --   'rhysd/accelerated-jk',
-  --   config = function()
-  --     vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
-  --     vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
-  --   end
-  -- }
 
   -- surround
   -- add: ysiw(
@@ -384,20 +357,6 @@ return require('packer').startup(function(use)
       require('nvim_comment').setup()
     end
   }
-
-  -- wilder
-  -- use {
-  --   'gelguy/wilder.nvim',
-  --   config = function()
-  --     vim.api.nvim_command([[
-  --       call wilder#enable_cmdline_enter()
-  --       set wildcharm=<Tab>
-  --       cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-  --       cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-  --       call wilder#set_option('modes', ['/', '?', ':'])
-  --     ]])
-  --   end
-  -- }
 
   -- nvim-treesitter
   use {
@@ -540,30 +499,30 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- use {
-  --   "folke/todo-comments.nvim",
-  --   requires = "nvim-lua/plenary.nvim",
-  --   config = function()
-  --     require("todo-comments").setup {
-  --       signs = true, -- show icons in the signs column
-  --       sign_priority = 8, -- sign priority
-  --       -- keywords recognized as todo comments
-  --       keywords = {
-  --         FIX = {
-  --           icon = " ", -- icon used for the sign, and in search results
-  --           color = "error", -- can be a hex color, or a named color (see below)
-  --           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-  --           -- signs = false, -- configure signs for some keywords individually
-  --         },
-  --         TODO = { icon = " ", color = "info" },
-  --         HACK = { icon = " ", color = "warning" },
-  --         WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-  --         PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-  --         NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-  --       },
-  --     }
-  --   end
-  -- }
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        signs = true, -- show icons in the signs column
+        sign_priority = 8, -- sign priority
+        -- keywords recognized as todo comments
+        keywords = {
+          FIX = {
+            icon = " ", -- icon used for the sign, and in search results
+            color = "error", -- can be a hex color, or a named color (see below)
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+            -- signs = false, -- configure signs for some keywords individually
+          },
+          TODO = { icon = " ", color = "info" },
+          HACK = { icon = " ", color = "warning" },
+          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        },
+      }
+    end
+  }
   -- filetype
   use {
     'nathom/filetype.nvim',
