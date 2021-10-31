@@ -580,6 +580,8 @@ return require('packer').startup(function(use)
     end
   }
 
+  use { 'dstein64/nvim-scrollview' }
+
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
   use {
