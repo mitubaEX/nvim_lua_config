@@ -306,27 +306,27 @@ return require('packer').startup(function(use)
   use { 'itchyny/vim-cursorword' }
 
   -- indent line
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function ()
-      vim.opt.termguicolors = true
-      vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
-
-      require("indent_blankline").setup {
-        char = "",
-        char_highlight_list = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-        },
-        space_char_highlight_list = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-        },
-        show_trailing_blankline_indent = false,
-      }
-    end
-  }
+--   use {
+--     'lukas-reineke/indent-blankline.nvim',
+--     config = function ()
+--       vim.opt.termguicolors = true
+--       vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
+--       vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
+--
+--       require("indent_blankline").setup {
+--         char = "",
+--         char_highlight_list = {
+--           "IndentBlanklineIndent1",
+--           "IndentBlanklineIndent2",
+--         },
+--         space_char_highlight_list = {
+--           "IndentBlanklineIndent1",
+--           "IndentBlanklineIndent2",
+--         },
+--         show_trailing_blankline_indent = false,
+--       }
+--     end
+--   }
 
   -- <Leader>r<word obj> replace word
   use { 'kana/vim-operator-user' }
@@ -547,6 +547,13 @@ return require('packer').startup(function(use)
     config = function ()
       require'alpha'.setup(require'alpha.themes.startify'.opts)
     end
+  }
+
+  use {
+    'itchyny/vim-parenmatch',
+    -- config = function ()
+    --   vim.g.loaded_matchparen = 1
+    -- end
   }
 
   -- use { 'dstein64/nvim-scrollview' }

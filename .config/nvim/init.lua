@@ -1,3 +1,6 @@
+-- for vim-parenmatch
+vim.g.loaded_matchparen = true
+
 require('plugins')
 require('keymap')
 require('set_config')
