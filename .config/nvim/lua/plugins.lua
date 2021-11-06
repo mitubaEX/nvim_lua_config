@@ -50,6 +50,45 @@ return require('packer').startup(function(use)
       vim.cmd('let g:copilot_no_tab_map = v:true')
     end
   }
+  use {
+    'mhartington/formatter.nvim',
+    config = function ()
+      require('formatter').setup({
+          filetype = {
+            javascript = {
+              -- eslint
+              function()
+                return {
+                  exe = "eslint_d",
+                  args = {"--stdin", "--fix-to-stdout"},
+                  stdin = true
+                }
+              end
+            },
+            javascriptreact = {
+              -- eslint
+              function()
+                return {
+                  exe = "eslint_d",
+                  args = {"--stdin", "--fix-to-stdout"},
+                  stdin = true
+                }
+              end
+            },
+            ruby = {
+              -- rubocop
+              function()
+                return {
+                  exe = "rubocop", -- might prepend `bundle exec `
+                  args = { '--auto-correct', '--stdin', '%:p', '2>/dev/null', '|', "awk 'f; /^====================$/{f=1}'"},
+                  stdin = true,
+                }
+              end
+            }
+          }
+        })
+    end
+  }
 
   -- snippets
   use { 'rafamadriz/friendly-snippets' }
