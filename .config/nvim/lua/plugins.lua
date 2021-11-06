@@ -594,6 +594,13 @@ return require('packer').startup(function(use)
     --   vim.g.loaded_matchparen = 1
     -- end
   }
+  use {
+    'rhysd/accelerated-jk',
+    config = function()
+      vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
+      vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
+    end
+  }
 
   -- use { 'dstein64/nvim-scrollview' }
 
