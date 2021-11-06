@@ -140,7 +140,9 @@ return require('packer').startup(function(use)
             }, {'diagnostics', sources = {'nvim_lsp'}, icon = '🚦:'}},
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
           lualine_y = { 'progress' },
-          lualine_z = { 'location'  },
+          lualine_z = { 'location', { function ()
+            return vim.api.nvim_exec([[echo pomo#status_bar()]], true);
+          end}  },
         },
         inactive_sections = {
           lualine_a = {  },
@@ -601,6 +603,8 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
     end
   }
+
+  use { 'tricktux/pomodoro.vim' }
 
   -- use { 'dstein64/nvim-scrollview' }
 
