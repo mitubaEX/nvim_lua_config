@@ -192,6 +192,25 @@ return require('packer').startup(function(use)
             mappings = mappings,
             sort_mru = true,
             preview_title = false,
+            theme="ivy",
+          },
+          git_files = {
+            prompt_title = '📦 Search Git Files 📦',
+            mappings = mappings,
+            sort_mru = true,
+            preview_title = false,
+          },
+          grep_string = {
+            mappings = mappings,
+            theme="ivy",
+          },
+          registers = {
+            mappings = mappings,
+            theme="ivy",
+          },
+          git_bcommits = {
+            mappings = mappings,
+            theme="ivy",
           },
         },
       }
@@ -454,7 +473,7 @@ return require('packer').startup(function(use)
     config = function()
       vim.api.nvim_set_keymap('n', '<C-g>g', ':Gina grep<CR>', { noremap = true, silent = false })
       -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
+      -- vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
       -- vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
     end
   }
