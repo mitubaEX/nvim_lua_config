@@ -219,7 +219,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>Telescope grep_string<CR>', { noremap = true, silent = false })
       vim.api.nvim_set_keymap('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
+      -- vim.api.nvim_set_keymap('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
     end
   }
   -- file tree
@@ -482,6 +482,13 @@ return require('packer').startup(function(use)
     requires = { 'tyru/open-browser.vim' },
     config = function()
       vim.api.nvim_set_keymap('n', '<C-g>o', '::OpenGithubFile<CR>', { noremap = true, silent = false })
+    end
+  }
+  use {
+    'junegunn/gv.vim',
+    requires = { 'tpope/vim-fugitive' },
+    config = function ()
+      vim.api.nvim_set_keymap('n', '<C-g>l', ":GV!<CR>", { noremap = true, silent = true })
     end
   }
 
