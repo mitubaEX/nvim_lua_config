@@ -11,3 +11,5 @@ vim.cmd('autocmd BufNewFile *_spec.rb 0r ~/.config/nvim/template/template_spec.r
 vim.cmd('autocmd bufnewfile,bufread *.tsx set filetype=typescriptreact')
 vim.cmd('autocmd bufnewfile,bufread *.jsx set filetype=javascriptreact')
 vim.cmd('autocmd bufnewfile,bufread *.js set filetype=javascriptreact')
+
+vim.cmd('au BufNewFile,BufRead *.eco setf mason')
