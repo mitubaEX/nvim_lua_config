@@ -2,7 +2,7 @@
 vim.cmd('autocmd BufWritePre * %s/\\s\\+$//e')
 
 -- format
-vim.cmd('autocmd BufWritePost *.js FormatWrite')
+vim.cmd('autocmd BufWritePost *.js,*.go FormatWrite')
 
 -- open spec template
 vim.cmd('autocmd BufNewFile *_spec.rb 0r ~/.config/nvim/template/template_spec.rb')

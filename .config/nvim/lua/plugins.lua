@@ -84,6 +84,16 @@ return require('packer').startup(function(use)
                   stdin = true,
                 }
               end
+            },
+            go = {
+              -- go fmt
+              function()
+                return {
+                  exe = "gofmt", -- might prepend `bundle exec `
+                  args = {},
+                  stdin = true,
+                }
+              end
             }
           }
         })
@@ -202,7 +212,6 @@ return require('packer').startup(function(use)
           },
           grep_string = {
             mappings = mappings,
-            theme="ivy",
           },
           registers = {
             mappings = mappings,
