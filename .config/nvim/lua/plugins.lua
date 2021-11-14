@@ -300,6 +300,7 @@ return require('packer').startup(function(use)
       vim.g.floaterm_height = 0.8
 
       vim.api.nvim_set_keymap('n', '<Leader>[', ':FloatermToggle<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>l', ':FloatermNew lazygit<CR>', { noremap = true, silent = false })
     end,
   }
 
