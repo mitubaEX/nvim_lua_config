@@ -642,6 +642,10 @@ return require('packer').startup(function(use)
 
   use { 'tricktux/pomodoro.vim' }
 
+  -- :Snek
+  -- :Camel
+  use { 'nicwest/vim-camelsnek' }
+
   -- use { 'dstein64/nvim-scrollview' }
 
   -- my util plugins
