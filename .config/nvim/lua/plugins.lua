@@ -431,12 +431,11 @@ return require('packer').startup(function(use)
   -- toggle comment
   -- gcc: toggle comment
   use {
-    'terrortylor/nvim-comment',
+    'numToStr/Comment.nvim',
     config = function()
-      require('nvim_comment').setup()
+      require('Comment').setup()
     end
   }
-
   -- nvim-treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
