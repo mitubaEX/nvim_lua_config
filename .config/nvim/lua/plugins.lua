@@ -42,6 +42,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>LspTroubleToggle<CR>', { noremap = true, silent = false })
     end
   }
+  use {'stevearc/dressing.nvim'}
   -- use { 'simrat39/symbols-outline.nvim' }
   use {
     'github/copilot.vim',
