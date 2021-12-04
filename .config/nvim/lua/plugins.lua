@@ -237,7 +237,6 @@ return require('packer').startup(function(use)
     config = function()
       require'nvim-tree'.setup {}
       vim.api.nvim_command([[
-        let g:nvim_tree_gitignore = 1 "0 by default
         let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
         let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
         let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
