@@ -115,7 +115,7 @@ return require('packer').startup(function(use)
     config = function()
       require('lualine').setup{
         options = {
-          theme = 'material-nvim',
+          theme = 'nightfox',
           icons_enabled = true,
         },
         sections = {
@@ -149,7 +149,7 @@ return require('packer').startup(function(use)
               icon = '⚙️ :',
               color = {fg = '#a69ded'},
               separator = ''
-            }, {'diagnostics', sources = {'nvim_lsp'}, icon = '🚦:'}},
+            }, {'diagnostics', sources = {'nvim_diagnostic'}, icon = '🚦:'}},
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
           lualine_y = { 'progress' },
           lualine_z = { 'location', { function ()
@@ -275,14 +275,23 @@ return require('packer').startup(function(use)
 --       vim.api.nvim_command('colorscheme tokyonight')
 --     end,
 --   }
+  -- use {
+  --   'marko-cerovac/material.nvim',
+  --   config = function()
+  --     vim.api.nvim_command('set termguicolors')
+  --     vim.api.nvim_command('syntax enable')
+  --
+  --     vim.g.material_style = "deep ocean"
+  --     vim.api.nvim_command('colorscheme material')
+  --   end,
+  -- }
   use {
-    'marko-cerovac/material.nvim',
+    'EdenEast/nightfox.nvim',
     config = function()
       vim.api.nvim_command('set termguicolors')
       vim.api.nvim_command('syntax enable')
 
-      vim.g.material_style = "deep ocean"
-      vim.api.nvim_command('colorscheme material')
+      require('nightfox').load('nightfox')
     end,
   }
   use 'folke/lsp-colors.nvim'
