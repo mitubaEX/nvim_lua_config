@@ -488,15 +488,6 @@ return require('packer').startup(function(use)
     end
   }
   use {
-    'lambdalisue/gina.vim',
-    config = function()
-      vim.api.nvim_set_keymap('n', '<C-g>g', ':Gina grep<CR>', { noremap = true, silent = false })
-      -- vim.api.nvim_set_keymap('n', '<C-g>o', ':Gina browse :%<CR>', { noremap = true, silent = false })
-      -- vim.api.nvim_set_keymap('n', '<C-g>b', ':Gina blame<CR>', { noremap = true, silent = false })
-      -- vim.api.nvim_set_keymap('n', '<C-g>l', ':Gina log %<CR>', { noremap = true, silent = false })
-    end
-  }
-  use {
     'tyru/open-browser-github.vim',
     requires = { 'tyru/open-browser.vim' },
     config = function()
@@ -646,6 +637,12 @@ return require('packer').startup(function(use)
     config = function()
       vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
       vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
+    end
+  }
+  use {
+    'mhinz/vim-grepper',
+    config = function ()
+      vim.api.nvim_set_keymap('n', '<C-g>g', ':Grepper -tool git<CR>', { noremap = true, silent = false })
     end
   }
 
