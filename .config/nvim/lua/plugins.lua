@@ -39,7 +39,7 @@ return require('packer').startup(function(use)
   use {
     'folke/lsp-trouble.nvim',
     config = function()
-      vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>LspTroubleToggle<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>TroubleToggle<CR>', { noremap = true, silent = false })
     end
   }
   use {'stevearc/dressing.nvim'}
