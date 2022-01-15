@@ -517,6 +517,8 @@ return require('packer').startup(function(use)
     config = function()
       vim.api.nvim_set_var('test#strategy', 'neovim')
 
+      vim.api.nvim_set_var('test#ruby#use_binstubs', '1')
+
       vim.api.nvim_set_keymap('n', '<Leader>q', ':TestFile<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<Leader>Q', ':TestNearest<CR>', { noremap = true, silent = true })
     end
