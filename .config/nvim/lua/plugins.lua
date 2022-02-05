@@ -76,6 +76,16 @@ return require('packer').startup(function(use)
                 }
               end
             },
+            typescriptreact = {
+              -- eslint
+              function()
+                return {
+                  exe = "eslint_d",
+                  args = {"--stdin", "--stdin-filename"},
+                  stdin = true
+                }
+              end
+            },
             ruby = {
               -- rubocop
               function()
@@ -101,6 +111,12 @@ return require('packer').startup(function(use)
     end
   }
   use { 'ray-x/lsp_signature.nvim' }
+  use {
+    'j-hui/fidget.nvim',
+    config = function ()
+      require"fidget".setup{}
+    end
+  }
 
   -- snippets
   use { 'rafamadriz/friendly-snippets' }
