@@ -316,18 +316,25 @@ return require('packer').startup(function(use)
   use { 'rhysd/clever-f.vim' }
 
   -- terminal
-  use {
-    'voldikss/vim-floaterm',
-    config = function()
-      vim.g.floaterm_gitcommit = 'floaterm'
-      vim.g.floaterm_wintitle = 0
-      vim.g.floaterm_autoclose = 1
-      vim.g.floaterm_width = 0.8
-      vim.g.floaterm_height = 0.8
+  -- use {
+  --   'voldikss/vim-floaterm',
+  --   config = function()
+  --     vim.g.floaterm_gitcommit = 'floaterm'
+  --     vim.g.floaterm_wintitle = 0
+  --     vim.g.floaterm_autoclose = 1
+  --     vim.g.floaterm_width = 0.8
+  --     vim.g.floaterm_height = 0.8
+  --
+  --     vim.api.nvim_set_keymap('n', '<Leader>[', ':FloatermToggle<CR>', { noremap = true, silent = false })
+  --     vim.api.nvim_set_keymap('n', '<Leader>l', ':FloatermNew lazygit<CR>', { noremap = true, silent = false })
+  --   end,
+  -- }
 
-      vim.api.nvim_set_keymap('n', '<Leader>[', ':FloatermToggle<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>l', ':FloatermNew lazygit<CR>', { noremap = true, silent = false })
-    end,
+  use {
+    "akinsho/toggleterm.nvim",
+    config = function ()
+      vim.api.nvim_set_keymap('n', '<Leader>[', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
+    end
   }
 
   -- yank highlight
