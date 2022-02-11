@@ -21,12 +21,11 @@ return require('packer').startup(function(use)
   use {
     "hrsh7th/nvim-cmp",
     requires = {
-      "hrsh7th/vim-vsnip",
+      "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-vsnip",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
       "f3fora/cmp-spell",
@@ -119,9 +118,12 @@ return require('packer').startup(function(use)
   }
 
   -- snippets
-  use { 'rafamadriz/friendly-snippets' }
-  use { 'hrsh7th/vim-vsnip' }
-  use { 'hrsh7th/vim-vsnip-integ' }
+  use {
+    'L3MON4D3/LuaSnip',
+    config = function ()
+      require("luasnip.loaders.from_vscode").load()
+    end
+  }
 
   -- status line
   use {

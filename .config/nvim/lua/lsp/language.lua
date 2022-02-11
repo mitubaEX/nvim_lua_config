@@ -1,7 +1,12 @@
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
 -- lspconfig
  require'lspconfig'.tsserver.setup{
    filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
-   settings = {documentFormatting = false}
+   settings = {documentFormatting = false},
+   capabilities = capabilities
  }
 require'lspconfig'.solargraph.setup{
   init_options = {codeAction = false},
@@ -15,19 +20,30 @@ require'lspconfig'.solargraph.setup{
           rename = true,
           symbols = true
       }
-  }
+  },
+  capabilities = capabilities
 }
-require'lspconfig'.flow.setup{}
-require'lspconfig'.yamlls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.gopls.setup{}
-  require "lsp_signature".setup({
-    bind = true, -- This is mandatory, otherwise border config won't get registered.
-    handler_opts = {
-      border = "rounded"
-    }
-  })
+require'lspconfig'.flow.setup{
+  capabilities = capabilities
+}
+require'lspconfig'.yamlls.setup{
+  capabilities = capabilities
+}
+require'lspconfig'.rust_analyzer.setup{
+  capabilities = capabilities
+}
+require'lspconfig'.pyright.setup{
+  capabilities = capabilities
+}
+require'lspconfig'.gopls.setup{
+  capabilities = capabilities
+}
+require "lsp_signature".setup({
+  bind = true, -- This is mandatory, otherwise border config won't get registered.
+  handler_opts = {
+    border = "rounded"
+  }
+})
 
 -- efm
 local eslint = {
