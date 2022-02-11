@@ -115,7 +115,8 @@ local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-s
 -- lua-dev.nvim
 local luadev = require("lua-dev").setup({
   lspconfig = {
-    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"}
+    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+    capabilities = capabilities
   },
 })
 
