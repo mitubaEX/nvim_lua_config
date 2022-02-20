@@ -120,10 +120,12 @@ return require('packer').startup(function(use)
   -- snippets
   use {
     'L3MON4D3/LuaSnip',
-    require("luasnip").config.set_config {
-      history = true,
-    },
-    require("luasnip.loaders.from_vscode").load {}
+    config = function ()
+      require("luasnip").config.set_config {
+        history = true,
+      }
+      require("luasnip.loaders.from_vscode").load {}
+    end
   }
   use { "rafamadriz/friendly-snippets" } -- a bunch of snippets to use
 
