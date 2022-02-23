@@ -343,9 +343,6 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- yank highlight
-  use { 'machakann/vim-highlightedyank' }
-
   -- surround
   -- add: ysiw(
   -- replace: cs(]

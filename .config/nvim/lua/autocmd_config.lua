@@ -13,3 +13,5 @@ vim.cmd('autocmd bufnewfile,bufread *.jsx set filetype=javascriptreact')
 vim.cmd('autocmd bufnewfile,bufread *.js set filetype=javascriptreact')
 
 vim.cmd('au BufNewFile,BufRead *.eco setf mason')
+
+vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}')
