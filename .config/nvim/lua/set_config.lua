@@ -32,4 +32,7 @@ vim.opt.virtualedit = 'block'
 vim.opt.backspace = 'indent,eol,start'
 vim.opt.whichwrap = 'b,s,<,>,[,],h,l'
 
-vim.opt.spell = false
+vim.opt.spelllang={'en','cjk'}
+vim.opt.spellsuggest={'best','9'}
+
+vim.opt.spell = true

@@ -15,7 +15,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  use { 'kamykn/spelunker.vim' }
+  -- use { 'kamykn/spelunker.vim' }
 
   -- lsp plugins
   use { 'neovim/nvim-lspconfig' }
