@@ -5,18 +5,6 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- language syntax
-  use {
-    'sheerun/vim-polyglot',
-    config = function()
-      vim.g.vim_markdown_conceal_code_blocks = 0
-      vim.g.vim_markdown_conceal = 0
-      vim.g.polyglot_disable = {'ruby', 'rspec'}
-    end
-  }
-
-  -- use { 'kamykn/spelunker.vim' }
-
   -- lsp plugins
   use { 'neovim/nvim-lspconfig' }
   use {
@@ -32,6 +20,8 @@ return require('packer').startup(function(use)
       "f3fora/cmp-spell",
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
+      "L3MON4D3/LuaSnip",
+      "rafamadriz/friendly-snippets",
     }
   }
  	use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
@@ -122,13 +112,12 @@ return require('packer').startup(function(use)
   use {
     'L3MON4D3/LuaSnip',
     config = function ()
-      require("luasnip").config.set_config {
-        history = true,
-      }
+      -- require("luasnip").config.set_config {
+      --   history = true,
+      -- }
       require("luasnip.loaders.from_vscode").load {}
     end
   }
-  use { "rafamadriz/friendly-snippets" } -- a bunch of snippets to use
 
   -- status line
   use {
@@ -314,7 +303,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_command('set termguicolors')
       vim.api.nvim_command('syntax enable')
 
-      require('nightfox').load('nightfox')
+      vim.cmd("colorscheme nightfox")
     end,
   }
   use 'folke/lsp-colors.nvim'
@@ -323,20 +312,6 @@ return require('packer').startup(function(use)
   use { 'rhysd/clever-f.vim' }
 
   -- terminal
-  -- use {
-  --   'voldikss/vim-floaterm',
-  --   config = function()
-  --     vim.g.floaterm_gitcommit = 'floaterm'
-  --     vim.g.floaterm_wintitle = 0
-  --     vim.g.floaterm_autoclose = 1
-  --     vim.g.floaterm_width = 0.8
-  --     vim.g.floaterm_height = 0.8
-  --
-  --     vim.api.nvim_set_keymap('n', '<Leader>[', ':FloatermToggle<CR>', { noremap = true, silent = false })
-  --     vim.api.nvim_set_keymap('n', '<Leader>l', ':FloatermNew lazygit<CR>', { noremap = true, silent = false })
-  --   end,
-  -- }
-
   use {
     "akinsho/toggleterm.nvim",
     config = function ()
@@ -475,6 +450,7 @@ return require('packer').startup(function(use)
       require('Comment').setup()
     end
   }
+
   -- nvim-treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -489,12 +465,7 @@ return require('packer').startup(function(use)
       }
     end
   }
-  -- use {
-  --   'lewis6991/spellsitter.nvim',
-  --   config = function()
-  --     require('spellsitter').setup()
-  --   end
-  -- }
+
   -- git
   use {
     'lewis6991/gitsigns.nvim',
@@ -603,6 +574,7 @@ return require('packer').startup(function(use)
     end,
   }
 
+  -- scroll
   use {
     'karb94/neoscroll.nvim',
     config = function ()
@@ -616,30 +588,6 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- use {
-  --   "folke/todo-comments.nvim",
-  --   requires = "nvim-lua/plenary.nvim",
-  --   config = function()
-  --     require("todo-comments").setup {
-  --       signs = true, -- show icons in the signs column
-  --       sign_priority = 8, -- sign priority
-  --       -- keywords recognized as todo comments
-  --       keywords = {
-  --         FIX = {
-  --           icon = " ", -- icon used for the sign, and in search results
-  --           color = "error", -- can be a hex color, or a named color (see below)
-  --           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-  --           -- signs = false, -- configure signs for some keywords individually
-  --         },
-  --         TODO = { icon = " ", color = "info" },
-  --         HACK = { icon = " ", color = "warning" },
-  --         WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-  --         PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-  --         NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-  --       },
-  --     }
-  --   end
-  -- }
   -- filetype
   use {
     'nathom/filetype.nvim',

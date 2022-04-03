@@ -1,7 +1,7 @@
 -- vsnip
 -- Jump forward or backward
-vim.api.nvim_set_keymap("i", "<C-b>", "<Plug>luasnip-next-choice", {})
-vim.api.nvim_set_keymap("s", "<C-b>", "<Plug>luasnip-next-choice", {})
+-- vim.api.nvim_set_keymap("i", "<C-b>", "<Plug>luasnip-next-choice", {})
+-- vim.api.nvim_set_keymap("s", "<C-b>", "<Plug>luasnip-next-choice", {})
 -- If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
 -- vim.api.nvim_command([[
 -- let g:vsnip_filetypes = {}
