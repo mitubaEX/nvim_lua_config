@@ -10,7 +10,6 @@ return require('packer').startup(function(use)
   use {
     "hrsh7th/nvim-cmp",
     requires = {
-      "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
@@ -20,7 +19,6 @@ return require('packer').startup(function(use)
       "f3fora/cmp-spell",
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
-      "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
     }
   }
@@ -105,17 +103,6 @@ return require('packer').startup(function(use)
     'j-hui/fidget.nvim',
     config = function ()
       require"fidget".setup{}
-    end
-  }
-
-  -- snippets
-  use {
-    'L3MON4D3/LuaSnip',
-    config = function ()
-      -- require("luasnip").config.set_config {
-      --   history = true,
-      -- }
-      require("luasnip.loaders.from_vscode").load {}
     end
   }
 

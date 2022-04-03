@@ -1,10 +1,5 @@
 vim.api.nvim_command('set completeopt=menuone,noselect')
 
-local snip_status_ok, _ = pcall(require, "luasnip")
-if not snip_status_ok then
-  return
-end
-
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require'cmp'
 cmp.setup({
@@ -14,15 +9,9 @@ cmp.setup({
       menu = {
         nvim_lsp = '[LSP]',
         buffer = '[Buf]',
-        luasnip = '[LSnip]',
         nvim_lua = '[Lua]',
       },
     }),
-  },
-  snippet = {
-    expand = function(args)
-      require'luasnip'.lsp_expand(args.body)
-    end
   },
   documentation = {
     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
@@ -30,7 +19,6 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "path" },
-    { name = "luasnip" },
     { name = "cmp_tabnine" },
     { name = "nvim_lua" },
     { name = "buffer" },
