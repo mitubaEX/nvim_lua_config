@@ -13,12 +13,18 @@ cmp.setup({
       },
     }),
   },
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    end,
+  },
   documentation = {
     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
   },
   sources = {
     { name = "nvim_lsp" },
     { name = "path" },
+    { name = 'vsnip' }, -- For vsnip users.
     { name = "cmp_tabnine" },
     { name = "nvim_lua" },
     { name = "buffer" },

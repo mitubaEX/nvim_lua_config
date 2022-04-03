@@ -19,6 +19,8 @@ return require('packer').startup(function(use)
       "f3fora/cmp-spell",
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-vsnip",
+      "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
     }
   }
