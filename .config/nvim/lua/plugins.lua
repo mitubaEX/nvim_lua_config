@@ -107,6 +107,19 @@ return require('packer').startup(function(use)
       require"fidget".setup{}
     end
   }
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = { 'yuezk/vim-js' },
+    config = function ()
+      require("null-ls").setup({
+        sources = {
+          require("null-ls").builtins.diagnostics.eslint_d,
+          -- require("null-ls").builtins.formatting.eslint_d,
+        },
+      })
+    end
+  }
+  use { 'maxmellon/vim-jsx-pretty' }
 
   -- status line
   use {
