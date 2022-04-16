@@ -45,52 +45,6 @@ require "lsp_signature".setup({
   }
 })
 
--- efm
--- local eslint = {
---   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
---   lintIgnoreExitCode = true,
---   lintStdin = true,
---   lintFormats = {"%f:%l:%c: %m"},
---   formatCommand = "eslint_d --fix ${INPUT}",
---   formatStdin = true
--- }
---
--- local rubocop = {
---   formatCommand = "rubocop -a ${INPUT}",
---   formatStdin = true
--- }
---
--- require "lspconfig".efm.setup {
---   init_options = {documentFormatting = true, codeAction = false},
---   filetypes = {"javascriptreact", "javascript", "typescript", "typescriptreact", "ruby", "rspec"},
---   settings = {
---     rootMarkers = {".git/"},
---     languages = {
---       javascript = {
---         eslint
---       },
---       javascriptreact = {
---         eslint
---       },
---       typescript = {
---         eslint
---       },
---       typescriptreact = {
---         eslint
---       },
---       ruby = {
---         rubocop
---       },
---       rspec = {
---         rubocop
---       }
---     }
---   },
---   flags = {
---     debounce_text_changes = 150,
---   }
--- }
-
 -- lua
 local system_name
 if vim.fn.has("mac") == 1 then
