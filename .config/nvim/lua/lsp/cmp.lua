@@ -18,8 +18,10 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
     end,
   },
-  documentation = {
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  window = {
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
   },
   sources = {
     { name = "nvim_lsp" },

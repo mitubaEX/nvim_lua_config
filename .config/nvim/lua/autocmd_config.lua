@@ -1,17 +1,36 @@
 -- remove all trailing whitespace on save
-vim.cmd('autocmd BufWritePre * %s/\\s\\+$//e')
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = "*",
+  command = "%s/\\s\\+$//e"
+})
 
 -- format
-vim.cmd('autocmd BufWritePost *.js,*.go FormatWrite')
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+  pattern = {"*.js","*.go"},
+  command = "FormatWrite"
+})
 
 -- open spec template
-vim.cmd('autocmd BufNewFile *_spec.rb 0r ~/.config/nvim/template/template_spec.rb')
+vim.api.nvim_create_autocmd({"BufNewFile"}, {
+  pattern = {"*_spec.rb"},
+  command = "0r ~/.config/nvim/template/template_spec.rb"
+})
 
--- set filetype
-vim.cmd('autocmd bufnewfile,bufread *.tsx set filetype=typescriptreact')
-vim.cmd('autocmd bufnewfile,bufread *.jsx set filetype=javascriptreact')
-vim.cmd('autocmd bufnewfile,bufread *.js set filetype=javascriptreact')
+vim.api.nvim_create_autocmd({"BufWritePre","BufRead"}, {
+  pattern = {"*.tsx"},
+  command = "set filetype=typescriptreact"
+})
+vim.api.nvim_create_autocmd({"BufWritePre","BufRead"}, {
+  pattern = {"*.tsx","*.jsx","*.js"},
+  command = "set filetype=javascriptreact"
+})
 
-vim.cmd('au BufNewFile,BufRead *.eco setf mason')
+vim.api.nvim_create_autocmd({"BufNewFile","BufRead"}, {
+  pattern = {"*.eco"},
+  command = "setf mason"
+})
 
-vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}')
+vim.api.nvim_create_autocmd({"TextYankPost"}, {
+  pattern = {"*"},
+  command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=700}"
+})
