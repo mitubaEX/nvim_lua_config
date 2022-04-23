@@ -128,10 +128,6 @@ return require('packer').startup(function(use)
     -- your statusline
     config = function()
       require('lualine').setup{
-        options = {
-          theme = 'nightfox',
-          icons_enabled = true,
-        },
         sections = {
           lualine_a = { {'mode', upper = true} },
           lualine_b = { {'branch', icon = ''} },
@@ -388,7 +384,8 @@ return require('packer').startup(function(use)
     end
   }
 
-  use { 'itchyny/vim-cursorword' }
+  -- use { 'itchyny/vim-cursorword' }
+  use { 'RRethy/vim-illuminate' }
 
   -- indent line
 --   use {
