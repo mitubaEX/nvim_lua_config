@@ -384,8 +384,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- use { 'itchyny/vim-cursorword' }
-  use { 'RRethy/vim-illuminate' }
+  use { 'itchyny/vim-cursorword' }
 
   -- indent line
 --   use {
@@ -628,6 +627,27 @@ return require('packer').startup(function(use)
   -- :Snek
   -- :Camel
   use { 'nicwest/vim-camelsnek' }
+
+  use {
+    'xiyaowong/nvim-transparent',
+    config = function ()
+      require("transparent").setup({
+        enable = true, -- boolean: enable transparent
+        extra_groups = { -- table/string: additional groups that should be cleared
+        -- In particular, when you set it to 'all', that means all available groups
+
+        -- example of akinsho/nvim-bufferline.lua
+        "BufferLineTabClose",
+        "BufferlineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        "BufferLineSeparator",
+        "BufferLineIndicatorSelected",
+      },
+      exclude = {}, -- table: groups you don't want to clear
+    })
+  end
+  }
 
   -- use { 'dstein64/nvim-scrollview' }
 
