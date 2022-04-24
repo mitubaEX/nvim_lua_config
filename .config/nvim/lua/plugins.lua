@@ -29,7 +29,7 @@ return require('packer').startup(function(use)
   use {
     'folke/lsp-trouble.nvim',
     config = function()
-      vim.api.nvim_set_keymap('n', '<Leader>xx', '<cmd>TroubleToggle<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>xx', '<cmd>TroubleToggle<CR>', { noremap = true, silent = false })
     end
   }
   use {'stevearc/dressing.nvim'}
@@ -236,11 +236,11 @@ return require('packer').startup(function(use)
         },
       }
 
-      vim.api.nvim_set_keymap('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>Telescope grep_string<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
-      -- vim.api.nvim_set_keymap('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
+      vim.keymap.set('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>g', '<cmd>Telescope grep_string<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
     end
   }
   -- file tree
@@ -258,7 +258,7 @@ return require('packer').startup(function(use)
           \ 'files': 1,
           \ }
       ]])
-      vim.api.nvim_set_keymap('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -313,7 +313,7 @@ return require('packer').startup(function(use)
   use {
     "akinsho/toggleterm.nvim",
     config = function ()
-      vim.api.nvim_set_keymap('n', '<Leader>[', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>[', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -339,12 +339,12 @@ return require('packer').startup(function(use)
   use {
     'tyru/columnskip.vim',
     config = function()
-      vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
     end
   }
 
@@ -367,7 +367,7 @@ return require('packer').startup(function(use)
     'pechorin/any-jump.vim',
     config = function()
       vim.g.any_jump_disable_default_keybindings = '1'
-      vim.api.nvim_set_keymap('n', '<Leader>a', ':AnyJump<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>a', ':AnyJump<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -377,10 +377,10 @@ return require('packer').startup(function(use)
   use {
     't9md/vim-quickhl',
     config = function()
-      vim.api.nvim_set_keymap('n', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
-      vim.api.nvim_set_keymap('x', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
-      vim.api.nvim_set_keymap('n', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
-      vim.api.nvim_set_keymap('x', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
+      vim.keymap.set('n', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
+      vim.keymap.set('x', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
+      vim.keymap.set('n', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
+      vim.keymap.set('x', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
     end
   }
 
@@ -414,8 +414,8 @@ return require('packer').startup(function(use)
   use {
     'kana/vim-operator-replace',
     config = function()
-      vim.api.nvim_set_keymap('v', 'p', '<Plug>(operator-replace)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>r', '<Plug>(operator-replace)', { noremap = false, silent = true })
+      vim.keymap.set('v', 'p', '<Plug>(operator-replace)', { noremap = false, silent = true })
+      vim.keymap.set('n', '<Leader>r', '<Plug>(operator-replace)', { noremap = false, silent = true })
     end
   }
 
@@ -423,12 +423,12 @@ return require('packer').startup(function(use)
   use {
     'bkad/CamelCaseMotion',
     config = function()
-      vim.api.nvim_set_keymap('', 'w', '<Plug>CamelCaseMotion_w', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('', 'e', '<Plug>CamelCaseMotion_e', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('o', 'iw', '<Plug>CamelCaseMotion_iw', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('x', 'iw', '<Plug>CamelCaseMotion_iw', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('o', 'ie', '<Plug>CamelCaseMotion_ie', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('x', 'ie', '<Plug>CamelCaseMotion_ie', { noremap = false, silent = true })
+      vim.keymap.set('', 'w', '<Plug>CamelCaseMotion_w', { noremap = false, silent = true })
+      vim.keymap.set('', 'e', '<Plug>CamelCaseMotion_e', { noremap = false, silent = true })
+      vim.keymap.set('o', 'iw', '<Plug>CamelCaseMotion_iw', { noremap = false, silent = true })
+      vim.keymap.set('x', 'iw', '<Plug>CamelCaseMotion_iw', { noremap = false, silent = true })
+      vim.keymap.set('o', 'ie', '<Plug>CamelCaseMotion_ie', { noremap = false, silent = true })
+      vim.keymap.set('x', 'ie', '<Plug>CamelCaseMotion_ie', { noremap = false, silent = true })
     end
   }
 
@@ -480,22 +480,22 @@ return require('packer').startup(function(use)
     'sindrets/diffview.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
-      vim.api.nvim_set_keymap('n', '<C-g>d', ':DiffviewOpen<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<C-g>D', ':DiffviewClose<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<C-g>d', ':DiffviewOpen<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<C-g>D', ':DiffviewClose<CR>', { noremap = true, silent = false })
     end
   }
   use {
     'tyru/open-browser-github.vim',
     requires = { 'tyru/open-browser.vim' },
     config = function()
-      vim.api.nvim_set_keymap('n', '<C-g>o', '::OpenGithubFile<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<C-g>o', '::OpenGithubFile<CR>', { noremap = true, silent = false })
     end
   }
   use {
     'junegunn/gv.vim',
     requires = { 'tpope/vim-fugitive' },
     config = function ()
-      vim.api.nvim_set_keymap('n', '<C-g>l', ":GV!<CR>", { noremap = true, silent = true })
+      vim.keymap.set('n', '<C-g>l', ":GV!<CR>", { noremap = true, silent = true })
     end
   }
 
@@ -503,8 +503,8 @@ return require('packer').startup(function(use)
   use {
     'Asheq/close-buffers.vim',
     config = function()
-      -- vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
     end
   }
 
@@ -516,8 +516,8 @@ return require('packer').startup(function(use)
 
       vim.api.nvim_set_var('test#ruby#use_binstubs', '1')
 
-      vim.api.nvim_set_keymap('n', '<Leader>q', ':TestFile<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<Leader>Q', ':TestNearest<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<Leader>q', ':TestFile<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<Leader>Q', ':TestNearest<CR>', { noremap = true, silent = true })
     end
   }
 
@@ -525,7 +525,7 @@ return require('packer').startup(function(use)
   use { 'phaazon/hop.nvim',
     config = function()
       require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5, create_hl_autocmd = false, winblend = 0 }
-      vim.api.nvim_set_keymap('n', '<Leader>e', ':HopWord<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<Leader>e', ':HopWord<CR>', { noremap = true, silent = true })
     end
   }
 
@@ -537,7 +537,7 @@ return require('packer').startup(function(use)
     'romgrk/barbar.nvim',
     requires = {'kyazdani42/nvim-web-devicons'},
     config = function()
-      local map = vim.api.nvim_set_keymap
+      local map = vim.keymap.set
       local opts = { noremap = true, silent = true }
 
       -- Move to previous/next
@@ -611,14 +611,14 @@ return require('packer').startup(function(use)
   use {
     'rhysd/accelerated-jk',
     config = function()
-      vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
-      vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
+      vim.keymap.set('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
+      vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
     end
   }
   use {
     'mhinz/vim-grepper',
     config = function ()
-      vim.api.nvim_set_keymap('n', '<C-g>g', ':Grepper -tool git<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<C-g>g', ':Grepper -tool git<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -656,7 +656,7 @@ return require('packer').startup(function(use)
   use {
     'mitubaEX/toggle_rspec_file.nvim',
     config = function()
-      vim.api.nvim_set_keymap('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
     end
   }
 
