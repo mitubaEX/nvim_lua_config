@@ -373,6 +373,14 @@ return require('packer').startup(function(use)
 
   use { 'AndrewRadev/linediff.vim' }
 
+  -- window
+  use {
+    't9md/vim-choosewin',
+    config = function ()
+      vim.keymap.set('n', '-', '<Plug>(choosewin)', { noremap = true, silent = false })
+    end
+  }
+
   -- highlight
   use {
     't9md/vim-quickhl',

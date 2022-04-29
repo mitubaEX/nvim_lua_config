@@ -10,6 +10,8 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
   command = "FormatWrite"
 })
 
+vim.cmd([[autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L]])
+
 -- open spec template
 vim.api.nvim_create_autocmd({"BufNewFile"}, {
   pattern = {"*_spec.rb"},
