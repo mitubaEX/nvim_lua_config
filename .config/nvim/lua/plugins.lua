@@ -350,13 +350,6 @@ return require('packer').startup(function(use)
   use { 'tpope/vim-repeat' }
 
   -- jsx
-  use {
-    'windwp/nvim-ts-autotag',
-    ft = {'javascriptreact', 'typescriptreact'},
-    config = function ()
-      require('nvim-ts-autotag').setup()
-    end
-  }
   use { 'neoclide/vim-jsx-improve' }
 
   -- fast move
@@ -485,8 +478,14 @@ return require('packer').startup(function(use)
   -- nvim-treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
+    requires = { "windwp/nvim-ts-autotag" },
+    run = ":TSUpdate",
     config = function()
       require'nvim-treesitter.configs'.setup {
+        ensure_installed = "all",
+        autotag = {
+          enable = true,
+        },
         highlight = {
           enable = true,
         },
