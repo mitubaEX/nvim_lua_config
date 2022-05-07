@@ -242,8 +242,6 @@ return require('packer').startup(function(use)
             winblend = 0,
             set_env = { ["COLORTERM"] = "truecolor" },
             selection_strategy = "reset",
-            border = {},
-            borderchars = { "" },
             results_title = "",
             color_devicons = true,
             use_less = true,
@@ -680,6 +678,12 @@ return require('packer').startup(function(use)
       exclude = {}, -- table: groups you don't want to clear
     })
   end
+  }
+
+  -- DB
+  use {
+    'kristijanhusak/vim-dadbod-ui',
+    requires = {'tpope/vim-dadbod'}
   }
 
   -- use { 'dstein64/nvim-scrollview' }
