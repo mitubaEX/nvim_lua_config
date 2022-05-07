@@ -249,7 +249,6 @@ return require('packer').startup(function(use)
     config = function()
       require'nvim-tree'.setup {}
       vim.api.nvim_command([[
-        let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
         let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
         let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
         let g:nvim_tree_show_icons = {
@@ -627,6 +626,7 @@ return require('packer').startup(function(use)
     'mhinz/vim-grepper',
     config = function ()
       vim.keymap.set('n', '<C-g>g', ':Grepper -tool git<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<C-g>G', ':Grepper -tool git -cword<CR>', { noremap = true, silent = false })
     end
   }
 
