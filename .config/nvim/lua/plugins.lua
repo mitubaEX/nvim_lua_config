@@ -24,7 +24,7 @@ return require('packer').startup(function(use)
       "rafamadriz/friendly-snippets",
     }
   }
- 	use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+ 	-- use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
   use { 'folke/lua-dev.nvim' }
   use {
     'folke/lsp-trouble.nvim',

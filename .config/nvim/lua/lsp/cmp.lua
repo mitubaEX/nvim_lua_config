@@ -27,7 +27,7 @@ cmp.setup({
     { name = "nvim_lsp" },
     { name = "path" },
     { name = 'vsnip' }, -- For vsnip users.
-    { name = "cmp_tabnine" },
+    -- { name = "cmp_tabnine" },
     { name = "nvim_lua" },
     { name = "buffer" },
     { name = "calc" },
@@ -76,11 +76,11 @@ cmp.setup.cmdline('/', {
   }
 })
 
-local tabnine = require('cmp_tabnine.config')
-tabnine:setup({
-  max_lines = 1000;
-  max_num_results = 20;
-  sort = true;
-  run_on_every_keystroke = true;
-  snippet_placeholder = '..';
-})
+-- local tabnine = require('cmp_tabnine.config')
+-- tabnine:setup({
+--   max_lines = 1000;
+--   max_num_results = 20;
+--   sort = true;
+--   run_on_every_keystroke = true;
+--   snippet_placeholder = '..';
+-- })
