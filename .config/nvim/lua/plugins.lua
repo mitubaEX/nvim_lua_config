@@ -267,6 +267,24 @@ return require('packer').startup(function(use)
       -- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
     end
   }
+  use({
+    "ghillb/cybu.nvim",
+    branch = "main", -- timely updates
+    requires = { "kyazdani42/nvim-web-devicons" }, --optional
+    config = function()
+      local ok, cybu = pcall(require, "cybu")
+      if not ok then
+        return
+      end
+      cybu.setup({
+        style = {
+          path = "tail"
+        }
+      })
+      vim.keymap.set("n", "gp", "<Plug>(CybuPrev)")
+      vim.keymap.set("n", "gn", "<Plug>(CybuNext)")
+    end,
+  })
   -- file tree
   use {
     'kyazdani42/nvim-tree.lua',
@@ -571,8 +589,8 @@ return require('packer').startup(function(use)
       local opts = { noremap = true, silent = true }
 
       -- Move to previous/next
-      map('n', 'gp', ':BufferPrevious<CR>', opts)
-      map('n', 'gn', ':BufferNext<CR>', opts)
+      -- map('n', 'gp', ':BufferPrevious<CR>', opts)
+      -- map('n', 'gn', ':BufferNext<CR>', opts)
       -- Goto buffer in position...
       map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
       map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
