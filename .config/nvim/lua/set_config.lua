@@ -1,6 +1,7 @@
 -- basic
 vim.opt.confirm = true
 vim.opt.hidden = true
+vim.opt.number = true
 
 -- clipboard
 vim.opt.clipboard = vim.opt.clipboard + 'unnamedplus'
