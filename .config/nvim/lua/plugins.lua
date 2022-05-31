@@ -362,8 +362,15 @@ return require('packer').startup(function(use)
   use {
     "akinsho/toggleterm.nvim",
     config = function ()
+      require("toggleterm").setup{
+        open_mapping = [[<c-l>]]
+      }
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
       vim.keymap.set('n', '<Leader>[', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
+
+      -- NOTE: after open terminal, `2<c-l>` will open another terminal
+      vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>v', ':ToggleTerm size=60 direction=vertical<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -627,6 +634,9 @@ return require('packer').startup(function(use)
     'tpope/vim-rails',
     ft = 'ruby',
     requires = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
+    config = function()
+      -- vim.keymap.set('n', 'j', ':Rails console<CR>', { noremap = false, silent = false })
+    end
   }
 
   use {
