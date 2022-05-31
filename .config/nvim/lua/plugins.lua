@@ -302,16 +302,11 @@ return require('packer').startup(function(use)
   use {
     'kyazdani42/nvim-tree.lua',
     config = function()
-      require'nvim-tree'.setup {}
-      vim.api.nvim_command([[
-        let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-        let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-        let g:nvim_tree_show_icons = {
-          \ 'git': 1,
-          \ 'folders': 1,
-          \ 'files': 1,
-          \ }
-      ]])
+      require'nvim-tree'.setup {
+        renderer = {
+          highlight_git = true,
+        }
+      }
       vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
     end
   }
@@ -368,6 +363,7 @@ return require('packer').startup(function(use)
     "akinsho/toggleterm.nvim",
     config = function ()
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>[', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -526,6 +522,14 @@ return require('packer').startup(function(use)
   }
 
   -- git
+  use {
+    'TimUntersberger/neogit',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function ()
+      local neogit = require('neogit')
+      neogit.setup {}
+    end
+  }
   use {
     'lewis6991/gitsigns.nvim',
     requires = {
