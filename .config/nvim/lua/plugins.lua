@@ -44,6 +44,7 @@ return require('packer').startup(function(use)
   use {
     'mhartington/formatter.nvim',
     config = function ()
+      local util = require("formatter.util")
       require('formatter').setup({
           filetype = {
             javascript = {
@@ -64,7 +65,14 @@ return require('packer').startup(function(use)
                   args = {"--stdin", "--fix-to-stdout"},
                   stdin = true
                 }
-              end
+              end,
+              function()
+                return {
+                  exe = "prettierd",
+                  args = {util.escape_path(util.get_current_buffer_file_path())},
+                  stdin = true
+                }
+              end,
             },
             typescriptreact = {
               -- eslint
@@ -74,7 +82,14 @@ return require('packer').startup(function(use)
                   args = {"--stdin", "--stdin-filename"},
                   stdin = true
                 }
-              end
+              end,
+              function()
+                return {
+                  exe = "prettierd",
+                  args = {util.escape_path(util.get_current_buffer_file_path())},
+                  stdin = true
+                }
+              end,
             },
             ruby = {
               -- rubocop
@@ -370,7 +385,7 @@ return require('packer').startup(function(use)
 
       -- NOTE: after open terminal, `2<c-l>` will open another terminal
       vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<Leader>v', ':ToggleTerm size=60 direction=vertical<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>v', ':ToggleTerm size=100 direction=vertical<CR>', { noremap = true, silent = false })
     end
   }
 
