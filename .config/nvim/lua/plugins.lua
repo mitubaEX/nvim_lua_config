@@ -550,6 +550,14 @@ return require('packer').startup(function(use)
     end
   }
   use {
+    'ldelossa/gh.nvim',
+    requires = { { 'ldelossa/litee.nvim' } },
+    config = function ()
+      require('litee.lib').setup()
+      require('litee.gh').setup()
+    end
+  }
+  use {
     'lewis6991/gitsigns.nvim',
     requires = {
       'nvim-lua/plenary.nvim'
