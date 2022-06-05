@@ -282,19 +282,20 @@ return require('packer').startup(function(use)
       -- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
     end
   }
-  use { 'ibhagwan/fzf-lua',
-  -- optional for icon support
-  requires = { 'kyazdani42/nvim-web-devicons' },
-  config = function ()
-    local fzf_history_dir = vim.fn.expand('~/.local/share/fzf-history')
-    require('fzf-lua').setup{
-      fzf_opts = {
-        ['--history'] = fzf_history_dir .. '/' .. 'myhistory'
+  use {
+    'ibhagwan/fzf-lua',
+    -- optional for icon support
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function ()
+      local fzf_history_dir = vim.fn.expand('~/.local/share/fzf-history')
+      require('fzf-lua').setup{
+        fzf_opts = {
+          ['--history'] = fzf_history_dir .. '/' .. 'myhistory'
+        }
       }
-    }
-    vim.keymap.set('n', '<Leader>t', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = false })
-  end
-}
+      vim.keymap.set('n', '<Leader>t', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = false })
+    end
+  }
   use({
     "ghillb/cybu.nvim",
     branch = "main", -- timely updates
@@ -550,6 +551,7 @@ return require('packer').startup(function(use)
     config = function ()
       local neogit = require('neogit')
       neogit.setup {}
+      vim.keymap.set('n', '<C-g>n', ':Neogit<CR>', { noremap = true, silent = false })
     end
   }
   use {
