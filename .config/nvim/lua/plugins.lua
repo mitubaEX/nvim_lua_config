@@ -318,11 +318,6 @@ return require('packer').startup(function(use)
   use {
     'kyazdani42/nvim-tree.lua',
     config = function()
-      require'nvim-tree'.setup {
-        renderer = {
-          highlight_git = true,
-        }
-      }
       vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
     end
   }
