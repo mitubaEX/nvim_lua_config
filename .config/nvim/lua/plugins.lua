@@ -6,7 +6,17 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- lsp plugins
-  use { 'neovim/nvim-lspconfig' }
+  use {
+    "williamboman/nvim-lsp-installer",
+    {
+      "neovim/nvim-lspconfig",
+      config = function()
+        require("nvim-lsp-installer").setup {}
+        local lspconfig = require("lspconfig")
+        lspconfig.sumneko_lua.setup {}
+      end
+    }
+  }
   use {
     "hrsh7th/nvim-cmp",
     requires = {
@@ -128,7 +138,7 @@ return require('packer').startup(function(use)
     config = function ()
       require("null-ls").setup({
         sources = {
-          require("null-ls").builtins.diagnostics.eslint_d,
+          require("null-ls").builtins.diagnostics.eslint,
           -- require("null-ls").builtins.formatting.eslint_d,
         },
       })
@@ -318,6 +328,11 @@ return require('packer').startup(function(use)
   use {
     'kyazdani42/nvim-tree.lua',
     config = function()
+      require'nvim-tree'.setup {
+        renderer = {
+          highlight_git = true,
+        }
+      }
       vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
     end
   }
