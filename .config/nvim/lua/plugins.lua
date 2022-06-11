@@ -138,7 +138,7 @@ return require('packer').startup(function(use)
     config = function ()
       require("null-ls").setup({
         sources = {
-          require("null-ls").builtins.diagnostics.eslint,
+          require("null-ls").builtins.diagnostics.eslint_d,
           -- require("null-ls").builtins.formatting.eslint_d,
         },
       })

@@ -18,14 +18,14 @@ vim.api.nvim_create_autocmd({"BufNewFile"}, {
   command = "0r ~/.config/nvim/template/template_spec.rb"
 })
 
-vim.api.nvim_create_autocmd({"BufWritePre","BufRead"}, {
-  pattern = {"*.tsx"},
-  command = "set filetype=typescriptreact"
-})
-vim.api.nvim_create_autocmd({"BufWritePre","BufRead"}, {
-  pattern = {"*.tsx","*.jsx","*.js"},
-  command = "set filetype=javascriptreact"
-})
+-- vim.api.nvim_create_autocmd({"BufWritePre","BufRead"}, {
+--   pattern = {"*.tsx"},
+--   command = "set filetype=typescriptreact"
+-- })
+-- vim.api.nvim_create_autocmd({"BufWritePre","BufRead"}, {
+--   pattern = {"*.tsx","*.jsx","*.js"},
+--   command = "set filetype=javascriptreact"
+-- })
 
 vim.api.nvim_create_autocmd({"BufNewFile","BufRead"}, {
   pattern = {"*.eco"},
