@@ -31,3 +31,6 @@ vim.keymap.set('n', '<Leader>o', 'o<Esc>', { noremap = true, silent = false })
 vim.keymap.set('n', '<Leader>c', ':!echo -n "%:t" | pbcopy<CR>', { noremap = false, silent = false })
 -- relative path
 vim.keymap.set('n', '<Leader>C', ':!echo -n "%" | pbcopy<CR>', { noremap = false, silent = false })
+
+-- save terminal output to file
+vim.keymap.set('n', '<Leader>>', ':w !tee >> terminal_output.txt<CR>', { noremap = false, silent = false })
