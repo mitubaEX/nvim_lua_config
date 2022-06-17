@@ -55,10 +55,14 @@ local luadev = require("lua-dev").setup({
 
 require'lspconfig'.sumneko_lua.setup(luadev)
 
+require'lspconfig'.eslint.setup{}
+
 -- null-ls
-require("null-ls").setup({
+null_ls = require("null-ls")
+null_ls.setup({
   sources = {
-    require("null-ls").builtins.diagnostics.eslint,
-    require("null-ls").builtins.formatting.eslint,
+    null_ls.builtins.formatting.prettier.with {
+      prefer_local = "/home/nakamura-jun/CFO-Alpha/node_modules/.bin",
+    },
   },
 })
