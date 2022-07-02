@@ -12,8 +12,6 @@ return require('packer').startup(function(use)
       "neovim/nvim-lspconfig",
       config = function()
         require("nvim-lsp-installer").setup {}
-        local lspconfig = require("lspconfig")
-        lspconfig.sumneko_lua.setup {}
       end
     }
   }
@@ -56,63 +54,11 @@ return require('packer').startup(function(use)
       require('formatter').setup({
           filetype = {
             javascript = {
-              -- eslint
-              function()
-                return {
-                  exe = "eslint_d",
-                  args = {"--stdin", "--fix-to-stdout"},
-                  stdin = true
-                }
-              end,
               function()
                 return {
                   exe = "prettierd",
                   args = {util.escape_path(util.get_current_buffer_file_path())},
                   stdin = true
-                }
-              end,
-            },
-            javascriptreact = {
-              -- eslint
-              function()
-                return {
-                  exe = "eslint_d",
-                  args = {"--stdin", "--fix-to-stdout"},
-                  stdin = true
-                }
-              end,
-              function()
-                return {
-                  exe = "prettierd",
-                  args = {util.escape_path(util.get_current_buffer_file_path())},
-                  stdin = true
-                }
-              end,
-            },
-            typescriptreact = {
-              -- eslint
-              function()
-                return {
-                  exe = "eslint_d",
-                  args = {"--stdin", "--stdin-filename"},
-                  stdin = true
-                }
-              end,
-              function()
-                return {
-                  exe = "prettierd",
-                  args = {util.escape_path(util.get_current_buffer_file_path())},
-                  stdin = true
-                }
-              end,
-            },
-            ruby = {
-              -- rubocop
-              function()
-                return {
-                  exe = "rubocop", -- might prepend `bundle exec `
-                  args = { '--auto-correct', '--stdin', '%:p', '2>/dev/null', '|', "awk 'f; /^====================$/{f=1}'"},
-                  stdin = true,
                 }
               end
             },
@@ -139,15 +85,7 @@ return require('packer').startup(function(use)
   }
   use {
     'jose-elias-alvarez/null-ls.nvim',
-    requires = { 'yuezk/vim-js' },
-    config = function ()
-      require("null-ls").setup({
-        sources = {
-          require("null-ls").builtins.diagnostics.eslint_d,
-          -- require("null-ls").builtins.formatting.eslint_d,
-        },
-      })
-    end
+    requires = { 'yuezk/vim-js' }
   }
   use { 'maxmellon/vim-jsx-pretty' }
 
@@ -290,25 +228,11 @@ return require('packer').startup(function(use)
         },
       }
 
-      -- vim.keymap.set('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
+      vim.keymap.set('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
       vim.keymap.set('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
       vim.keymap.set('n', '<Leader>g', '<cmd>Telescope grep_string<CR>', { noremap = true, silent = false })
       vim.keymap.set('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
       -- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
-    end
-  }
-  use {
-    'ibhagwan/fzf-lua',
-    -- optional for icon support
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-      local fzf_history_dir = vim.fn.expand('~/.local/share/fzf-history')
-      require('fzf-lua').setup{
-        fzf_opts = {
-          ['--history'] = fzf_history_dir .. '/' .. 'myhistory'
-        }
-      }
-      vim.keymap.set('n', '<Leader>t', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = false })
     end
   }
   use({
@@ -541,9 +465,6 @@ return require('packer').startup(function(use)
         highlight = {
           enable = true,
         },
-        -- indent = {
-        --   enable = true
-        -- },
       }
     end
   }
@@ -604,7 +525,6 @@ return require('packer').startup(function(use)
   use {
     'Asheq/close-buffers.vim',
     config = function()
-      -- vim.keymap.set('n', '<C-q>', ':Bdelete this<CR>', { noremap = true, silent = true })
       vim.keymap.set('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
     end
   }
@@ -637,25 +557,6 @@ return require('packer').startup(function(use)
   use {
     'romgrk/barbar.nvim',
     requires = {'kyazdani42/nvim-web-devicons'},
-    config = function()
-      local map = vim.keymap.set
-      local opts = { noremap = true, silent = true }
-
-      -- Move to previous/next
-      -- map('n', 'gp', ':BufferPrevious<CR>', opts)
-      -- map('n', 'gn', ':BufferNext<CR>', opts)
-      -- Goto buffer in position...
-      map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
-      map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
-      map('n', '<A-3>', ':BufferGoto 3<CR>', opts)
-      map('n', '<A-4>', ':BufferGoto 4<CR>', opts)
-      map('n', '<A-5>', ':BufferGoto 5<CR>', opts)
-      map('n', '<A-6>', ':BufferGoto 6<CR>', opts)
-      map('n', '<A-7>', ':BufferGoto 7<CR>', opts)
-      map('n', '<A-8>', ':BufferGoto 8<CR>', opts)
-      map('n', '<A-9>', ':BufferGoto 9<CR>', opts)
-      map('n', '<A-0>', ':BufferLast<CR>', opts)
-    end
   }
 
   -- vim-rails
@@ -663,9 +564,6 @@ return require('packer').startup(function(use)
     'tpope/vim-rails',
     ft = 'ruby',
     requires = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
-    config = function()
-      -- vim.keymap.set('n', 'j', ':Rails console<CR>', { noremap = false, silent = false })
-    end
   }
 
   use {
@@ -693,9 +591,6 @@ return require('packer').startup(function(use)
   -- filetype
   use {
     'nathom/filetype.nvim',
-    -- config = function()
-    --   vim.g.did_load_filetypes = 1
-    -- end
   }
 
   use {
@@ -708,9 +603,6 @@ return require('packer').startup(function(use)
 
   use {
     'itchyny/vim-parenmatch',
-    -- config = function ()
-    --   vim.g.loaded_matchparen = 1
-    -- end
   }
   use {
     'rhysd/accelerated-jk',
@@ -753,14 +645,6 @@ return require('packer').startup(function(use)
     })
   end
   }
-
-  -- DB
-  use {
-    'kristijanhusak/vim-dadbod-ui',
-    requires = {'tpope/vim-dadbod'}
-  }
-
-  -- use { 'dstein64/nvim-scrollview' }
 
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
