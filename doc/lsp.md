@@ -7,6 +7,7 @@ $ gem install solargraph
 $ solargraph download-core
 $ solargraph bundle
 $ solargraph config
+$ bundle exec yard gems
 ```
 
 ### install rubocop
