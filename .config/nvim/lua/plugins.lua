@@ -40,13 +40,13 @@ return require('packer').startup(function(use)
     end
   }
   use {'stevearc/dressing.nvim'}
-  use {
-    'github/copilot.vim',
-    config = function ()
-      vim.cmd('imap <silent><script><expr> <C-e> copilot#Accept("<CR>")')
-      vim.cmd('let g:copilot_no_tab_map = v:true')
-    end
-  }
+  -- use {
+  --   'github/copilot.vim',
+  --   config = function ()
+  --     vim.cmd('imap <silent><script><expr> <C-e> copilot#Accept("<CR>")')
+  --     vim.cmd('let g:copilot_no_tab_map = v:true')
+  --   end
+  -- }
   use {
     'mhartington/formatter.nvim',
     config = function ()

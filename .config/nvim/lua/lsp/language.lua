@@ -9,18 +9,8 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
    capabilities = capabilities
  }
 require'lspconfig'.solargraph.setup{
-  init_options = {codeAction = false},
+  cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
   filetypes = {"ruby", "rakefile", "rspec"},
-  settings = {
-      solargraph = {
-          completion = true,
-          diagnostic = false,
-          folding = true,
-          references = true,
-          rename = true,
-          symbols = true
-      }
-  },
   capabilities = capabilities
 }
 require'lspconfig'.flow.setup{
@@ -55,7 +45,7 @@ local luadev = require("lua-dev").setup({
 
 require'lspconfig'.sumneko_lua.setup(luadev)
 
-require'lspconfig'.eslint.setup{}
+-- require'lspconfig'.eslint.setup{}
 
 -- null-ls
 null_ls = require("null-ls")
