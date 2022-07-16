@@ -333,8 +333,12 @@ return require('packer').startup(function(use)
   -- add: ysiw(
   -- replace: cs(]
   -- delete: ds(
-  use { 'tpope/vim-surround' }
-  use { 'tpope/vim-repeat' }
+  use {
+    'kylechui/nvim-surround',
+    config = function()
+      require('nvim-surround').setup()
+    end
+  }
 
   -- jsx
   use { 'neoclide/vim-jsx-improve' }
