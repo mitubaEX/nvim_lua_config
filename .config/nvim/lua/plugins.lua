@@ -40,13 +40,6 @@ return require('packer').startup(function(use)
     end
   }
   use {'stevearc/dressing.nvim'}
-  -- use {
-  --   'github/copilot.vim',
-  --   config = function ()
-  --     vim.cmd('imap <silent><script><expr> <C-e> copilot#Accept("<CR>")')
-  --     vim.cmd('let g:copilot_no_tab_map = v:true')
-  --   end
-  -- }
   use {
     'mhartington/formatter.nvim',
     config = function ()
@@ -235,24 +228,6 @@ return require('packer').startup(function(use)
       -- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
     end
   }
-  use({
-    "ghillb/cybu.nvim",
-    branch = "main", -- timely updates
-    requires = { "kyazdani42/nvim-web-devicons" }, --optional
-    config = function()
-      local ok, cybu = pcall(require, "cybu")
-      if not ok then
-        return
-      end
-      cybu.setup({
-        style = {
-          path = "tail"
-        }
-      })
-      vim.keymap.set("n", "gp", "<Plug>(CybuPrev)")
-      vim.keymap.set("n", "gn", "<Plug>(CybuNext)")
-    end,
-  })
   -- file tree
   use {
     'kyazdani42/nvim-tree.lua',
@@ -267,38 +242,6 @@ return require('packer').startup(function(use)
   }
 
   -- color
---   use {
---     'navarasu/onedark.nvim',
---     config = function()
---       vim.api.nvim_command('set termguicolors')
---       vim.api.nvim_command('syntax enable')
---
---       vim.g.onedark_style = 'deep'
---
---       vim.api.nvim_command('colorscheme onedark')
---     end,
---   }
---   use {
---     'folke/tokyonight.nvim',
---     config = function()
---       vim.api.nvim_command('set termguicolors')
---       vim.api.nvim_command('syntax enable')
---
---       vim.g.tokyonight_style = 'night'
---
---       vim.api.nvim_command('colorscheme tokyonight')
---     end,
---   }
-  -- use {
-  --   'marko-cerovac/material.nvim',
-  --   config = function()
-  --     vim.api.nvim_command('set termguicolors')
-  --     vim.api.nvim_command('syntax enable')
-  --
-  --     vim.g.material_style = "deep ocean"
-  --     vim.api.nvim_command('colorscheme material')
-  --   end,
-  -- }
   use {
     'EdenEast/nightfox.nvim',
     config = function()
@@ -484,14 +427,6 @@ return require('packer').startup(function(use)
     end
   }
   use {
-    'ldelossa/gh.nvim',
-    requires = { { 'ldelossa/litee.nvim' } },
-    config = function ()
-      require('litee.lib').setup()
-      require('litee.gh').setup()
-    end
-  }
-  use {
     'lewis6991/gitsigns.nvim',
     requires = {
       'nvim-lua/plenary.nvim'
@@ -500,14 +435,6 @@ return require('packer').startup(function(use)
       require('gitsigns').setup {
         current_line_blame = true,
       }
-    end
-  }
-  use {
-    'sindrets/diffview.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function()
-      vim.keymap.set('n', '<C-g>d', ':DiffviewOpen<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<C-g>D', ':DiffviewClose<CR>', { noremap = true, silent = false })
     end
   }
   use {
@@ -593,9 +520,7 @@ return require('packer').startup(function(use)
   }
 
   -- filetype
-  use {
-    'nathom/filetype.nvim',
-  }
+  use { 'nathom/filetype.nvim' }
 
   use {
     'goolord/alpha-nvim',
@@ -605,9 +530,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  use {
-    'itchyny/vim-parenmatch',
-  }
+  use { 'itchyny/vim-parenmatch', }
   use {
     'rhysd/accelerated-jk',
     config = function()
