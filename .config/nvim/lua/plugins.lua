@@ -572,6 +572,7 @@ return require('packer').startup(function(use)
     })
   end
   }
+  use { 'ojroques/vim-oscyank' }
 
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }

@@ -36,3 +36,8 @@ vim.api.nvim_create_autocmd({"TextYankPost"}, {
   pattern = {"*"},
   command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=700}"
 })
+
+vim.api.nvim_create_autocmd({"TextYankPost"}, {
+  pattern = {"*"},
+  command = "if v:event.operator is \'y\' && v:event.regname is \'\' | execute \'OSCYankReg \"\' | endif"
+})
