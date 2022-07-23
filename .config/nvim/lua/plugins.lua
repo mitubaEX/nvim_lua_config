@@ -582,5 +582,6 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
     end
   }
+  use { 'mitubaEX/to_github_target_pull_request_from_commit_hash.nvim' }
 
 end)
