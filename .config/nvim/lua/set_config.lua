@@ -37,3 +37,5 @@ vim.opt.whichwrap = 'b,s,<,>,[,],h,l'
 -- vim.opt.spellsuggest={'best','9'}
 --
 -- vim.opt.spell = true
+
+vim.opt.guicursor = ''
