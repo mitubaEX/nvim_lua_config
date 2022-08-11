@@ -344,7 +344,12 @@ return require('packer').startup(function(use)
     end
   }
 
-  use { 'itchyny/vim-cursorword' }
+  use {
+    'xiyaowong/nvim-cursorword',
+    config = function()
+      vim.api.nvim_set_hl(0, "CursorWord", { bold = 1, default = 1 })
+    end
+  }
 
   -- indent line
   use {
