@@ -123,9 +123,7 @@ return require('packer').startup(function(use)
             }, {'diagnostics', sources = {'nvim_diagnostic'}, icon = '🚦:'}},
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
           lualine_y = { 'progress' },
-          lualine_z = { 'location', { function ()
-            return vim.api.nvim_exec([[echo pomo#status_bar()]], true);
-          end}  },
+          lualine_z = {   },
         },
         inactive_sections = {
           lualine_a = {  },
