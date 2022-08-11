@@ -90,11 +90,11 @@ return require('packer').startup(function(use)
     config = function()
       require('lualine').setup{
         sections = {
-          lualine_a = { {'mode', upper = true} },
+          lualine_a = {  },
           lualine_b = { {'branch', icon = ''} },
           lualine_c = {
-            {'filename', file_status = true, path = 1, separator = ''},
-            { 'diff', separator = '', icon = '✏️ :' }, {
+            {'filename', file_status = true, path = 1, separator = ''},
+            { 'diff' }, {
               -- Lsp server name .
               -- ref: https://gist.github.com/shadmansaleh/cd526bc166237a5cbd51429cc1f6291b
               function ()
@@ -582,6 +582,11 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
     end
   }
-  use { 'mitubaEX/to_github_target_pull_request_from_commit_hash.nvim' }
+  use {
+    'mitubaEX/to_github_target_pull_request_from_commit_hash.nvim',
+    config = function()
+      require('to_github_target_pull_request_from_commit_hash').setup()
+    end
+  }
 
 end)
