@@ -3,11 +3,11 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- lspconfig
- require'lspconfig'.tsserver.setup{
-   filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
-   settings = {documentFormatting = false},
-   capabilities = capabilities
- }
+require'lspconfig'.tsserver.setup{
+  filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
+  settings = {documentFormatting = false},
+  capabilities = capabilities
+}
 require'lspconfig'.solargraph.setup{
   cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
   filetypes = {"ruby", "rakefile", "rspec"},
@@ -36,14 +36,35 @@ require "lsp_signature".setup({
 })
 
 -- lua-dev.nvim
-local luadev = require("lua-dev").setup({
-  lspconfig = {
-    -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-    capabilities = capabilities
-  },
-})
+-- local luadev = require("lua-dev").setup({
+--   lspconfig = {
+--     -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+--     capabilities = capabilities
+--   },
+-- })
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
-require'lspconfig'.sumneko_lua.setup(luadev)
+require'lspconfig'.sumneko_lua.setup {
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = { enable = false, },
+    },
+  },
+}
 
 -- require'lspconfig'.eslint.setup{}
 
