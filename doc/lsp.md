@@ -10,18 +10,6 @@ $ solargraph config
 $ bundle exec yard gems
 ```
 
-### install rubocop
-
-NOTE: Please asdf disable.
-
-```sh
-$ sudo gem install -v <version> rubocop
-# optional
-$ sudo gem install -v <version> rubocop-performance
-$ sudo gem install -v <version> rubocop-rspec
-$ sudo gem install -v <version> rubocop-rails
-```
-
 ## typescript
 install commands
 
@@ -44,29 +32,10 @@ $ npm install -g flow-typed@2.6.2
 install commands
 
 ```sh
-$ brew install ninja
+$ brew install lua-language-server
 ```
 
-Please install bellow command of web page.
-https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
-
-### Trouble Shoot
-> FormulaUnavailableError: No available formula with the name "/usr/local/opt/avr-gcc@7/.brew/avr-gcc@7.rb".
-
+## go
 ```sh
-$ brew install avr-gcc@7
-```
-
-## diagnostic
-use [mattn/efm-langserver](https://github.com/mattn/efm-langserver)
-ref: https://qiita.com/hrsh7th@github/items/7b9670adf3d8328fe2d8
-
-```sh
-$ brew install efm-langserver
-```
-
-## srb
-
-```sh
-$ gem install sorbet
+$ brew install gopls
 ```
