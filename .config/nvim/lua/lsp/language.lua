@@ -2,30 +2,33 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+local lspconfig = require'lspconfig'
+
 -- lspconfig
-require'lspconfig'.tsserver.setup{
+lspconfig.tsserver.setup{
   filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
+  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
   settings = {documentFormatting = false},
   capabilities = capabilities
 }
-require'lspconfig'.solargraph.setup{
+lspconfig.solargraph.setup{
   cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
   filetypes = {"ruby", "rakefile", "rspec"},
   capabilities = capabilities
 }
-require'lspconfig'.flow.setup{
+lspconfig.flow.setup{
   capabilities = capabilities
 }
-require'lspconfig'.yamlls.setup{
+lspconfig.yamlls.setup{
   capabilities = capabilities
 }
-require'lspconfig'.rust_analyzer.setup{
+lspconfig.rust_analyzer.setup{
   capabilities = capabilities
 }
-require'lspconfig'.pyright.setup{
+lspconfig.pyright.setup{
   capabilities = capabilities
 }
-require'lspconfig'.gopls.setup{
+lspconfig.gopls.setup{
   capabilities = capabilities
 }
 require "lsp_signature".setup({
@@ -34,6 +37,9 @@ require "lsp_signature".setup({
     border = "rounded"
   }
 })
+lspconfig.denols.setup{
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
+}
 
 -- lua-dev.nvim
 -- local luadev = require("lua-dev").setup({
@@ -46,7 +52,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require'lspconfig'.sumneko_lua.setup {
+lspconfig.sumneko_lua.setup {
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -66,7 +72,7 @@ require'lspconfig'.sumneko_lua.setup {
   },
 }
 
--- require'lspconfig'.eslint.setup{}
+-- lspconfig.eslint.setup{}
 
 -- null-ls
 null_ls = require("null-ls")
