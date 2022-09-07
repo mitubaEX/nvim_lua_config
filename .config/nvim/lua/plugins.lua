@@ -550,6 +550,12 @@ return require('packer').startup(function(use)
   }
 
   use { 'tricktux/pomodoro.vim' }
+  use {
+    'levouh/tint.nvim',
+    config = function ()
+      require("tint").setup()
+    end
+  }
 
   -- :Snek
   -- :Camel
