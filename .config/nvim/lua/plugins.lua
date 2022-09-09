@@ -548,6 +548,9 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', '<C-g>G', ':Grepper -tool git -cword<CR>', { noremap = true, silent = false })
     end
   }
+  use {
+    'kevinhwang91/nvim-hlslens'
+  }
 
   use { 'tricktux/pomodoro.vim' }
   use {
