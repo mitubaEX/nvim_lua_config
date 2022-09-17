@@ -111,7 +111,7 @@ return require('packer').startup(function(use)
                   end
                 end
 
-                if table.getn(client_table) > 0 then
+                if #client_table > 0 then
                   return '[' .. table.concat(client_table, ',') .. ']'
                 end
 
@@ -556,7 +556,7 @@ return require('packer').startup(function(use)
   use {
     'levouh/tint.nvim',
     config = function ()
-      require("tint").setup()
+      require("tint").setup({})
     end
   }
 
