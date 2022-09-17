@@ -548,34 +548,23 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', '<C-g>G', ':Grepper -tool git -cword<CR>', { noremap = true, silent = false })
     end
   }
+  use {
+    'kevinhwang91/nvim-hlslens'
+  }
 
   use { 'tricktux/pomodoro.vim' }
+  use {
+    'levouh/tint.nvim',
+    config = function ()
+      require("tint").setup()
+    end
+  }
 
   -- :Snek
   -- :Camel
   use { 'nicwest/vim-camelsnek' }
-
-  use {
-    'xiyaowong/nvim-transparent',
-    config = function ()
-      require("transparent").setup({
-        enable = true, -- boolean: enable transparent
-        extra_groups = { -- table/string: additional groups that should be cleared
-        -- In particular, when you set it to 'all', that means all available groups
-
-        -- example of akinsho/nvim-bufferline.lua
-        "BufferLineTabClose",
-        "BufferlineBufferSelected",
-        "BufferLineFill",
-        "BufferLineBackground",
-        "BufferLineSeparator",
-        "BufferLineIndicatorSelected",
-      },
-      exclude = {}, -- table: groups you don't want to clear
-    })
-  end
-  }
   use { 'ojroques/vim-oscyank' }
+  use { 'brooth/far.vim' }
 
   -- my util plugins
   use { 'mitubaEX/blame_open.nvim' }
