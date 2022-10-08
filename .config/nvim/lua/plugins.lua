@@ -542,13 +542,6 @@ return require('packer').startup(function(use)
     end
   }
   use {
-    'mhinz/vim-grepper',
-    config = function ()
-      vim.keymap.set('n', '<C-g>g', ':Grepper -tool git<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<C-g>G', ':Grepper -tool git -cword<CR>', { noremap = true, silent = false })
-    end
-  }
-  use {
     'kevinhwang91/nvim-hlslens'
   }
 
