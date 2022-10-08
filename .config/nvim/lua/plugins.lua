@@ -561,7 +561,7 @@ return require('packer').startup(function(use)
   -- :Snek
   -- :Camel
   use { 'nicwest/vim-camelsnek' }
-  use { 'ojroques/vim-oscyank' }
+  use { 'greymd/oscyank.vim' }
   use { 'brooth/far.vim' }
 
   -- my util plugins
