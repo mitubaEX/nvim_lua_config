@@ -81,5 +81,8 @@ null_ls.setup({
     null_ls.builtins.formatting.prettier.with {
       prefer_local = "/home/nakamura-jun/CFO-Alpha/node_modules/.bin",
     },
+    null_ls.builtins.formatting.eslint.with {
+      prefer_local = "/home/nakamura-jun/CFO-Alpha/node_modules/.bin",
+    },
   },
 })
