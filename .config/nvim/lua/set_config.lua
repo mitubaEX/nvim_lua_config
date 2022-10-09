@@ -38,7 +38,7 @@ vim.opt.whichwrap = 'b,s,<,>,[,],h,l'
 --
 -- vim.opt.spell = true
 
-vim.opt.guicursor = ''
+-- vim.opt.guicursor = ''
 
 -- disable mouse
 vim.opt.mouse = ''
