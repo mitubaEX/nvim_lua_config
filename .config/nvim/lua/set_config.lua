@@ -42,3 +42,5 @@ vim.opt.whichwrap = 'b,s,<,>,[,],h,l'
 
 -- disable mouse
 vim.opt.mouse = ''
+
+vim.opt.swapfile = false
