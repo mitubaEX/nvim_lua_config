@@ -84,11 +84,11 @@ null_ls.setup({
       end,
       prefer_local = "node_modules/.bin",
     },
-    null_ls.builtins.diagnostics.eslint.with {
+    null_ls.builtins.diagnostics.eslint_d.with {
       cwd = function()
         return vim.fn.getcwd()
       end,
-      command = "node_modules/.bin/eslint",
+      -- command = "node_modules/.bin/eslint",
     },
   },
 })

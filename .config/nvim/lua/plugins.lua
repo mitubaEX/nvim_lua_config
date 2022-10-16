@@ -215,7 +215,7 @@ return require('packer').startup(function(use)
           },
           registers = {
             mappings = mappings,
-            theme="ivy",
+            -- theme="ivy",
           },
           git_bcommits = {
             mappings = mappings,
