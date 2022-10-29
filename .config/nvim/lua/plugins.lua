@@ -152,6 +152,8 @@ return require('packer').startup(function(use)
 
           ["<C-j>"] = actions.move_selection_next,
           ["<C-k>"] = actions.move_selection_previous,
+
+          ["<CR>"] = actions.select_vertical,
         },
         n = {
           ["<esc>"] = actions.close,
@@ -257,7 +259,7 @@ return require('packer').startup(function(use)
   use 'folke/lsp-colors.nvim'
 
   -- f motion
-  use { 'rhysd/clever-f.vim' }
+  -- use { 'rhysd/clever-f.vim' }
 
   -- terminal
   use {
@@ -546,9 +548,9 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
     end
   }
-  use {
-    'kevinhwang91/nvim-hlslens'
-  }
+  -- use {
+  --   'kevinhwang91/nvim-hlslens'
+  -- }
 
   use { 'tricktux/pomodoro.vim' }
   use {
