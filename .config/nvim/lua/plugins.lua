@@ -495,10 +495,10 @@ return require('packer').startup(function(use)
   use { 'weirongxu/plantuml-previewer.vim' }
 
   -- barbar
-  use {
-    'romgrk/barbar.nvim',
-    requires = {'kyazdani42/nvim-web-devicons'},
-  }
+  -- use {
+  --   'romgrk/barbar.nvim',
+  --   requires = {'kyazdani42/nvim-web-devicons'},
+  -- }
 
   -- vim-rails
   use {
