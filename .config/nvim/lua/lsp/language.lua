@@ -15,11 +15,11 @@ lspconfig.solargraph.setup{
   filetypes = {"ruby", "rakefile", "rspec"},
   capabilities = capabilities
 }
-lspconfig.ruby_ls.setup{
-  cmd = { 'bundle', 'exec', 'ruby-lsp' },
-  filetypes = {"ruby", "rakefile", "rspec"},
-  capabilities = capabilities
-}
+-- lspconfig.ruby_ls.setup{
+--   cmd = { 'bundle', 'exec', 'ruby-lsp' },
+--   filetypes = {"ruby", "rakefile", "rspec"},
+--   capabilities = capabilities
+-- }
 lspconfig.flow.setup{
   capabilities = capabilities
 }
