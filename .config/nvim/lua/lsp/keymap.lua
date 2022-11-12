@@ -15,3 +15,5 @@ vim.keymap.set('n', '[d', ":lua vim.diagnostic.goto_prev()<CR>", { noremap = tru
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = 'single',
 })
+
+vim.keymap.set('n', '<Leader>xx', '<cmd>TroubleToggle<CR>', { noremap = true, silent = false })

@@ -6,15 +6,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- lsp plugins
-  use {
-    "williamboman/nvim-lsp-installer",
-    {
-      "neovim/nvim-lspconfig",
-      config = function()
-        require("nvim-lsp-installer").setup {}
-      end
-    }
-  }
+  use { "neovim/nvim-lspconfig" }
   use {
     "hrsh7th/nvim-cmp",
     requires = {
@@ -33,218 +25,20 @@ return require('packer').startup(function(use)
     }
   }
   use { 'folke/lua-dev.nvim' }
-  use {
-    'folke/lsp-trouble.nvim',
-    config = function()
-      vim.keymap.set('n', '<Leader>xx', '<cmd>TroubleToggle<CR>', { noremap = true, silent = false })
-    end
-  }
+  use { 'folke/lsp-trouble.nvim' }
   use {'stevearc/dressing.nvim'}
-  use {
-    'mhartington/formatter.nvim',
-    config = function ()
-      local util = require("formatter.util")
-      require('formatter').setup({
-          filetype = {
-            javascript = {
-              function()
-                return {
-                  exe = "prettierd",
-                  args = {util.escape_path(util.get_current_buffer_file_path())},
-                  stdin = true
-                }
-              end
-            },
-            go = {
-              -- go fmt
-              function()
-                return {
-                  exe = "gofmt", -- might prepend `bundle exec `
-                  args = {},
-                  stdin = true,
-                }
-              end
-            }
-          }
-        })
-    end
-  }
+  use { 'mhartington/formatter.nvim', }
   use { 'ray-x/lsp_signature.nvim' }
-  use {
-    'j-hui/fidget.nvim',
-    config = function ()
-      require"fidget".setup{}
-    end
-  }
-  use {
-    'jose-elias-alvarez/null-ls.nvim',
-    requires = { 'yuezk/vim-js' }
-  }
+  use { 'j-hui/fidget.nvim' }
+  use { 'jose-elias-alvarez/null-ls.nvim', requires = { 'yuezk/vim-js' } }
   use { 'maxmellon/vim-jsx-pretty' }
 
   -- status line
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { {'kyazdani42/nvim-web-devicons'}, {'ryanoasis/vim-devicons'} },
-    -- your statusline
-    config = function()
-      require('lualine').setup{
-        sections = {
-          lualine_a = {  },
-          lualine_b = { {'branch', icon = ''} },
-          lualine_c = {
-            {'filename', file_status = true, path = 1, separator = ''},
-            { 'diff' }, {
-              -- Lsp server name .
-              -- ref: https://gist.github.com/shadmansaleh/cd526bc166237a5cbd51429cc1f6291b
-              function ()
-                local msg = 'No Active Lsp'
-                local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
-                local clients = vim.lsp.get_active_clients()
-                if next(clients) == nil then return msg end
+  use { 'nvim-lualine/lualine.nvim', requires = { {'kyazdani42/nvim-web-devicons'}, {'ryanoasis/vim-devicons'} } }
 
-                local client_table = {}
-                for _, client in ipairs(clients) do
-                  local filetypes = client.config.filetypes
-                  if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                    table.insert(client_table,  client.name)
-                  end
-                end
-
-                if #client_table > 0 then
-                  return '[' .. table.concat(client_table, ',') .. ']'
-                end
-
-                return msg
-              end,
-              icon = '⚙️ :',
-              color = {fg = '#a69ded'},
-              separator = ''
-            }, {'diagnostics', sources = {'nvim_diagnostic'}, icon = '🚦:'}},
-          lualine_x = { 'encoding', 'fileformat', 'filetype' },
-          lualine_y = { 'progress' },
-          lualine_z = {   },
-        },
-        inactive_sections = {
-          lualine_a = {  },
-          lualine_b = {  },
-          lualine_c = { 'filename' },
-          lualine_x = { 'location' },
-          lualine_y = {  },
-          lualine_z = {  },
-        },
-      }
-    end,
-  }
-
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} },
-    config = function()
-      local actions = require('telescope.actions')
-      local mappings = {
-        i = {
-          ["<c-p>"] = actions.cycle_history_prev,
-          ["<c-n>"] = actions.cycle_history_next,
-
-          ["<c-u>"] = actions.preview_scrolling_up,
-          ["<c-d>"] = actions.preview_scrolling_down,
-
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-
-          ["<CR>"] = actions.select_vertical,
-        },
-        n = {
-          ["<esc>"] = actions.close,
-        },
-      }
-      -- Global remapping
-      ------------------------------
-      require('telescope').setup{
-        defaults = {
-          -- please install fzy
-          file_sorter = require'telescope.sorters'.get_fzy_sorter,
-          generic_sorter = require'telescope.sorters'.get_fzy_sorter,
-          mappings = mappings,
-        },
-        pickers = {
-          -- Your special builtin config goes in here
-          buffers = {
-            prompt_title = '✨ Search Buffers ✨',
-            mappings = mappings,
-            sort_mru = true,
-            preview_title = false,
-            theme="ivy",
-          },
-          git_files = {
-            mappings = mappings,
-            sort_mru = true,
-            preview_title = false,
-            prompt_title = "",
-            prompt_prefix = "     ",
-            selection_caret = "  ",
-            entry_prefix = "  ",
-            sorting_strategy = "ascending",
-            layout_strategy = "horizontal",
-            layout_config = {
-              horizontal = {
-                prompt_position = "top",
-                preview_width = 0.55,
-                results_width = 0.8,
-              },
-              vertical = {
-                mirror = false,
-              },
-              width = 0.80,
-              height = 0.85,
-              preview_cutoff = 120,
-            },
-            winblend = 0,
-            set_env = { ["COLORTERM"] = "truecolor" },
-            selection_strategy = "reset",
-            results_title = "",
-            color_devicons = true,
-            use_less = true,
-          },
-          grep_string = {
-            mappings = mappings,
-          },
-          live_grep = {
-            additional_args = function()
-              return {"--hidden"}
-            end
-          },
-          registers = {
-            mappings = mappings,
-            -- theme="ivy",
-          },
-          git_bcommits = {
-            mappings = mappings,
-            theme="ivy",
-          },
-        },
-      }
-
-      vim.keymap.set('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<Leader>g', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
-      -- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
-    end
-  }
+  use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
   -- file tree
-  use {
-    'kyazdani42/nvim-tree.lua',
-    config = function()
-      require'nvim-tree'.setup {
-        renderer = {
-          highlight_git = true,
-        }
-      }
-      vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = false })
-    end
-  }
+  use { 'kyazdani42/nvim-tree.lua' }
 
   -- color
   use {
@@ -257,9 +51,6 @@ return require('packer').startup(function(use)
     end,
   }
   use 'folke/lsp-colors.nvim'
-
-  -- f motion
-  -- use { 'rhysd/clever-f.vim' }
 
   -- terminal
   use {
