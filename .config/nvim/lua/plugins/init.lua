@@ -22,6 +22,7 @@ return require('packer').startup(function(use)
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
+      'mitubaEX/cmp-account-items',
     }
   }
   use { 'folke/lua-dev.nvim' }

@@ -2,6 +2,21 @@ vim.api.nvim_command('set completeopt=menuone,noselect')
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require'cmp'
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'cmdline' }
+  }
+})
+
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
 cmp.setup({
   formatting = {
     format = require('lspkind').cmp_format({
@@ -34,6 +49,9 @@ cmp.setup({
     { name = "emoji" },
     { name = "treesitter" },
     { name = "crates" },
+
+    -- My custom sources.
+    { name = 'account_items' },
   },
   mapping = {
     ['<Tab>'] = function(fallback)
@@ -61,26 +79,3 @@ cmp.setup({
   },
 })
 cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
-
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'cmdline' }
-  }
-})
-
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- local tabnine = require('cmp_tabnine.config')
--- tabnine:setup({
---   max_lines = 1000;
---   max_num_results = 20;
---   sort = true;
---   run_on_every_keystroke = true;
---   snippet_placeholder = '..';
--- })
