@@ -50,7 +50,6 @@ return require('packer').startup(function(use)
       vim.cmd("colorscheme nightfox")
     end,
   }
-  use 'folke/lsp-colors.nvim'
 
   -- terminal
   use {
@@ -60,10 +59,7 @@ return require('packer').startup(function(use)
         open_mapping = [[<c-l>]]
       }
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
-
-      -- NOTE: after open terminal, `2<c-l>` will open another terminal
       vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<Leader>v', ':ToggleTerm size=100 direction=vertical<CR>', { noremap = true, silent = false })
     end
   }
 
@@ -94,9 +90,6 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
     end
   }
-
-  -- skip definitions
-  use { 'mitubaEX/jumpy.vim' }
 
   -- move line
   use {
