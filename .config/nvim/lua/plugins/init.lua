@@ -27,7 +27,6 @@ return require('packer').startup(function(use)
   }
   use { 'folke/lua-dev.nvim' }
   use { 'folke/lsp-trouble.nvim' }
-  use {'stevearc/dressing.nvim'}
   use { 'mhartington/formatter.nvim', }
   use { 'ray-x/lsp_signature.nvim' }
   use { 'j-hui/fidget.nvim' }
@@ -61,7 +60,6 @@ return require('packer').startup(function(use)
         open_mapping = [[<c-l>]]
       }
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<Leader>[', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
 
       -- NOTE: after open terminal, `2<c-l>` will open another terminal
       vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
@@ -121,14 +119,6 @@ return require('packer').startup(function(use)
   }
 
   use { 'AndrewRadev/linediff.vim' }
-
-  -- window
-  use {
-    't9md/vim-choosewin',
-    config = function ()
-      vim.keymap.set('n', '-', '<Plug>(choosewin)', { noremap = true, silent = false })
-    end
-  }
 
   -- highlight
   use {
@@ -220,15 +210,6 @@ return require('packer').startup(function(use)
 
   -- git
   use {
-    'TimUntersberger/neogit',
-    requires = 'nvim-lua/plenary.nvim',
-    config = function ()
-      local neogit = require('neogit')
-      neogit.setup {}
-      vim.keymap.set('n', '<C-g>n', ':Neogit<CR>', { noremap = true, silent = false })
-    end
-  }
-  use {
     'lewis6991/gitsigns.nvim',
     requires = {
       'nvim-lua/plenary.nvim'
@@ -237,13 +218,6 @@ return require('packer').startup(function(use)
       require('gitsigns').setup {
         current_line_blame = true,
       }
-    end
-  }
-  use {
-    'tyru/open-browser-github.vim',
-    requires = { 'tyru/open-browser.vim' },
-    config = function()
-      vim.keymap.set('n', '<C-g>o', '::OpenGithubFile<CR>', { noremap = true, silent = false })
     end
   }
   use {
