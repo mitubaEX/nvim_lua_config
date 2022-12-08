@@ -25,7 +25,6 @@ return require('packer').startup(function(use)
       'mitubaEX/cmp-account-items',
     }
   }
-  use { 'folke/lua-dev.nvim' }
   use { 'folke/lsp-trouble.nvim' }
   use { 'mhartington/formatter.nvim', }
   use { 'ray-x/lsp_signature.nvim' }

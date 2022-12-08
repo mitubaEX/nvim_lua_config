@@ -6,12 +6,6 @@ vim.g.mapleader = ' '
 vim.keymap.set('n', '<Leader>w', ':w<CR>', { noremap = true, silent = false })
 vim.keymap.set('i', 'jj', '<ESC>', { noremap = true, silent = true })
 
--- tab
--- vim.keymap.set('n', '<tab>', 'gt', { noremap = true, silent = false })
-
--- move previous buffer
--- vim.keymap.set('n', '<Leader>n', ':b #<CR>', { noremap = true, silent = false })
-
 -- terminal escape
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', { noremap = true, silent = true })
 
@@ -33,6 +27,3 @@ vim.keymap.set('n', '<Leader>c', ':let @"=expand("%:t") | echo expand("%:t") | O
 -- relative path
 -- vim.keymap.set('n', '<Leader>C', ':let @*=expand("%") | echo expand("%")<CR>', { noremap = false, silent = false })
 vim.keymap.set('n', '<Leader>C', ':let @"=expand("%") | echo expand("%") | OscyankRegister<CR>', { noremap = false, silent = false })
-
--- save terminal output to file
-vim.keymap.set('n', '<Leader>>', ':w !tee >> terminal_output.txt<CR>', { noremap = false, silent = false })

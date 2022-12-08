@@ -17,11 +17,6 @@ lspconfig.solargraph.setup{
   filetypes = {"ruby", "rakefile", "rspec"},
   capabilities = capabilities
 }
--- lspconfig.ruby_ls.setup{
---   cmd = { 'bundle', 'exec', 'ruby-lsp' },
---   filetypes = {"ruby", "rakefile", "rspec"},
---   capabilities = capabilities
--- }
 lspconfig.flow.setup{
   capabilities = capabilities
 }
@@ -47,13 +42,6 @@ lspconfig.denols.setup{
   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
 }
 
--- lua-dev.nvim
--- local luadev = require("lua-dev").setup({
---   lspconfig = {
---     -- cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
---     capabilities = capabilities
---   },
--- })
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
@@ -77,8 +65,6 @@ lspconfig.sumneko_lua.setup {
     },
   },
 }
-
--- lspconfig.eslint.setup{}
 
 -- null-ls
 local null_ls = require("null-ls")

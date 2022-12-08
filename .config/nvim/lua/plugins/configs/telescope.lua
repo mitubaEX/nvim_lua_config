@@ -87,4 +87,3 @@ vim.keymap.set('n', '<Leader>t', '<cmd>Telescope git_files<CR>', { noremap = tru
 vim.keymap.set('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
 vim.keymap.set('n', '<Leader>g', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
 vim.keymap.set('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
--- vim.keymap.set('n', '<C-g>l', ":lua require'telescope.builtin'.git_bcommits{}<CR>", { noremap = true, silent = true })
