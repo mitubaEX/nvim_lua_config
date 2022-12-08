@@ -260,12 +260,6 @@ return require('packer').startup(function(use)
   -- plantuml
   use { 'weirongxu/plantuml-previewer.vim' }
 
-  -- barbar
-  -- use {
-  --   'romgrk/barbar.nvim',
-  --   requires = {'kyazdani42/nvim-web-devicons'},
-  -- }
-
   -- vim-rails
   use {
     'tpope/vim-rails',
@@ -279,20 +273,6 @@ return require('packer').startup(function(use)
     config = function()
       require('headlines').setup()
     end,
-  }
-
-  -- scroll
-  use {
-    'karb94/neoscroll.nvim',
-    config = function ()
-      require('neoscroll').setup()
-      local t = {}
-      -- Syntax: t[keys] = {function, {function arguments}}
-      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '50'}}
-      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '50'}}
-
-      require('neoscroll.config').set_mappings(t)
-    end
   }
 
   -- filetype
@@ -314,9 +294,6 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
     end
   }
-  -- use {
-  --   'kevinhwang91/nvim-hlslens'
-  -- }
 
   use { 'tricktux/pomodoro.vim' }
   use {
