@@ -10,7 +10,7 @@ local mappings = {
     ["<C-j>"] = actions.move_selection_next,
     ["<C-k>"] = actions.move_selection_previous,
 
-    ["<CR>"] = actions.select_vertical,
+    -- ["<CR>"] = actions.select_vertical,
   },
   n = {
     ["<esc>"] = actions.close,
