@@ -31,7 +31,6 @@ return require('packer').startup(function(use)
   use { 'ray-x/lsp_signature.nvim' }
   use { 'j-hui/fidget.nvim' }
   use { 'jose-elias-alvarez/null-ls.nvim', requires = { 'yuezk/vim-js' } }
-  use { 'maxmellon/vim-jsx-pretty' }
 
   -- status line
   use { 'nvim-lualine/lualine.nvim', requires = { {'kyazdani42/nvim-web-devicons'}, {'ryanoasis/vim-devicons'} } }
