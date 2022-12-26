@@ -37,3 +37,5 @@ vim.opt.whichwrap = 'b,s,<,>,[,],h,l'
 vim.opt.mouse = ''
 
 vim.opt.swapfile = false
+
+-- vim.opt.cursorline = true

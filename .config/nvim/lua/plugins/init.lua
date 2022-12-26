@@ -34,7 +34,9 @@ return require('packer').startup(function(use)
   -- status line
   use { 'nvim-lualine/lualine.nvim', requires = { {'kyazdani42/nvim-web-devicons'}, {'ryanoasis/vim-devicons'} } }
 
+  -- explorer
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
+
   -- file tree
   use { 'kyazdani42/nvim-tree.lua' }
 
@@ -81,10 +83,6 @@ return require('packer').startup(function(use)
     'tyru/columnskip.vim',
     config = function()
       vim.keymap.set('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
-      vim.keymap.set('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
-      vim.keymap.set('n', '<Leader>j', '<Plug>(columnskip:nonblank:next)', { noremap = false, silent = true })
-      vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
-      vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
       vim.keymap.set('n', '<Leader>k', '<Plug>(columnskip:nonblank:prev)', { noremap = false, silent = true })
     end
   }
@@ -109,6 +107,7 @@ return require('packer').startup(function(use)
     end
   }
 
+  -- show diff
   use { 'AndrewRadev/linediff.vim' }
 
   -- highlight
@@ -116,12 +115,11 @@ return require('packer').startup(function(use)
     't9md/vim-quickhl',
     config = function()
       vim.keymap.set('n', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
-      vim.keymap.set('x', '<Leader>m', '<Plug>(quickhl-manual-this)', { noremap = false, silent = false })
       vim.keymap.set('n', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
-      vim.keymap.set('x', '<Leader>M', '<Plug>(quickhl-manual-reset)', { noremap = false, silent = false })
     end
   }
 
+  -- word highlight
   use {
     'xiyaowong/nvim-cursorword',
     config = function()
@@ -151,7 +149,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- text obj
+  -- text obj extension
   use {
     'bkad/CamelCaseMotion',
     config = function()
@@ -227,7 +225,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- test
+  -- run test
   use {
     'vim-test/vim-test',
     config = function()
@@ -258,6 +256,7 @@ return require('packer').startup(function(use)
     requires = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
   }
 
+  -- for markdown
   use {
     'lukas-reineke/headlines.nvim',
     ft = 'markdown',
@@ -269,6 +268,7 @@ return require('packer').startup(function(use)
   -- filetype
   use { 'nathom/filetype.nvim' }
 
+  -- startup view
   use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
@@ -278,6 +278,8 @@ return require('packer').startup(function(use)
   }
 
   use { 'itchyny/vim-parenmatch', }
+
+  -- improve jk
   use {
     'rhysd/accelerated-jk',
     config = function()
@@ -287,6 +289,8 @@ return require('packer').startup(function(use)
   }
 
   use { 'tricktux/pomodoro.vim' }
+
+  -- highlight pane
   use {
     'levouh/tint.nvim',
     config = function ()
