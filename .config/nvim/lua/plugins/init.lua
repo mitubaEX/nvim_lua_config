@@ -14,9 +14,7 @@ return require('packer').startup(function(use)
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
-      "f3fora/cmp-spell",
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-vsnip",
@@ -44,9 +42,6 @@ return require('packer').startup(function(use)
   use {
     'EdenEast/nightfox.nvim',
     config = function()
-      vim.api.nvim_command('set termguicolors')
-      vim.api.nvim_command('syntax enable')
-
       vim.cmd("colorscheme nightfox")
     end,
   }
@@ -55,9 +50,7 @@ return require('packer').startup(function(use)
   use {
     "akinsho/toggleterm.nvim",
     config = function ()
-      require("toggleterm").setup{
-        open_mapping = [[<c-l>]]
-      }
+      require("toggleterm").setup{ open_mapping = [[<c-l>]] }
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
       vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
     end
@@ -295,6 +288,16 @@ return require('packer').startup(function(use)
     'levouh/tint.nvim',
     config = function ()
       require("tint").setup({})
+    end
+  }
+
+  use {
+    'leoluz/nvim-dap-go',
+    requires = {
+      'mfussenegger/nvim-dap'
+    },
+    config = function ()
+      require('dap-go').setup()
     end
   }
 
