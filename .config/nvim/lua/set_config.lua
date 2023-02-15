@@ -39,3 +39,5 @@ vim.opt.mouse = ''
 vim.opt.swapfile = false
 
 -- vim.opt.cursorline = true
+
+vim.opt.laststatus = 3
