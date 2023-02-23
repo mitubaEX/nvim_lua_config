@@ -1,9 +1,6 @@
 -- for vim-parenmatch
 vim.g.loaded_matchparen = true
 
--- for filetype.nvim
-vim.g.did_load_filetypes = 1
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -68,11 +65,11 @@ require("lazy").setup({
     end
   },
   {
-    'folke/tokyonight.nvim',
+    'EdenEast/nightfox.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      require('tokyonight').load()
+      vim.cmd("colorscheme nightfox")
     end
   },
 
@@ -83,22 +80,22 @@ require("lazy").setup({
   'mhartington/formatter.nvim',
   'greymd/oscyank.vim'
 }, {
- defaults = { lazy = true },
- install = { colorscheme = { "tokyonight" } },
- performance = {
-  rtp = {
-   disabled_plugins = {
-    "gzip",
-    "matchit",
-    "matchparen",
-    "netrwPlugin",
-    "tarPlugin",
-    "tohtml",
-    "tutor",
-    "zipPlugin",
-   },
+  defaults = { lazy = false },
+  install = { colorscheme = { "nightfox", "habamax" } },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
   },
- },
 })
 
 require('keymap')
