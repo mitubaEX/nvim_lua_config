@@ -10,15 +10,15 @@ return function()
     local bufopts = { noremap=true, silent=true, buffer=buffer }
 
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', bufopts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gl', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<CR>', bufopts)
-    vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.rename()<CR>', bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', '<space>f', ":lua vim.lsp.buf.format { async = true }<CR>", bufopts)
+    -- vim.keymap.set('n', '<space>f', ":lua vim.lsp.buf.format { async = true }<CR>", bufopts)
 
-    vim.keymap.set('n', ']d', ":lua vim.diagnostic.goto_next()<CR>", bufopts)
-    vim.keymap.set('n', '[d', ":lua vim.diagnostic.goto_prev()<CR>", bufopts)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
 
     vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
       border = 'single',
@@ -41,37 +41,37 @@ return function()
     on_attach = on_attach,
     capabilities = capabilities
   }
-  lspconfig.ruby_ls.setup{
-    cmd = { 'bundle', 'exec', 'ruby-lsp' },
-    filetypes = {"ruby", "rakefile", "rspec"},
-    capabilities = capabilities,
-    on_attach = function(client, buffer)
-      local callback = function()
-        local params = vim.lsp.util.make_text_document_params(buffer)
-        client.request(
-        'textDocument/diagnostic',
-        { textDocument = params },
-        function(err, result)
-          if err then return end
-
-          vim.lsp.diagnostic.on_publish_diagnostics(
-          nil,
-          vim.tbl_extend('keep', params, { diagnostics = result.items }),
-          { client_id = client.id }
-          )
-        end
-        )
-      end
-
-      on_attach(client, buffer) -- call my common func
-      callback() -- call on attach
-
-      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePre', 'BufReadPost', 'InsertLeave', 'TextChanged' }, {
-        buffer = buffer,
-        callback = callback,
-      })
-    end,
-  }
+  -- lspconfig.ruby_ls.setup{
+  --   cmd = { 'bundle', 'exec', 'ruby-lsp' },
+  --   filetypes = {"ruby", "rakefile", "rspec"},
+  --   capabilities = capabilities,
+  --   on_attach = function(client, buffer)
+  --     local callback = function()
+  --       local params = vim.lsp.util.make_text_document_params(buffer)
+  --       client.request(
+  --       'textDocument/diagnostic',
+  --       { textDocument = params },
+  --       function(err, result)
+  --         if err then return end
+  --
+  --         vim.lsp.diagnostic.on_publish_diagnostics(
+  --         nil,
+  --         vim.tbl_extend('keep', params, { diagnostics = result.items }),
+  --         { client_id = client.id }
+  --         )
+  --       end
+  --       )
+  --     end
+  --
+  --     on_attach(client, buffer) -- call my common func
+  --     callback() -- call on attach
+  --
+  --     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePre', 'BufReadPost', 'InsertLeave', 'TextChanged' }, {
+  --       buffer = buffer,
+  --       callback = callback,
+  --     })
+  --   end,
+  -- }
   lspconfig.sorbet.setup {
     cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
     filetypes = {"ruby", "rakefile", "rspec"},
