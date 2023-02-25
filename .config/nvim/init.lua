@@ -39,10 +39,4 @@ require("lazy").setup(require('plugins'), {
 require('keymap')
 require('set_config')
 require('autocmd_config')
-require('lsp_config')
 require('utils')
-
-require('plugins.configs.formatter')
-require('plugins.configs.lualine')
-require('plugins.configs.nvim-tree')
-require('plugins.configs.telescope')

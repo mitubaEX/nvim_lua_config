@@ -2,11 +2,13 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' }
+    dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' },
+    config = require('plugins.configs.lualine'),
   },
   {
     'kyazdani42/nvim-tree.lua',
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    config = require('plugins.configs.nvim-tree'),
   },
 
   {

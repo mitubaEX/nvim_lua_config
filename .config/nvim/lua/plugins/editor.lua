@@ -2,11 +2,13 @@ return {
   {
     'mhartington/formatter.nvim',
     event = "InsertEnter",
+    config = require('plugins.configs.formatter'),
   },
   {
     'nvim-telescope/telescope.nvim',
     lazy = false,
-    dependencies = { 'nvim-lua/plenary.nvim' }
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = require('plugins.configs.telescope'),
   },
   {
     'kylechui/nvim-surround',

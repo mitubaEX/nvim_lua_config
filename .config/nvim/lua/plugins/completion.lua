@@ -13,8 +13,9 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
-      'mitubaEX/cmp-account-items',
-    }
+      -- 'mitubaEX/cmp-account-items',
+    },
+    config = require('lsp.cmp')
   },
   {
     'windwp/nvim-autopairs',
