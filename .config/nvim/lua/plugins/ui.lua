@@ -1,6 +1,13 @@
 return {
-  { 'nvim-lualine/lualine.nvim', dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' } },
-  'kyazdani42/nvim-tree.lua',
+  {
+    'nvim-lualine/lualine.nvim',
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' }
+  },
+  {
+    'kyazdani42/nvim-tree.lua',
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+  },
 
   {
     'nvim-treesitter/nvim-treesitter',
@@ -30,6 +37,7 @@ return {
 
   {
     'lukas-reineke/indent-blankline.nvim',
+    event = "BufReadPost",
     config = function ()
       require("indent_blankline").setup {
         -- for example, context is off by default, use this to turn it on
@@ -42,7 +50,8 @@ return {
 
   {
     'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
+    event = "BufWinEnter",
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
     config = function ()
       require'alpha'.setup(require'alpha.themes.startify'.opts)
     end
@@ -50,6 +59,7 @@ return {
 
   {
     'levouh/tint.nvim',
+    event = "BufReadPost",
     config = function ()
       require("tint").setup({})
     end

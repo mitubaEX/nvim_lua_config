@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " " -- make sure to set `mapleader` before lazy so your mappings are correct
 
 require("lazy").setup(require('plugins'), {
-  defaults = { lazy = false },
+  defaults = { lazy = true },
   install = { colorscheme = { "nightfox", "habamax" } },
   performance = {
     rtp = {

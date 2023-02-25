@@ -1,6 +1,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
@@ -17,6 +18,7 @@ return {
   },
   {
     'windwp/nvim-autopairs',
+    event = "InsertEnter",
     config = function ()
       require('nvim-autopairs').setup{}
     end

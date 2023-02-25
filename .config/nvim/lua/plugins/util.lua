@@ -1,6 +1,7 @@
 return {
   {
     "akinsho/toggleterm.nvim",
+    event = "BufReadPost",
     config = function ()
       require("toggleterm").setup{ open_mapping = [[<c-l>]] }
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
@@ -8,11 +9,18 @@ return {
     end
   },
 
-  'greymd/oscyank.vim',
-  'AndrewRadev/linediff.vim',
+  {
+    'greymd/oscyank.vim',
+    event = "BufReadPost",
+  },
+  {
+    'AndrewRadev/linediff.vim',
+    event = "BufReadPost",
+  },
 
   {
     'vim-test/vim-test',
+    event = "BufReadPost",
     config = function()
       vim.api.nvim_set_var('test#strategy', 'neovim')
 
@@ -32,9 +40,13 @@ return {
   },
   {
     'mitubaEX/toggle_rspec_file.nvim',
+    ft = 'ruby',
     config = function()
       vim.keymap.set('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
     end
   },
-  'itchyny/vim-parenmatch',
+  {
+    'itchyny/vim-parenmatch',
+    event = "BufReadPost",
+  },
 }
