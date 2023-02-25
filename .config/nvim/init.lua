@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " " -- make sure to set `mapleader` before lazy so your mappings are correct
 
 require("lazy").setup(require('plugins'), {
-  defaults = { lazy = false },
+  defaults = { lazy = true },
   install = { colorscheme = { "nightfox", "habamax" } },
   performance = {
     rtp = {
@@ -39,10 +39,4 @@ require("lazy").setup(require('plugins'), {
 require('keymap')
 require('set_config')
 require('autocmd_config')
-require('lsp_config')
 require('utils')
-
-require('plugins.configs.formatter')
-require('plugins.configs.lualine')
-require('plugins.configs.nvim-tree')
-require('plugins.configs.telescope')
