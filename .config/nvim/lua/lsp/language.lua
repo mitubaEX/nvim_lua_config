@@ -103,16 +103,12 @@ return function()
     root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
   }
 
-  require "lsp_signature".setup({
+  require("lsp_signature").setup({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
     handler_opts = {
       border = "rounded"
     }
   })
-
-  local runtime_path = vim.split(package.path, ';')
-  table.insert(runtime_path, 'lua/?.lua')
-  table.insert(runtime_path, 'lua/?/init.lua')
 
   -- null-ls
   local null_ls = require("null-ls")
