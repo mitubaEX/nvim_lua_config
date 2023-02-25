@@ -8,7 +8,7 @@ return {
       { 'jose-elias-alvarez/null-ls.nvim', dependencies = { 'yuezk/vim-js' } },
       'j-hui/fidget.nvim',
     },
-    config = require('lsp.language'),
+    config = require('plugins.configs.lspconfig'),
   },
 
   {

@@ -15,7 +15,7 @@ return {
       "rafamadriz/friendly-snippets",
       -- 'mitubaEX/cmp-account-items',
     },
-    config = require('lsp.cmp')
+    config = require('plugins.configs.nvim-cmp')
   },
   {
     'windwp/nvim-autopairs',
