@@ -12,7 +12,7 @@ return {
   {
     'junegunn/gv.vim',
     event = { "CursorHold", "CursorHoldI" },
-    requires = { 'tpope/vim-fugitive' },
+    dependencies = { 'tpope/vim-fugitive' },
     config = function ()
       vim.keymap.set('n', '<C-g>l', ":GV!<CR>", { noremap = true, silent = true })
     end

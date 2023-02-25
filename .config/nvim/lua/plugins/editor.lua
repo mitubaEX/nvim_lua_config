@@ -60,18 +60,6 @@ return {
       vim.api.nvim_set_hl(0, "CursorWord", { bold = 1, default = 1 })
     end
   },
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    event = "BufReadPost",
-    config = function ()
-      require("indent_blankline").setup {
-        -- for example, context is off by default, use this to turn it on
-        show_current_context = true,
-        show_current_context_start = false,
-      }
-    end
-  },
-
 
   {
     'kana/vim-operator-replace',
