@@ -1,4 +1,6 @@
 return {
+  'mhartington/formatter.nvim',
+  { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
   {
     'kylechui/nvim-surround',
     config = function()
