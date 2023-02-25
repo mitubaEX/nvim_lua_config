@@ -12,19 +12,6 @@ my lua config
 ```
 sh setup.sh
 ```
-
-### Install dependencies
-
-- Please install [packer.nvim](https://github.com/wbthomason/packer.nvim)
-- Launch Neovim and execute bellow command.
-
-```
-:PackerInstall
-:PackerCompile
-```
-
-Enjoy!
-
 ## Uninstallation
 
 ```
