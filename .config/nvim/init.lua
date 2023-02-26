@@ -36,7 +36,7 @@ require("lazy").setup(require('plugins'), {
   },
 })
 
-require('keymap')
-require('set_config')
-require('autocmd_config')
-require('utils')
+require('common.keymap')
+require('common.set_config')
+require('common.autocmd_config')
+require('common.utils')
