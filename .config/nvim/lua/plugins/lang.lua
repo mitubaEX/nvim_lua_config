@@ -10,9 +10,13 @@ return {
     },
     config = require('plugins.configs.lspconfig'),
   },
-
   {
     'neoclide/vim-jsx-improve',
     lazy = false,
+  },
+  {
+    'tpope/vim-rails',
+    ft = 'ruby',
+    dependencies = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
   },
 }

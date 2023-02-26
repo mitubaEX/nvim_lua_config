@@ -104,11 +104,6 @@ return {
     end
   },
   {
-    'tpope/vim-rails',
-    ft = 'ruby',
-    dependencies = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
-  },
-  {
     'rhysd/accelerated-jk',
     event = "VeryLazy",
     config = function()

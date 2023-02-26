@@ -8,7 +8,6 @@ return {
       vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
     end
   },
-
   {
     'greymd/oscyank.vim',
     event = "BufReadPost",
@@ -17,7 +16,6 @@ return {
     'AndrewRadev/linediff.vim',
     event = "BufReadPost",
   },
-
   {
     'vim-test/vim-test',
     event = "BufReadPost",
@@ -30,7 +28,6 @@ return {
       vim.keymap.set('n', '<Leader>Q', ':TestNearest<CR>', { noremap = true, silent = true })
     end
   },
-
   {
     'lukas-reineke/headlines.nvim',
     ft = 'markdown',

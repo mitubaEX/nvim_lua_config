@@ -17,9 +17,13 @@ return {
       vim.keymap.set('n', '<C-g>l', ":GV!<CR>", { noremap = true, silent = true })
     end
   },
-  {'mitubaEX/blame_open.nvim'},
+  {
+    'mitubaEX/blame_open.nvim',
+    event = "VeryLazy",
+  },
   {
     'mitubaEX/to_github_target_pull_request_from_commit_hash.nvim',
+    event = "VeryLazy",
     config = function()
       require('to_github_target_pull_request_from_commit_hash').setup()
     end

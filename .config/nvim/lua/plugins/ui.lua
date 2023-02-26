@@ -1,16 +1,5 @@
 return {
-  {
-    'nvim-lualine/lualine.nvim',
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' },
-    config = require('plugins.configs.lualine'),
-  },
-  {
-    'kyazdani42/nvim-tree.lua',
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    config = require('plugins.configs.nvim-tree'),
-  },
-
+  -- syntax
   {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
@@ -37,6 +26,18 @@ return {
     end
   },
 
+  -- editor ui
+  {
+    'nvim-lualine/lualine.nvim',
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' },
+    config = require('plugins.configs.lualine'),
+  },
+  {
+    'kyazdani42/nvim-tree.lua',
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    config = require('plugins.configs.nvim-tree'),
+  },
   {
     'lukas-reineke/indent-blankline.nvim',
     event = "BufReadPost",
@@ -48,22 +49,21 @@ return {
       }
     end
   },
+  {
+    'levouh/tint.nvim',
+    event = "BufReadPost",
+    config = function ()
+      require("tint").setup({})
+    end
+  },
 
-
+  -- startify
   {
     'goolord/alpha-nvim',
     event = "BufWinEnter",
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     config = function ()
       require'alpha'.setup(require'alpha.themes.startify'.opts)
-    end
-  },
-
-  {
-    'levouh/tint.nvim',
-    event = "BufReadPost",
-    config = function ()
-      require("tint").setup({})
     end
   },
 }
