@@ -60,14 +60,13 @@ return {
       vim.api.nvim_set_hl(0, "CursorWord", { bold = 1, default = 1 })
     end
   },
-
   {
-    'kana/vim-operator-replace',
+    'gbprod/substitute.nvim',
     event = "VeryLazy",
-    dependencies = { 'kana/vim-operator-user' },
     config = function()
-      vim.keymap.set('v', 'p', '<Plug>(operator-replace)', { noremap = false, silent = true })
-      vim.keymap.set('n', '<Leader>r', '<Plug>(operator-replace)', { noremap = false, silent = true })
+      require("substitute").setup({})
+
+      vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
     end
   },
   {
@@ -121,4 +120,8 @@ return {
     'nicwest/vim-camelsnek',
     event = "VeryLazy",
   },
+  {
+    'rhysd/clever-f.vim',
+    event = "VeryLazy",
+  }
 }
