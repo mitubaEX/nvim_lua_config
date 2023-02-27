@@ -28,9 +28,9 @@ return {
   {
     'matze/vim-move',
     event = "BufReadPost",
-    config = function()
+    init = function()
       vim.g.move_key_modifier = 'C'
-    end
+    end,
   },
   {
     'mg979/vim-visual-multi',
@@ -40,8 +40,10 @@ return {
   {
     'pechorin/any-jump.vim',
     event = "BufReadPost",
-    config = function()
+    init = function()
       vim.g.any_jump_disable_default_keybindings = '1'
+    end,
+    config = function()
       vim.keymap.set('n', '<Leader>a', ':AnyJump<CR>', { noremap = true, silent = false })
     end
   },
