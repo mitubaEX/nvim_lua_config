@@ -3,7 +3,6 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
-    priority = 1000,
     dependencies = { "windwp/nvim-ts-autotag" },
     config = function()
       require'nvim-treesitter.configs'.setup {
@@ -12,6 +11,9 @@ return {
           enable = true,
         },
         highlight = {
+          enable = true,
+        },
+        indent = {
           enable = true,
         },
       }

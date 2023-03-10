@@ -85,7 +85,7 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    event = { "CursorHold", "CursorHoldI" },
+    event = "BufReadPost",
     config = function()
       require('Comment').setup()
     end
