@@ -64,14 +64,18 @@ return function()
         results_title = "",
         color_devicons = true,
         use_less = true,
+        -- ignore rbi
+        file_ignore_patterns = { "%.rbi" },
       },
       grep_string = {
         mappings = mappings,
+        file_ignore_patterns = { "%.rbi" },
       },
       live_grep = {
         additional_args = function()
           return {"--hidden"}
-        end
+        end,
+        file_ignore_patterns = { "%.rbi" },
       },
       registers = {
         mappings = mappings,

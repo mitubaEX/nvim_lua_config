@@ -41,3 +41,5 @@ vim.opt.swapfile = false
 -- vim.opt.cursorline = true
 
 vim.opt.laststatus = 3
+
+vim.opt.clipboard = {}
