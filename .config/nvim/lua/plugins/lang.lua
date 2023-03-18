@@ -19,4 +19,11 @@ return {
     ft = 'ruby',
     dependencies = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
   },
+  {
+    'williamboman/mason.nvim',
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    config = function ()
+      require("mason").setup()
+    end
+  }
 }

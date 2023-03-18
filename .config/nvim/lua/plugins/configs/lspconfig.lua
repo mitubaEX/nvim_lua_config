@@ -135,21 +135,21 @@ return function()
   })
 
   -- null-ls
-  -- local null_ls = require("null-ls")
-  -- null_ls.setup({
-  --   sources = {
-  --     null_ls.builtins.formatting.prettier.with {
-  --       cwd = function()
-  --         return vim.fn.getcwd()
-  --       end,
-  --       prefer_local = "node_modules/.bin",
-  --     },
-  --     null_ls.builtins.diagnostics.eslint_d.with {
-  --       cwd = function()
-  --         return vim.fn.getcwd()
-  --       end,
-  --       -- command = "node_modules/.bin/eslint",
-  --     },
-  --   },
-  -- })
+  local null_ls = require("null-ls")
+  null_ls.setup({
+    sources = {
+      null_ls.builtins.formatting.prettier.with {
+        cwd = function()
+          return vim.fn.getcwd()
+        end,
+        prefer_local = "node_modules/.bin",
+      },
+      null_ls.builtins.diagnostics.eslint_d.with {
+        cwd = function()
+          return vim.fn.getcwd()
+        end,
+        -- command = "node_modules/.bin/eslint",
+      },
+    },
+  })
 end
