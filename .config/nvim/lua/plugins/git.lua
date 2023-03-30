@@ -28,4 +28,12 @@ return {
       require('to_github_target_pull_request_from_commit_hash').setup()
     end
   },
+  {
+    'github/copilot.vim',
+    event = "InsertEnter",
+    config = function ()
+      vim.keymap.set('i', 'C-J', [['copilot#Accept("\<CR>")']])
+      vim.g.copilot_no_tab_map = true
+    end
+  }
 }
