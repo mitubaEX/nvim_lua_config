@@ -62,13 +62,13 @@ return  function()
       { name = 'account_items' },
     },
     mapping = {
-      ['<Tab>'] = function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        else
-          fallback()
-        end
-      end,
+      -- ['<Tab>'] = function(fallback)
+      --   if cmp.visible() then
+      --     cmp.select_next_item()
+      --   else
+      --     fallback()
+      --   end
+      -- end,
       ['<C-n>'] = function(fallback)
         if cmp.visible() then
           cmp.select_next_item()

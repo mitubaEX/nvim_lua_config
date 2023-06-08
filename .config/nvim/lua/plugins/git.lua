@@ -32,7 +32,7 @@ return {
     'github/copilot.vim',
     event = "InsertEnter",
     config = function ()
-      vim.keymap.set('i', 'C-J', [['copilot#Accept("\<CR>")']])
+      vim.keymap.set('i', 'C-j', [[copilot#Accept("\<CR>")]])
       vim.g.copilot_no_tab_map = true
     end
   },
