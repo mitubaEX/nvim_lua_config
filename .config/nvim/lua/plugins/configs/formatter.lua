@@ -27,7 +27,7 @@ return function()
           return {
             exe = "bundle exec stree",
             args = {"write"},
-            stdin = true,
+            stdin = false,
           }
         end
       }

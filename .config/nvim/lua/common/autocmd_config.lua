@@ -6,7 +6,7 @@ vim.api.nvim_create_autocmd({"BufWritePre"}, {
 
 -- format
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
-  pattern = {"*.js","*.go"},
+  pattern = {"*.js","*.go","*.rb"},
   command = "FormatWrite"
 })
 
