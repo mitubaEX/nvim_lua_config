@@ -15,8 +15,18 @@ return function()
         -- go fmt
         function()
           return {
-            exe = "gofmt", -- might prepend `bundle exec `
+            exe = "gofmt",
             args = {},
+            stdin = true,
+          }
+        end
+      },
+      ruby = {
+        -- syntax_tree
+        function()
+          return {
+            exe = "bundle exec stree",
+            args = {"write"},
             stdin = true,
           }
         end

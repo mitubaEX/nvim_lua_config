@@ -10,7 +10,7 @@ return {
   },
   {
     'greymd/oscyank.vim',
-    event = "BufReadPost",
+    lazy = false,
   },
   {
     'AndrewRadev/linediff.vim',

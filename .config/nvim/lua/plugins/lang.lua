@@ -6,7 +6,7 @@ return {
       'ray-x/lsp_signature.nvim',
       'folke/lsp-trouble.nvim',
       { 'jose-elias-alvarez/null-ls.nvim', dependencies = { 'yuezk/vim-js' } },
-      'j-hui/fidget.nvim',
+      { 'j-hui/fidget.nvim', tag = 'legacy' },
     },
     config = require('plugins.configs.lspconfig'),
   },
