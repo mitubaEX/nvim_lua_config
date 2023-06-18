@@ -25,9 +25,9 @@ return function()
         -- syntax_tree
         function()
           return {
-            exe = "bundle exec stree",
-            args = {"write"},
-            stdin = false,
+            exe = "bin/stree",
+            args = {"format"},
+            stdin = true,
           }
         end
       }
