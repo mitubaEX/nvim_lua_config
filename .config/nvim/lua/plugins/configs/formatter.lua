@@ -26,8 +26,8 @@ return function()
         function()
           return {
             exe = "bin/stree",
-            args = {"format"},
-            stdin = true,
+            args = {"write"},
+            stdin = false,
           }
         end
       }

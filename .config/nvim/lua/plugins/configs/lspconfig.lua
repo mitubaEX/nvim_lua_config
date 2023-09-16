@@ -36,41 +36,16 @@ return function()
     capabilities = capabilities
   }
   lspconfig.solargraph.setup{
-    cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
+    cmd = { 'solargraph', 'stdio' },
     filetypes = {"ruby", "rakefile", "rspec"},
     on_attach = on_attach,
     capabilities = capabilities
   }
   -- lspconfig.ruby_ls.setup{
-  --   cmd = { 'bundle', 'exec', 'ruby-lsp' },
+  --   cmd = { 'ruby-lsp' },
   --   filetypes = {"ruby", "rakefile", "rspec"},
   --   capabilities = capabilities,
-  --   on_attach = function(client, buffer)
-  --     local callback = function()
-  --       local params = vim.lsp.util.make_text_document_params(buffer)
-  --       client.request(
-  --       'textDocument/diagnostic',
-  --       { textDocument = params },
-  --       function(err, result)
-  --         if err then return end
-  --
-  --         vim.lsp.diagnostic.on_publish_diagnostics(
-  --         nil,
-  --         vim.tbl_extend('keep', params, { diagnostics = result.items }),
-  --         { client_id = client.id }
-  --         )
-  --       end
-  --       )
-  --     end
-  --
-  --     on_attach(client, buffer) -- call my common func
-  --     callback() -- call on attach
-  --
-  --     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePre', 'BufReadPost', 'InsertLeave', 'TextChanged' }, {
-  --       buffer = buffer,
-  --       callback = callback,
-  --     })
-  --   end,
+  --   on_attach = on_attach,
   -- }
   lspconfig.sorbet.setup {
     cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
