@@ -1,8 +1,18 @@
 return {
   {
-    'mhartington/formatter.nvim',
-    event = "InsertEnter",
-    config = require('plugins.configs.formatter'),
+    'stevearc/conform.nvim',
+    lazy = false,
+    opts = {},
+    config = function()
+      require('conform').setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+          -- Use a sub-list to run only the first available formatter
+          javascript = { { "prettierd", "prettier" } },
+          typescript = { { "prettierd", "prettier" } },
+        },
+      })
+    end,
   },
   {
     'nvim-telescope/telescope.nvim',
