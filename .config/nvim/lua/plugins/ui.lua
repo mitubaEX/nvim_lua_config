@@ -6,7 +6,7 @@ return {
     dependencies = { "windwp/nvim-ts-autotag" },
     config = function()
       require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "ruby", "javascript", "lua", "vim", "vimdoc", "query" },
+        ensure_installed = { "ruby", "javascript", "lua", "vim", "vimdoc", "query", "typescript", "tsx", "json", "yaml", "html", "css", "scss", "bash", "python", "go", "rust", "toml", "jsonc", "dockerfile", "lua" },
         autotag = {
           enable = true,
         },

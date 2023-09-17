@@ -2,7 +2,6 @@ return {
   {
     'stevearc/conform.nvim',
     lazy = false,
-    opts = {},
     config = function()
       require('conform').setup({
         formatters_by_ft = {
@@ -13,6 +12,17 @@ return {
         },
       })
     end,
+  },
+  {
+    'mfussenegger/nvim-lint',
+    lazy = false,
+    config = function()
+      require('lint').linters_by_ft = {
+        javascript = { 'eslint' },
+        typescript = { 'eslint' },
+        lua = { 'luacheck' },
+      }
+    end
   },
   {
     'nvim-telescope/telescope.nvim',
