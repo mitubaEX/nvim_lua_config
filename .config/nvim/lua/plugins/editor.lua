@@ -9,6 +9,7 @@ return {
           -- Use a sub-list to run only the first available formatter
           javascript = { { "prettierd", "prettier" } },
           typescript = { { "prettierd", "prettier" } },
+          go = { "gofmt" },
         },
       })
     end,
@@ -21,6 +22,7 @@ return {
         javascript = { 'eslint' },
         typescript = { 'eslint' },
         lua = { 'luacheck' },
+        ruby = { 'rubocop' },
       }
     end
   },

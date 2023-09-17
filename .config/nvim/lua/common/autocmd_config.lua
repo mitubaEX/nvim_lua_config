@@ -4,12 +4,6 @@ vim.api.nvim_create_autocmd({"BufWritePre"}, {
   command = "%s/\\s\\+$//e"
 })
 
--- format
-vim.api.nvim_create_autocmd({"BufWritePost"}, {
-  pattern = {"*.js","*.go","*.rb"},
-  command = "FormatWrite"
-})
-
 vim.cmd([[autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L]])
 
 -- open spec template
