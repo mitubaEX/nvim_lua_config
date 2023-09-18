@@ -20,11 +20,20 @@ return {
   },
   {
     'williamboman/mason.nvim',
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    lazy = false,
     config = function ()
       require("mason").setup()
     end
   },
+
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {'williamboman/mason.nvim'},
+    lazy = false,
+    config = function ()
+      require("mason-lspconfig").setup()
+    end
+  }
   -- {
   --   'scalameta/nvim-metals',
   --   ft = 'scala',
