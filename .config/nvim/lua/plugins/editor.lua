@@ -116,7 +116,7 @@ return {
     'Asheq/close-buffers.vim',
     event = { "CursorHold", "CursorHoldI" },
     config = function()
-      vim.keymap.set('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
     end
   },
   {
