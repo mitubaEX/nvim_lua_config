@@ -30,7 +30,7 @@ return function()
   -- lspconfig
   lspconfig.tsserver.setup{
     filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
-    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
     settings = {documentFormatting = false},
     on_attach = on_attach,
     capabilities = capabilities
@@ -47,12 +47,12 @@ return function()
   --   capabilities = capabilities,
   --   on_attach = on_attach,
   -- }
-  lspconfig.sorbet.setup {
-    cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
-    filetypes = {"ruby", "rakefile", "rspec"},
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
+  -- lspconfig.sorbet.setup {
+  --   cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
+  --   filetypes = {"ruby", "rakefile", "rspec"},
+  --   on_attach = on_attach,
+  --   capabilities = capabilities,
+  -- }
   lspconfig.flow.setup{
     on_attach = on_attach,
     capabilities = capabilities
