@@ -105,6 +105,10 @@ return function()
     on_attach = on_attach,
     capabilities = capabilities
   }
+  lspconfig.hls.setup{
+    on_attach = on_attach,
+    capabilities = capabilities
+  }
 
   require("lsp_signature").setup({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
