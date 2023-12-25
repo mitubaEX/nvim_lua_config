@@ -81,7 +81,7 @@ return {
     'xiyaowong/nvim-cursorword',
     event = "BufReadPost",
     config = function()
-      vim.api.nvim_set_hl(0, "CursorWord", { bold = 1, default = 1 })
+      vim.api.nvim_set_hl(0, "CursorWord", { bold = true, default = true })
     end
   },
   {
