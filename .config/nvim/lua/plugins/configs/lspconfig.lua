@@ -15,6 +15,7 @@ return function()
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
     -- vim.keymap.set('n', '<space>f', ":lua vim.lsp.buf.format { async = true }<CR>", bufopts)
 
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
