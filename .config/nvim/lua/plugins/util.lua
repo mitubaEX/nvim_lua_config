@@ -3,7 +3,7 @@ return {
     "akinsho/toggleterm.nvim",
     event = "BufReadPost",
     config = function ()
-      require("toggleterm").setup{ open_mapping = [[<c-l>]] }
+      require("toggleterm").setup{}
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
       vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
     end
