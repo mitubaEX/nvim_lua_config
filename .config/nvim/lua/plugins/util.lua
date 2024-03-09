@@ -46,4 +46,11 @@ return {
     'itchyny/vim-parenmatch',
     event = "BufReadPost",
   },
+  {
+    'bloznelis/before.nvim',
+    config = function()
+      local before = require('before')
+      before.setup()
+    end
+  }
 }
