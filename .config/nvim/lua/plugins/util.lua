@@ -39,7 +39,14 @@ return {
     'mitubaEX/toggle_rspec_file.nvim',
     ft = 'ruby',
     config = function()
-      vim.keymap.set('n', '<Leader>x', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<Leader>xr', ':ToggleRspecFile<CR>', { noremap = true, silent = true })
+    end
+  },
+  {
+    'mitubaEX/toggle_go_test_file.nvim',
+    ft = 'go',
+    config = function()
+      vim.keymap.set('n', '<Leader>xg', ':ToggleGoTestFile<CR>', { noremap = true, silent = true })
     end
   },
   {
