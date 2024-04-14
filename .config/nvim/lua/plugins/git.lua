@@ -28,30 +28,30 @@ return {
       require('to_github_target_pull_request_from_commit_hash').setup()
     end
   },
-  -- {
-  --   'github/copilot.vim',
-  --   event = "InsertEnter",
-  --   config = function ()
-  --     vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
-  --       expr = true,
-  --       replace_keycodes = false
-  --     })
-  --     vim.g.copilot_no_tab_map = true
-  --     vim.g.copilot_filetypes = {
-  --       gitcommit = true,
-  --       markdown = true,
-  --       yaml = true,
-  --     }
-  --     -- vim.keymap.set('i', '<C-H>', '<Plug>(copilot-previous)', {
-  --     --   expr = true,
-  --     --   replace_keycodes = false
-  --     -- })
-  --     -- vim.keymap.set('i', '<C-L>', '<Plug>(copilot-next)', {
-  --     --   expr = true,
-  --     --   replace_keycodes = false
-  --     -- })
-  --   end
-  -- },
+  {
+    'github/copilot.vim',
+    event = "InsertEnter",
+    config = function ()
+      vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false
+      })
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_filetypes = {
+        gitcommit = true,
+        markdown = true,
+        yaml = true,
+      }
+      -- vim.keymap.set('i', '<C-H>', '<Plug>(copilot-previous)', {
+      --   expr = true,
+      --   replace_keycodes = false
+      -- })
+      -- vim.keymap.set('i', '<C-L>', '<Plug>(copilot-next)', {
+      --   expr = true,
+      --   replace_keycodes = false
+      -- })
+    end
+  },
   {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
