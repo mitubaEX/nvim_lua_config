@@ -65,6 +65,7 @@ return {
           markdown = true,
           help = true,
           ruby = true,
+          gitcommit = true,
         },
       })
     end
