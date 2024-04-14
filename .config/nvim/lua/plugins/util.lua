@@ -29,6 +29,43 @@ return {
     end
   },
   {
+    "nvim-neotest/neotest",
+    event = "BufReadPost",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "olimorris/neotest-rspec",
+      "nvim-neotest/neotest-go",
+    },
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          require("neotest-rspec"),
+          require("neotest-go"),
+        },
+      })
+      -- vim.keymap.set('n', '<Leader>q', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<Leader>Q', ':lua require("neotest").run.run()<CR>', { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<Leader>qo', ':lua require("neotest").output.open({ enter = true })<CR>', { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<Leader>qb', ':lua require("neotest").run.run({strategy = "dap"})<CR>', { noremap = true, silent = true })
+    end
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    event = "BufReadPost",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+      "leoluz/nvim-dap-go",
+    },
+    config = function()
+      require("dapui").setup()
+      require('dap-go').setup()
+    end
+  },
+  {
     'lukas-reineke/headlines.nvim',
     ft = 'markdown',
     config = function()

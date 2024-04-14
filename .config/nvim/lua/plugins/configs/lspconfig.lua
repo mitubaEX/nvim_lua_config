@@ -36,24 +36,24 @@ return function()
     on_attach = on_attach,
     capabilities = capabilities
   }
-  lspconfig.solargraph.setup{
-    cmd = { 'solargraph', 'stdio' },
-    filetypes = {"ruby", "rakefile", "rspec"},
-    on_attach = on_attach,
-    capabilities = capabilities
-  }
+  -- lspconfig.solargraph.setup{
+  --   cmd = { 'solargraph', 'stdio' },
+  --   filetypes = {"ruby", "rakefile", "rspec"},
+  --   on_attach = on_attach,
+  --   capabilities = capabilities
+  -- }
   -- lspconfig.ruby_ls.setup{
   --   cmd = { 'ruby-lsp' },
   --   filetypes = {"ruby", "rakefile", "rspec"},
   --   capabilities = capabilities,
   --   on_attach = on_attach,
   -- }
-  -- lspconfig.sorbet.setup {
-  --   cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
-  --   filetypes = {"ruby", "rakefile", "rspec"},
-  --   on_attach = on_attach,
-  --   capabilities = capabilities,
-  -- }
+  lspconfig.sorbet.setup {
+    cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
+    filetypes = {"ruby", "rakefile", "rspec"},
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
   lspconfig.flow.setup{
     on_attach = on_attach,
     capabilities = capabilities
@@ -72,6 +72,14 @@ return function()
   }
   lspconfig.gopls.setup{
     on_attach = on_attach,
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+      }
+    },
     capabilities = capabilities
   }
   lspconfig.denols.setup{
