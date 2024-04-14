@@ -53,6 +53,31 @@ return {
     end
   },
   {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    build = ":Copilot auth",
+    event = "InsertEnter",
+    config = function ()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        filetypes = {
+          markdown = true,
+          help = true,
+          ruby = true,
+          gitcommit = true,
+        },
+      })
+    end
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    event = "InsertEnter",
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
+  {
     "CopilotC-Nvim/CopilotChat.nvim",
     opts = {
       show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes

@@ -45,6 +45,7 @@ return  function()
       { name = 'vsnip' }, -- For vsnip users.
       -- { name = "cmp_tabnine" },
       { name = "nvim_lua" },
+      { name = "copilot" },
       {
         name = "buffer",
         option = {
