@@ -13,6 +13,7 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
+      "zbirenbaum/copilot-cmp"
       -- 'mitubaEX/cmp-account-items',
     },
     config = require('plugins.configs.nvim-cmp')
