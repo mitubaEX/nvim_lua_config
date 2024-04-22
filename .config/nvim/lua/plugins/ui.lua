@@ -63,6 +63,13 @@ return {
   --     require("tint").setup({})
   --   end
   -- },
+  {
+    'b0o/incline.nvim',
+    event = "BufReadPost",
+    config = function ()
+      require("incline").setup({})
+    end
+  },
 
   -- startify
   {
