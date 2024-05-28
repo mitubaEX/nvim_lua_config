@@ -42,4 +42,4 @@ vim.opt.swapfile = false
 
 vim.opt.laststatus = 3
 
-vim.opt.clipboard = {}
+-- vim.opt.clipboard = {}
