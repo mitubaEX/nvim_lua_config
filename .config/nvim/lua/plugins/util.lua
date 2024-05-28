@@ -1,7 +1,7 @@
 return {
   {
     "akinsho/toggleterm.nvim",
-    event = "BufReadPost",
+    lazy = false,
     config = function ()
       require("toggleterm").setup{}
       vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
@@ -63,6 +63,14 @@ return {
     config = function()
       require("dapui").setup()
       require('dap-go').setup()
+
+      -- デバッグ実行はこれ
+      -- local dap = require('dap')
+      -- dap.listerners.after.event_initialized['dapui_config'] = dapui.open
+      -- dap.listerners.after.event_terminated['dapui_config'] = dapui.close
+
+      -- 単体テストはこれ
+      -- lua require('dap-go').debug_test()
     end
   },
   {
