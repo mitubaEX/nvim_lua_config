@@ -3,7 +3,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
-    dependencies = { "windwp/nvim-ts-autotag" },
+    dependencies = { "windwp/nvim-ts-autotag", 'RRethy/nvim-treesitter-endwise', 'andymass/vim-matchup' },
     build = ":TSUpdate",
     config = function()
       require'nvim-treesitter.configs'.setup {
@@ -12,6 +12,9 @@ return {
         auto_install = true,
         ignore_install = {},
         modules = {},
+        matchup = {
+          enable = true, -- mandatory, false will disable the whole extension
+        },
         autotag = {
           enable = true,
         },
@@ -19,6 +22,9 @@ return {
           enable = true,
         },
         indent = {
+          enable = true,
+        },
+        endwise = {
           enable = true,
         },
       }
