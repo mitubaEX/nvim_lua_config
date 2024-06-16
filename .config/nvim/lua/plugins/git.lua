@@ -128,5 +128,22 @@ return {
     'akinsho/git-conflict.nvim',
     event = "VeryLazy",
     version = "*",
+    config = function()
+      require('git-conflict').setup()
+    end
+  },
+  {
+    "NeogitOrg/neogit",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+
+      -- Only one of these is needed, not both.
+      "ibhagwan/fzf-lua",              -- optional
+    },
+    config = function()
+      require('neogit').setup()
+    end
   }
 }
