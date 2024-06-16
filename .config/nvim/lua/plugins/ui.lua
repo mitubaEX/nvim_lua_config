@@ -46,10 +46,38 @@ return {
     dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' },
     config = require('plugins.configs.lualine'),
   },
+  -- {
+  --   'kyazdani42/nvim-tree.lua',
+  --   event = { "BufReadPost", "BufAdd", "BufNewFile" },
+  --   config = require('plugins.configs.nvim-tree'),
+  -- },
   {
-    'kyazdani42/nvim-tree.lua',
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    config = require('plugins.configs.nvim-tree'),
+    -- NOTE: require https://github.com/sxyazi/yazi
+    "mikavilpas/yazi.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>d",
+        function()
+          require("yazi").yazi()
+        end,
+        desc = "Open the file manager",
+      },
+      {
+        "<leader>cw",
+        function()
+          require("yazi").yazi(nil, vim.fn.getcwd())
+        end,
+        desc = "Open the file manager in nvim's working directory" ,
+      },
+    },
+    ---@type YaziConfig
+    opts = {
+      open_for_directories = false,
+    },
   },
   -- {
   --   'lukas-reineke/indent-blankline.nvim',
