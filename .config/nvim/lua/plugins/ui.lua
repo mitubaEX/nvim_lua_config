@@ -46,11 +46,6 @@ return {
     dependencies = { 'kyazdani42/nvim-web-devicons', 'ryanoasis/vim-devicons' },
     config = require('plugins.configs.lualine'),
   },
-  -- {
-  --   'kyazdani42/nvim-tree.lua',
-  --   event = { "BufReadPost", "BufAdd", "BufNewFile" },
-  --   config = require('plugins.configs.nvim-tree'),
-  -- },
   {
     -- NOTE: require https://github.com/sxyazi/yazi
     "mikavilpas/yazi.nvim",
