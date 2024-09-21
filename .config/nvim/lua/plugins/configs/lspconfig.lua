@@ -27,7 +27,7 @@ return function()
   end
 
   -- lspconfig
-  lspconfig.tsserver.setup{
+  lspconfig.ts_ls.setup{
     filetypes = {'typescript', 'typescript.tsx', 'typescriptreact'},
     root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
     settings = {documentFormatting = false},
