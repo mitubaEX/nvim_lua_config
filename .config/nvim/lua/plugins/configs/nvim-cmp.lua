@@ -29,11 +29,6 @@ return  function()
         },
       }),
     },
-    snippet = {
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      end,
-    },
     window = {
       documentation = {
         border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
@@ -42,8 +37,6 @@ return  function()
     sources = {
       { name = "nvim_lsp" },
       { name = "path" },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = "cmp_tabnine" },
       { name = "nvim_lua" },
       { name = "copilot" },
       {
@@ -63,13 +56,6 @@ return  function()
       { name = 'account_items' },
     },
     mapping = {
-      -- ['<Tab>'] = function(fallback)
-      --   if cmp.visible() then
-      --     cmp.select_next_item()
-      --   else
-      --     fallback()
-      --   end
-      -- end,
       ['<C-n>'] = function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -88,17 +74,4 @@ return  function()
     },
   })
   cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
-
-  -- vsnip
-  -- Jump forward or backward
-  vim.api.nvim_command([[
-    imap <expr> <C-b>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-b>'
-    smap <expr> <C-b>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-b>'
-  ]])
-  -- If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
-  vim.api.nvim_command([[
-    let g:vsnip_filetypes = {}
-    let g:vsnip_filetypes.javascriptreact = ['javascript']
-    let g:vsnip_filetypes.typescriptreact = ['typescript']
-  ]])
 end

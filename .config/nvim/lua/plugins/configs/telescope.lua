@@ -8,13 +8,16 @@ return function()
       ["<c-u>"] = actions.preview_scrolling_up,
       ["<c-d>"] = actions.preview_scrolling_down,
 
-      ["<C-j>"] = actions.move_selection_next,
-      ["<C-k>"] = actions.move_selection_previous,
+      -- ["<C-j>"] = actions.move_selection_next,
+      -- ["<C-k>"] = actions.move_selection_previous,
 
       -- ["<CR>"] = actions.select_vertical,
     },
     n = {
       ["<esc>"] = actions.close,
+
+      ["<c-u>"] = actions.preview_scrolling_up,
+      ["<c-d>"] = actions.preview_scrolling_down,
     },
   }
   -- Global remapping
