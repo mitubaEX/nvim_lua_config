@@ -1,23 +1,17 @@
 return {
 	{
-		"kdheepak/lazygit.nvim",
-		lazy = true,
-		cmd = {
-			"LazyGit",
-			"LazyGitConfig",
-			"LazyGitCurrentFile",
-			"LazyGitFilter",
-			"LazyGitFilterCurrentFile",
-		},
-		-- optional for floating window border decoration
+		"NeogitOrg/neogit",
+		event = "VeryLazy",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
+			"nvim-lua/plenary.nvim", -- required
+			"sindrets/diffview.nvim", -- optional - Diff integration
+
+			-- Only one of these is needed, not both.
+			"ibhagwan/fzf-lua", -- optional
 		},
-		-- setting the keybinding for LazyGit with 'keys' is recommended in
-		-- order to load the plugin when the command is run for the first time
-		keys = {
-			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-		},
+		config = function()
+			require("neogit").setup()
+		end,
 	},
 	{
 		"lewis6991/gitsigns.nvim",
@@ -29,17 +23,8 @@ return {
 			})
 		end,
 	},
-	{
-		"mitubaEX/blame_open.nvim",
-		event = "VeryLazy",
-	},
-	{
-		"mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("to_github_target_pull_request_from_commit_hash").setup()
-		end,
-	},
+
+	-- copilot
 	{
 		"github/copilot.vim",
 		event = "InsertEnter",
@@ -123,26 +108,25 @@ return {
 			},
 		},
 	},
+
+	-- utils
+	{
+		"mitubaEX/blame_open.nvim",
+		event = "VeryLazy",
+	},
+	{
+		"mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("to_github_target_pull_request_from_commit_hash").setup()
+		end,
+	},
 	{
 		"akinsho/git-conflict.nvim",
 		event = "VeryLazy",
 		version = "*",
 		config = function()
 			require("git-conflict").setup()
-		end,
-	},
-	{
-		"NeogitOrg/neogit",
-		event = "VeryLazy",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
-
-			-- Only one of these is needed, not both.
-			"ibhagwan/fzf-lua", -- optional
-		},
-		config = function()
-			require("neogit").setup()
 		end,
 	},
 }

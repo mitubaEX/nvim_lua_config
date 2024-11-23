@@ -7,8 +7,8 @@ return {
 				formatters_by_ft = {
 					lua = { "stylua" },
 					-- Use a sub-list to run only the first available formatter
-					javascript = { { "prettierd", "prettier" } },
-					typescript = { { "prettierd", "prettier" } },
+					javascript = { "prettierd", "prettier" },
+					typescript = { "prettierd", "prettier" },
 					go = { "gofmt" },
 				},
 			})
@@ -48,13 +48,6 @@ return {
 		end,
 	},
 	{
-		"matze/vim-move",
-		event = "BufReadPost",
-		init = function()
-			vim.g.move_key_modifier = "C"
-		end,
-	},
-	{
 		"mg979/vim-visual-multi",
 		event = "BufReadPost",
 	},
@@ -66,15 +59,15 @@ return {
 			vim.g.any_jump_disable_default_keybindings = "1"
 		end,
 		config = function()
-			vim.keymap.set("n", "<Leader>a", ":AnyJump<CR>", { noremap = true, silent = false })
+			vim.keymap.set("n", "<Leader>an", ":AnyJump<CR>", { noremap = true, silent = false })
 		end,
 	},
 	{
 		"t9md/vim-quickhl",
 		event = "BufReadPost",
 		config = function()
-			vim.keymap.set("n", "<Leader>m", "<Plug>(quickhl-manual-this)", { noremap = false, silent = false })
-			vim.keymap.set("n", "<Leader>M", "<Plug>(quickhl-manual-reset)", { noremap = false, silent = false })
+			vim.keymap.set("n", "<Leader>qh", "<Plug>(quickhl-manual-this)", { noremap = false, silent = false })
+			vim.keymap.set("n", "<Leader>qH", "<Plug>(quickhl-manual-reset)", { noremap = false, silent = false })
 		end,
 	},
 	{
@@ -108,9 +101,6 @@ return {
 	{
 		"Asheq/close-buffers.vim",
 		event = { "CursorHold", "CursorHoldI" },
-		config = function()
-			-- vim.keymap.set('n', '<C-q>', ':Bdelete hidden<CR>', { noremap = true, silent = true })
-		end,
 	},
 	{
 		"phaazon/hop.nvim",
@@ -122,7 +112,7 @@ return {
 				create_hl_autocmd = false,
 				winblend = 0,
 			})
-			vim.keymap.set("n", "<Leader>e", ":HopWord<CR>", { noremap = true, silent = true })
+			vim.keymap.set("n", "<Leader>hp", ":HopWord<CR>", { noremap = true, silent = true })
 		end,
 	},
 	-- {
