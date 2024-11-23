@@ -3,9 +3,7 @@ return {
     "akinsho/toggleterm.nvim",
     lazy = false,
     config = function ()
-      require("toggleterm").setup{}
-      vim.keymap.set('n', '<C-w>w', ':ToggleTerm direction=float<CR>', { noremap = true, silent = false })
-      vim.keymap.set('n', '<Leader>s', ':ToggleTerm size=15 direction=horizontal<CR>', { noremap = true, silent = false })
+      require("toggleterm").setup()
     end
   },
   {
@@ -96,6 +94,10 @@ return {
   },
   {
     'itchyny/vim-parenmatch',
+    event = "BufReadPost",
+  },
+  {
+    'mogulla3/copy-file-path.nvim',
     event = "BufReadPost",
   },
   {

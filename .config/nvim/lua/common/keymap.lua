@@ -16,12 +16,3 @@ vim.keymap.set('v', '<Leader>p', '"0p', { noremap = true, silent = true })
 
 -- noh
 vim.keymap.set('n', '<Esc><Esc>', ':noh<CR>', { noremap = true, silent = true })
-
--- insert new line without entering insert mode
-vim.keymap.set('n', '<Leader>o', 'o<Esc>', { noremap = true, silent = false })
-
--- pbcopy filename
--- only filename
-vim.keymap.set('n', '<Leader>c', ':!echo -n "%:t" | pbcopy<CR>', { noremap = false, silent = false })
--- relative path
-vim.keymap.set('n', '<Leader>C', ':!echo -n "%:." | pbcopy<CR>', { noremap = false, silent = false })
