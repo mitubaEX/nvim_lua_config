@@ -6,9 +6,6 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<Leader>w", ":w<CR>", { noremap = true, silent = false })
 vim.keymap.set("i", "jj", "<ESC>", { noremap = true, silent = true })
 
--- terminal escape
-vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true })
-
 -- copy 0 register
 vim.keymap.set("n", "<Leader>p", '"0p', { noremap = true, silent = true })
 vim.keymap.set("n", "<Leader>P", '"0P', { noremap = true, silent = true })

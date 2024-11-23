@@ -30,14 +30,6 @@ return {
 		end,
 	},
 	{
-		"junegunn/gv.vim",
-		event = { "CursorHold", "CursorHoldI" },
-		dependencies = { "tpope/vim-fugitive" },
-		config = function()
-			vim.keymap.set("n", "<C-g>l", ":GV!<CR>", { noremap = true, silent = true })
-		end,
-	},
-	{
 		"mitubaEX/blame_open.nvim",
 		event = "VeryLazy",
 	},
@@ -52,24 +44,11 @@ return {
 		"github/copilot.vim",
 		event = "InsertEnter",
 		config = function()
-			-- vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
-			--   expr = true,
-			--   replace_keycodes = false
-			-- })
-			-- vim.g.copilot_no_tab_map = true
 			vim.g.copilot_filetypes = {
 				gitcommit = true,
 				markdown = true,
 				yaml = true,
 			}
-			-- vim.keymap.set('i', '<C-H>', '<Plug>(copilot-previous)', {
-			--   expr = true,
-			--   replace_keycodes = false
-			-- })
-			-- vim.keymap.set('i', '<C-L>', '<Plug>(copilot-next)', {
-			--   expr = true,
-			--   replace_keycodes = false
-			-- })
 		end,
 	},
 	{
