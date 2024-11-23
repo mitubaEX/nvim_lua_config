@@ -95,9 +95,4 @@ return function()
   vim.keymap.set('n', ';', '<cmd>Telescope buffers<CR>', { noremap = true, silent = false })
   vim.keymap.set('n', '<Leader>g', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = false })
   vim.keymap.set('n', '<Leader>y', ":lua require'telescope.builtin'.registers{}<CR>", { noremap = true, silent = true })
-
-  local before = require('before')
-  vim.keymap.set('n', '<leader>oe', function()
-    before.show_edits(require('telescope.themes').get_dropdown())
-  end, {})
 end

@@ -4,29 +4,11 @@ vim.api.nvim_create_autocmd({"BufWritePre"}, {
   command = "%s/\\s\\+$//e"
 })
 
-vim.cmd([[autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L]])
-
--- open spec template
-vim.api.nvim_create_autocmd({"BufNewFile"}, {
-  pattern = {"*_spec.rb"},
-  command = "0r ~/.config/nvim/template/template_spec.rb"
-})
-
-vim.api.nvim_create_autocmd({"BufNewFile","BufRead"}, {
-  pattern = {"*.eco"},
-  command = "setf mason"
-})
-
 -- yank highlight
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
   pattern = {"*"},
   command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=700}"
 })
-
--- vim.api.nvim_create_autocmd({"TextYankPost"}, {
---   pattern = {"*"},
---   command = "silent! OscyankRegister"
--- })
 
 -- restore cursor shape
 -- https://vi.stackexchange.com/questions/25103/neovim-does-not-restore-terminal-cursor-on-exit

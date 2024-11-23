@@ -21,22 +21,12 @@ return {
     },
   },
   {
-    'neoclide/vim-jsx-improve',
-    lazy = false,
-  },
-  {
-    'tpope/vim-rails',
-    ft = 'ruby',
-    dependencies = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
-  },
-  {
     'williamboman/mason.nvim',
     lazy = false,
     config = function ()
       require("mason").setup()
     end
   },
-
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = {'williamboman/mason.nvim'},
@@ -44,26 +34,50 @@ return {
     config = function ()
       require("mason-lspconfig").setup()
     end
-  }
-  -- {
-  --   'scalameta/nvim-metals',
-  --   ft = 'scala',
-  --   requires = { "nvim-lua/plenary.nvim" },
-  --   config = function ()
-  --     vim.cmd([[augroup lsp]])
-  --     vim.cmd([[autocmd!]])
-  --     vim.cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-  --     -- Java のLSPも利用する場合はここがコンフリクトする可能性がある
-  --     vim.cmd([[autocmd FileType java,scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
-  --     vim.cmd([[augroup end]])
-  --
-  --     local metals_config = require("metals").bare_config()
-  --
-  --     -- Example of settings
-  --     metals_config.settings = {
-  --       showImplicitArguments = true,
-  --       excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-  --     }
-  --   end
-  -- }
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    event = "BufReadPost",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+      "leoluz/nvim-dap-go",
+    },
+    config = function()
+      require("dapui").setup()
+      require('dap-go').setup()
+
+      -- デバッグ実行はこれ
+      -- local dap = require('dap')
+      -- dap.listerners.after.event_initialized['dapui_config'] = dapui.open
+      -- dap.listerners.after.event_terminated['dapui_config'] = dapui.close
+
+      -- 単体テストはこれ
+      -- lua require('dap-go').debug_test()
+    end
+  },
+
+
+  -- ## each langauge
+  -- js
+  {
+    'neoclide/vim-jsx-improve',
+    lazy = false,
+  },
+
+  -- rails
+  {
+    'tpope/vim-rails',
+    ft = 'ruby',
+    dependencies = {'tpope/vim-bundler', 'tpope/vim-dispatch'},
+  },
+
+  -- markdown
+  {
+    'lukas-reineke/headlines.nvim',
+    ft = 'markdown',
+    config = function()
+      require('headlines').setup()
+    end,
+  },
 }
