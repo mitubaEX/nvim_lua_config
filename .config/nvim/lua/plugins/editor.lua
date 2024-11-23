@@ -115,14 +115,14 @@ return {
 			vim.keymap.set("n", "<Leader>hp", ":HopWord<CR>", { noremap = true, silent = true })
 		end,
 	},
-	-- {
-	--   'rhysd/accelerated-jk',
-	--   event = "VeryLazy",
-	--   config = function()
-	--     vim.keymap.set('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = false, silent = false })
-	--     vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = false, silent = false })
-	--   end
-	-- },
+	{
+		"rhysd/accelerated-jk",
+		event = "VeryLazy",
+		config = function()
+			vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", { noremap = false, silent = false })
+			vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", { noremap = false, silent = false })
+		end,
+	},
 	{
 		"nicwest/vim-camelsnek",
 		event = "VeryLazy",

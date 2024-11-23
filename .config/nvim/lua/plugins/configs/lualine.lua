@@ -31,11 +31,10 @@ return function()
 
 						return msg
 					end,
-					icon = "⚙️ :",
 					color = { fg = "#a69ded" },
 					separator = "",
 				},
-				{ "diagnostics", sources = { "nvim_diagnostic" }, icon = "🚦:" },
+				{ "diagnostics", sources = { "nvim_diagnostic" } },
 			},
 			lualine_x = { "encoding", "fileformat", "filetype" },
 			lualine_y = { "progress" },

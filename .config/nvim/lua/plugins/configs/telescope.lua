@@ -7,11 +7,6 @@ return function()
 
 			["<c-u>"] = actions.preview_scrolling_up,
 			["<c-d>"] = actions.preview_scrolling_down,
-
-			-- ["<C-j>"] = actions.move_selection_next,
-			-- ["<C-k>"] = actions.move_selection_previous,
-
-			-- ["<CR>"] = actions.select_vertical,
 		},
 		n = {
 			["<esc>"] = actions.close,
@@ -36,7 +31,7 @@ return function()
 				mappings = mappings,
 				sort_mru = true,
 				preview_title = false,
-				theme = "ivy",
+				-- theme = "ivy",
 			},
 			git_files = {
 				mappings = mappings,
@@ -91,13 +86,7 @@ return function()
 		},
 	})
 
-	vim.keymap.set("n", "<Leader>t", "<cmd>Telescope git_files<CR>", { noremap = true, silent = false })
+	vim.keymap.set("n", "<Leader>ff", "<cmd>Telescope git_files<CR>", { noremap = true, silent = false })
+	vim.keymap.set("n", "<Leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = false })
 	vim.keymap.set("n", ";", "<cmd>Telescope buffers<CR>", { noremap = true, silent = false })
-	vim.keymap.set("n", "<Leader>g", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = false })
-	vim.keymap.set(
-		"n",
-		"<Leader>y",
-		":lua require'telescope.builtin'.registers{}<CR>",
-		{ noremap = true, silent = true }
-	)
 end
