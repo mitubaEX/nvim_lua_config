@@ -47,32 +47,37 @@ return {
     config = require('plugins.configs.lualine'),
   },
   {
-    -- NOTE: require https://github.com/sxyazi/yazi
-    "mikavilpas/yazi.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    event = "VeryLazy",
-    keys = {
-      {
-        "<leader>d",
-        function()
-          require("yazi").yazi()
-        end,
-        desc = "Open the file manager",
-      },
-      {
-        "<leader>cw",
-        function()
-          require("yazi").yazi(nil, vim.fn.getcwd())
-        end,
-        desc = "Open the file manager in nvim's working directory" ,
-      },
-    },
-    ---@type YaziConfig
-    opts = {
-      open_for_directories = false,
-    },
+    'stevearc/oil.nvim',
+    event = "BufReadPost",
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    config = function ()
+      local oil = require("oil")
+      oil.setup({
+        keymaps = {
+          ["<C-d>"] = "actions.preview_scroll_down",
+          ["<C-u>"] = "actions.preview_scroll_up",
+          ["<leader>ff"] = {
+            function()
+              require("telescope.builtin").find_files({
+                cwd = require("oil").get_current_dir()
+              })
+            end,
+            mode = "n",
+            nowait = true,
+            desc = "Find files in the current directory"
+          },
+        },
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "OilEnter",
+        callback = vim.schedule_wrap(function(args)
+          if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+            oil.open_preview()
+          end
+        end),
+      })
+    end
   },
   -- {
   --   'lukas-reineke/indent-blankline.nvim',
