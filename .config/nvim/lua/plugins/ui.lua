@@ -72,25 +72,24 @@ return {
 		"stevearc/oil.nvim",
 		event = "BufReadPost",
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
+		opts = {
+			keymaps = {
+				["<C-d>"] = "actions.preview_scroll_down",
+				["<C-u>"] = "actions.preview_scroll_up",
+				["<leader>ff"] = {
+					function()
+						require("telescope.builtin").find_files({
+							cwd = require("oil").get_current_dir(),
+						})
+					end,
+					mode = "n",
+					nowait = true,
+					desc = "Find files in the current directory",
+				},
+			},
+		},
 		config = function()
 			local oil = require("oil")
-			oil.setup({
-				keymaps = {
-					["<C-d>"] = "actions.preview_scroll_down",
-					["<C-u>"] = "actions.preview_scroll_up",
-					["<leader>ff"] = {
-						function()
-							require("telescope.builtin").find_files({
-								cwd = require("oil").get_current_dir(),
-							})
-						end,
-						mode = "n",
-						nowait = true,
-						desc = "Find files in the current directory",
-					},
-				},
-			})
-
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "OilEnter",
 				callback = vim.schedule_wrap(function(args)

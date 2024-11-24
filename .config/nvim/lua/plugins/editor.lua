@@ -2,17 +2,15 @@ return {
 	{
 		"stevearc/conform.nvim",
 		lazy = false,
-		config = function()
-			require("conform").setup({
-				formatters_by_ft = {
-					lua = { "stylua" },
-					-- Use a sub-list to run only the first available formatter
-					javascript = { "prettierd", "prettier" },
-					typescript = { "prettierd", "prettier" },
-					go = { "gofmt" },
-				},
-			})
-		end,
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				-- Use a sub-list to run only the first available formatter
+				javascript = { "prettierd", "prettier" },
+				typescript = { "prettierd", "prettier" },
+				go = { "gofmt" },
+			},
+		},
 	},
 	{
 		"mfussenegger/nvim-lint",
@@ -35,9 +33,6 @@ return {
 	{
 		"kylechui/nvim-surround",
 		event = "InsertEnter",
-		config = function()
-			require("nvim-surround").setup()
-		end,
 	},
 	{
 		"tyru/columnskip.vim",
@@ -65,10 +60,10 @@ return {
 	{
 		"t9md/vim-quickhl",
 		event = "BufReadPost",
-		config = function()
-			vim.keymap.set("n", "<Leader>qh", "<Plug>(quickhl-manual-this)", { noremap = false, silent = false })
-			vim.keymap.set("n", "<Leader>qH", "<Plug>(quickhl-manual-reset)", { noremap = false, silent = false })
-		end,
+		keys = {
+			{ "<Leader>h", "<Plug>(quickhl-manual-this)", mode = "n" },
+			{ "<Leader>H", "<Plug>(quickhl-manual-reset)", mode = "n" },
+		},
 	},
 	{
 		"xiyaowong/nvim-cursorword",
@@ -80,11 +75,9 @@ return {
 	{
 		"gbprod/substitute.nvim",
 		event = "VeryLazy",
-		config = function()
-			require("substitute").setup({})
-
-			vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-		end,
+		keys = {
+			{ "s", "<cmd>lua require('substitute').operator()<cr>", mode = "n" },
+		},
 	},
 	{
 		"bkad/CamelCaseMotion",
