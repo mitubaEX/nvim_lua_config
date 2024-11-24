@@ -121,6 +121,19 @@ return {
 		end,
 	},
 	{
+		"jedrzejboczar/possession.nvim",
+		event = "BufReadPost",
+		opts = {
+			autosave = {
+				current = true,
+				cwd = function()
+					return not require("possession.session").exists(require("possession.paths").cwd_session_name())
+				end,
+			},
+			autoload = "auto_cwd",
+		},
+	},
+	{
 		"rhysd/accelerated-jk",
 		event = "VeryLazy",
 		config = function()

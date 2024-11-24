@@ -89,4 +89,7 @@ return function()
 	vim.keymap.set("n", "<Leader>ff", "<cmd>Telescope git_files<CR>", { noremap = true, silent = false })
 	vim.keymap.set("n", "<Leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = false })
 	vim.keymap.set("n", ";", "<cmd>Telescope buffers<CR>", { noremap = true, silent = false })
+
+	-- other telescope pickers
+	require("telescope").load_extension("possession")
 end
