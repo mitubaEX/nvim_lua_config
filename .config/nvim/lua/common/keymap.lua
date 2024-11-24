@@ -13,3 +13,6 @@ vim.keymap.set("v", "<Leader>p", '"0p', { noremap = true, silent = true })
 
 -- noh
 vim.keymap.set("n", "<Esc><Esc>", ":noh<CR>", { noremap = true, silent = true })
+
+-- terminal
+vim.keymap.set("t", "<Esc><Esc>", "<c-\\><c-n>", { noremap = true, silent = true })

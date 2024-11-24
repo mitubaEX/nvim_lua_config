@@ -2,6 +2,18 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		lazy = false,
+		config = function()
+			require("toggleterm").setup({
+				-- size = 60,
+				direction = "horizontal",
+
+				-- 2<C-t> to open new terminal
+				open_mapping = { [[<c-\>]], [[<C-t>]] },
+			})
+		end,
+		keys = {
+			{ "<Leader>tt", "<cmd>lua require('toggleterm').toggle()<CR>", mode = "n" },
+		},
 	},
 	{
 		"greymd/oscyank.vim",
@@ -14,10 +26,10 @@ return {
 	{
 		"vim-test/vim-test",
 		event = "BufReadPost",
-    keys = {
-      { "<Leader>tn", ":TestNearest RAILS_ENV=test<CR>", mode = "n" },
-      { "<Leader>tf", ":TestFile RAILS_ENV=test<CR>", mode = "n" },
-    },
+		keys = {
+			{ "<Leader>tn", ":TestNearest RAILS_ENV=test<CR>", mode = "n" },
+			{ "<Leader>tf", ":TestFile RAILS_ENV=test<CR>", mode = "n" },
+		},
 		config = function()
 			vim.api.nvim_set_var("test#strategy", "neovim")
 
