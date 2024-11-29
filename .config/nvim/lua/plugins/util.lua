@@ -4,8 +4,7 @@ return {
 		lazy = false,
 		config = function()
 			require("toggleterm").setup({
-				-- size = 60,
-				direction = "horizontal",
+				size = 20,
 
 				-- 2<C-t> to open new terminal
 				open_mapping = { [[<c-\>]], [[<C-t>]] },
