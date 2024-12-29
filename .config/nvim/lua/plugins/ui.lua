@@ -75,8 +75,9 @@ return {
 		config = function()
 			local oil = require("oil")
 
-			require("oil").setup({
+			oil.setup({
 				keymaps = {
+					["q"] = { "actions.close", mode = "n" },
 					["<C-d>"] = "actions.preview_scroll_down",
 					["<C-u>"] = "actions.preview_scroll_up",
 					["<leader>ff"] = {
