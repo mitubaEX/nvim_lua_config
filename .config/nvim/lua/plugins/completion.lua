@@ -1,18 +1,33 @@
 return {
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+  {
+		"saghen/blink.cmp",
+    version = '*',
+    event = { "InsertEnter", "CmdLineEnter" },
 		dependencies = {
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-emoji",
-			"onsails/lspkind-nvim",
-			"hrsh7th/cmp-cmdline",
-			"zbirenbaum/copilot-cmp",
+      'rafamadriz/friendly-snippets',
+      "fang2hou/blink-copilot",
+      'Kaiser-Yang/blink-cmp-avante',
 		},
-		config = require("plugins.configs.nvim-cmp"),
+    opts = {
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot', 'avante' },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+          },
+          avante = {
+            name = "avante",
+            module = "blink-cmp-avante",
+            score_offset = 100,
+            async = true,
+          },
+        }
+      },
+      fuzzy = { implementation = "lua" },
+    }
 	},
 	{
 		"windwp/nvim-autopairs",

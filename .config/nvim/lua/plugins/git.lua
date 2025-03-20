@@ -26,17 +26,6 @@ return {
 	},
 
 	-- copilot
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		vim.g.copilot_filetypes = {
-	-- 			gitcommit = true,
-	-- 			markdown = true,
-	-- 			yaml = true,
-	-- 		}
-	-- 	end,
-	-- },
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -54,13 +43,6 @@ return {
 					gitcommit = true,
 				},
 			})
-		end,
-	},
-	{
-		"zbirenbaum/copilot-cmp",
-		event = "InsertEnter",
-		config = function()
-			require("copilot_cmp").setup()
 		end,
 	},
 	{

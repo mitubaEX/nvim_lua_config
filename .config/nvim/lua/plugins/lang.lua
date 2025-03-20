@@ -4,6 +4,7 @@ return {
 		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		dependencies = {
 			"ray-x/lsp_signature.nvim",
+      "saghen/blink.cmp",
 			{ "j-hui/fidget.nvim", tag = "legacy" },
 		},
 		config = require("plugins.configs.lspconfig"),

@@ -1,11 +1,9 @@
 return function()
 	require("fidget").setup({})
 
-	-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-	local capabilities = require("cmp_nvim_lsp").default_capabilities()
-	-- capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-
 	local lspconfig = require("lspconfig")
+
+	local capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig.capabilities)
 
 	local on_attach = function(_, buffer)
 		local bufopts = { noremap = true, silent = true, buffer = buffer }
