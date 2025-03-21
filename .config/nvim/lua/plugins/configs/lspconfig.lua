@@ -3,7 +3,7 @@ return function()
 
 	local lspconfig = require("lspconfig")
 
-	local capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig.capabilities)
+	local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 	local on_attach = function(_, buffer)
 		local bufopts = { noremap = true, silent = true, buffer = buffer }
