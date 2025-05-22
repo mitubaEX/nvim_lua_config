@@ -5,7 +5,7 @@ return {
 		event = { "InsertEnter", "CmdLineEnter" },
 		dependencies = {
 			"rafamadriz/friendly-snippets",
-			"fang2hou/blink-copilot",
+			"giuxtaposition/blink-cmp-copilot",
 			"Kaiser-Yang/blink-cmp-avante",
 		},
 		opts = {
@@ -14,7 +14,7 @@ return {
 				providers = {
 					copilot = {
 						name = "copilot",
-						module = "blink-copilot",
+						module = "blink-cmp-copilot",
 						score_offset = 100,
 						async = true,
 					},

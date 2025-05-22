@@ -33,7 +33,7 @@ return {
 		dependencies = { "williamboman/mason.nvim" },
 		lazy = false,
 		config = function()
-			require("mason-lspconfig").setup()
+			-- require("mason-lspconfig").setup()
 		end,
 	},
 	{
