@@ -47,6 +47,7 @@ return {
 			"mfussenegger/nvim-dap",
 			"nvim-neotest/nvim-nio",
 			"leoluz/nvim-dap-go",
+			"jay-babu/mason-nvim-dap.nvim",
 		},
 		config = function()
 			require("dapui").setup()
