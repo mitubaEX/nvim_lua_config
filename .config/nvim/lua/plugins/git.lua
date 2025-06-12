@@ -1,29 +1,25 @@
 return {
-	{
-		"NeogitOrg/neogit",
-		event = "VeryLazy",
-		version = "*",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
+        {
+                "NeogitOrg/neogit",
+                event = "VeryLazy",
+                version = "*",
+                dependencies = {
+                        "nvim-lua/plenary.nvim", -- required
+                        "sindrets/diffview.nvim", -- optional - Diff integration
 
-			-- Only one of these is needed, not both.
-			"ibhagwan/fzf-lua", -- optional
-		},
-		config = function()
-			require("neogit").setup()
-		end,
-	},
-	{
-		"lewis6991/gitsigns.nvim",
-		event = { "CursorHold", "CursorHoldI" },
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("gitsigns").setup({
-				current_line_blame = true,
-			})
-		end,
-	},
+                        -- Only one of these is needed, not both.
+                        "ibhagwan/fzf-lua", -- optional
+                },
+                opts = {},
+        },
+        {
+                "lewis6991/gitsigns.nvim",
+                event = { "CursorHold", "CursorHoldI" },
+                dependencies = { "nvim-lua/plenary.nvim" },
+                opts = {
+                        current_line_blame = true,
+                },
+        },
 
 	-- copilot
 	{
@@ -100,17 +96,12 @@ return {
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
 		opts = {
-			-- add any opts here
-			-- for example
-			provider = "copilot",
-			openai = {
-				model = "gpt-4o-2024-08-06", -- your desired model (or use gpt-4o, etc.)
-				timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-				temperature = 0,
-				max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-				--reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-			},
-		},
+      providers = {
+        openai = {
+          model = "gpt-4o-2024-08-06", -- your desired model (or use gpt-4o, etc.)
+        },
+      },
+    },
 		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 		build = "make",
 		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
@@ -127,19 +118,15 @@ return {
 		"mitubaEX/blame_open.nvim",
 		event = "VeryLazy",
 	},
-	{
-		"mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("to_github_target_pull_request_from_commit_hash").setup()
-		end,
-	},
-	{
-		"akinsho/git-conflict.nvim",
-		event = "VeryLazy",
-		version = "*",
-		config = function()
-			require("git-conflict").setup()
-		end,
-	},
+        {
+                "mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
+                event = "VeryLazy",
+                opts = {},
+        },
+        {
+                "akinsho/git-conflict.nvim",
+                event = "VeryLazy",
+                version = "*",
+                opts = {},
+        },
 }
