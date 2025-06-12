@@ -1,6 +1,4 @@
--- Set leader key
-vim.keymap.set("n", "<Space>", "<NOP>", { noremap = true, silent = true })
-vim.g.mapleader = " "
+-- Leader key is set in init.lua
 
 -- Basic key mappings
 vim.keymap.set("n", "<Leader>w", ":w<CR>", { noremap = true, silent = false })

@@ -28,7 +28,6 @@ return {
 					"toml",
 					"jsonc",
 					"dockerfile",
-					"lua",
 				},
 				sync_install = false,
 				auto_install = true,

@@ -4,7 +4,7 @@ vim.opt.hidden = true
 vim.opt.number = true
 
 -- clipboard
-vim.opt.clipboard = vim.opt.clipboard + "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 
 -- inifinite undo
 vim.api.nvim_command("set undofile")
@@ -39,5 +39,3 @@ vim.opt.mouse = ""
 vim.opt.swapfile = false
 
 vim.opt.laststatus = 3
-
-vim.opt.clipboard = {}
