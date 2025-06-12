@@ -20,9 +20,9 @@ sh remove.sh
 
 ### Pre-commit
 
-Install [pre-commit](https://pre-commit.com/) and run the following to enable
-automatic Stylua checks when committing:
+Copy the provided hook script to enable automatic Stylua checks when committing:
 
 ```
-pre-commit install
+cp scripts/pre-commit .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
 ```
