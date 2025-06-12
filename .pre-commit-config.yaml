@@ -1,0 +1,10 @@
+repos:
+  - repo: local
+    hooks:
+      - id: stylua
+        name: stylua
+        entry: stylua
+        language: system
+        pass_filenames: false
+        args: [--check, .]
+        types: [lua]

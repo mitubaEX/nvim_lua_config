@@ -17,3 +17,12 @@ sh setup.sh
 ```
 sh remove.sh
 ```
+
+### Pre-commit
+
+Install [pre-commit](https://pre-commit.com/) and run the following to enable
+automatic Stylua checks when committing:
+
+```
+pre-commit install
+```
