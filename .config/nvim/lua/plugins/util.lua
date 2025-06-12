@@ -74,27 +74,4 @@ return {
 		"mogulla3/copy-file-path.nvim",
 		event = "BufReadPost",
 	},
-	{
-		"GeorgesAlkhouri/nvim-aider",
-		cmd = "Aider",
-		keys = {
-			{ "<leader>at", "<cmd>Aider toggle<cr>", desc = "Toggle Aider" },
-			{ "<leader>as", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
-			{ "<leader>ah", "<cmd>Aider health<cr>", desc = "Aider Health Check" },
-		},
-		dependencies = {
-			"folke/snacks.nvim",
-		},
-		opts = {
-			aider_cmd = "aider",
-			args = {
-				"--model",
-				"ollama_chat/qwen3:8b",
-				"--no-auto-commits",
-				"--pretty",
-				"--stream",
-			},
-			auto_reload = false,
-		},
-	},
 }

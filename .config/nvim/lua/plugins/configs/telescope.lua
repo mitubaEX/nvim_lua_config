@@ -92,4 +92,5 @@ return function()
 
 	-- other telescope pickers
 	require("telescope").load_extension("possession")
+	vim.keymap.set("n", "<Leader>fp", "<cmd>Telescope possession<CR>", { noremap = true, silent = false })
 end
