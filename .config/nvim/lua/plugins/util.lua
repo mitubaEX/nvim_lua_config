@@ -52,18 +52,20 @@ return {
                         })
                 end,
         },
-        {
-                "rgroli/other.nvim",
-                event = "BufReadPost",
-                opts = {
-                        mappings = {
-                                "rails",
-                                "golang",
-                                "react",
-                                "rust",
-                        },
-                },
-        },
+  	{
+		"rgroli/other.nvim",
+		event = "BufReadPost",
+		config = function()
+			require("other-nvim").setup({
+				mappings = {
+					"rails",
+					"golang",
+					"react",
+					"rust",
+				},
+			})
+		end,
+	},
 	{
 		"itchyny/vim-parenmatch",
 		event = "BufReadPost",
