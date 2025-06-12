@@ -3,7 +3,7 @@ return function()
 
 	local lspconfig = require("lspconfig")
 
-	local capabilities = require("blink.cmp").get_lsp_capabilities()
+	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 	local on_attach = function(_, buffer)
 		local bufopts = { noremap = true, silent = true, buffer = buffer }

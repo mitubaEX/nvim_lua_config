@@ -3,7 +3,6 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		dependencies = {
-			"saghen/blink.cmp",
 			{ "j-hui/fidget.nvim", tag = "legacy" },
 		},
 		config = require("plugins.configs.lspconfig"),
