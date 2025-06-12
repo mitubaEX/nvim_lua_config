@@ -43,12 +43,14 @@ return {
                         "olimorris/neotest-rspec",
                         "nvim-neotest/neotest-go",
                 },
-                opts = {
-                        adapters = {
-                                require("neotest-rspec"),
-                                require("neotest-go"),
-                        },
-                },
+                config = function()
+                        require("neotest").setup({
+                                adapters = {
+                                        require("neotest-rspec"),
+                                        require("neotest-go"),
+                                },
+                        })
+                end,
         },
         {
                 "rgroli/other.nvim",

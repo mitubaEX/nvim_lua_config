@@ -125,6 +125,9 @@ return {
                 "goolord/alpha-nvim",
                 event = "BufWinEnter",
                 dependencies = { "kyazdani42/nvim-web-devicons" },
-                opts = require("alpha.themes.startify").opts,
+                config = function()
+                        local startify = require("alpha.themes.startify")
+                        require("alpha").setup(startify.opts)
+                end,
         },
 }
