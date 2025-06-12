@@ -103,35 +103,28 @@ return {
 			})
 		end,
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = "BufReadPost",
-		---@module "ibl"
-		---@type ibl.config
-		opts = {
-			scope = {
-				show_extra_scope = true,
-			},
-		},
-		config = function()
-			require("ibl").setup()
-		end,
-	},
-	{
-		"b0o/incline.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("incline").setup({})
-		end,
-	},
+        {
+                "lukas-reineke/indent-blankline.nvim",
+                event = "BufReadPost",
+                ---@module "ibl"
+                ---@type ibl.config
+                opts = {
+                        scope = {
+                                show_extra_scope = true,
+                        },
+                },
+        },
+        {
+                "b0o/incline.nvim",
+                event = "BufReadPost",
+                opts = {},
+        },
 
 	-- startify
-	{
-		"goolord/alpha-nvim",
-		event = "BufWinEnter",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		config = function()
-			require("alpha").setup(require("alpha.themes.startify").opts)
-		end,
-	},
+        {
+                "goolord/alpha-nvim",
+                event = "BufWinEnter",
+                dependencies = { "kyazdani42/nvim-web-devicons" },
+                opts = require("alpha.themes.startify").opts,
+        },
 }

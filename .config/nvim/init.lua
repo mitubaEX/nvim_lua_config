@@ -1,6 +1,11 @@
 -- for vim-parenmatch
 vim.g.loaded_matchparen = true
 
+-- Enable faster Lua module loading when available
+pcall(function()
+    vim.loader.enable()
+end)
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -21,11 +26,13 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " " -- make sure to set `mapleader` before lazy so your mappings are correct
 
 require("lazy").setup({
-	spec = {
-		{ import = "plugins" },
-	},
-	defaults = { lazy = true },
-	install = { colorscheme = { "nightfox", "habamax" } },
+        spec = {
+                { import = "plugins" },
+        },
+        defaults = { lazy = true },
+        install = { colorscheme = { "nightfox", "habamax" } },
+        checker = { enabled = true },
+        change_detection = { notify = false },
 })
 
 require("common.keymap")

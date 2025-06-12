@@ -1,29 +1,25 @@
 return {
-	{
-		"NeogitOrg/neogit",
-		event = "VeryLazy",
-		version = "*",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
+        {
+                "NeogitOrg/neogit",
+                event = "VeryLazy",
+                version = "*",
+                dependencies = {
+                        "nvim-lua/plenary.nvim", -- required
+                        "sindrets/diffview.nvim", -- optional - Diff integration
 
-			-- Only one of these is needed, not both.
-			"ibhagwan/fzf-lua", -- optional
-		},
-		config = function()
-			require("neogit").setup()
-		end,
-	},
-	{
-		"lewis6991/gitsigns.nvim",
-		event = { "CursorHold", "CursorHoldI" },
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("gitsigns").setup({
-				current_line_blame = true,
-			})
-		end,
-	},
+                        -- Only one of these is needed, not both.
+                        "ibhagwan/fzf-lua", -- optional
+                },
+                opts = {},
+        },
+        {
+                "lewis6991/gitsigns.nvim",
+                event = { "CursorHold", "CursorHoldI" },
+                dependencies = { "nvim-lua/plenary.nvim" },
+                opts = {
+                        current_line_blame = true,
+                },
+        },
 
 	-- copilot
 	{
@@ -127,19 +123,15 @@ return {
 		"mitubaEX/blame_open.nvim",
 		event = "VeryLazy",
 	},
-	{
-		"mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("to_github_target_pull_request_from_commit_hash").setup()
-		end,
-	},
-	{
-		"akinsho/git-conflict.nvim",
-		event = "VeryLazy",
-		version = "*",
-		config = function()
-			require("git-conflict").setup()
-		end,
-	},
+        {
+                "mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
+                event = "VeryLazy",
+                opts = {},
+        },
+        {
+                "akinsho/git-conflict.nvim",
+                event = "VeryLazy",
+                version = "*",
+                opts = {},
+        },
 }
