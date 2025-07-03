@@ -1,17 +1,5 @@
 return {
 	{
-		"akinsho/toggleterm.nvim",
-		lazy = false,
-		opts = {
-			size = 20,
-			-- 2<C-t> to open new terminal
-			open_mapping = { [[<c-\>]], [[<C-t>]] },
-		},
-		keys = {
-			{ "<Leader>tt", "<cmd>lua require('toggleterm').toggle()<CR>", mode = "n" },
-		},
-	},
-	{
 		"greymd/oscyank.vim",
 		lazy = false,
 	},
