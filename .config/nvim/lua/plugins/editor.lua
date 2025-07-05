@@ -131,6 +131,9 @@ return {
 				end,
 			},
 			autoload = "auto_cwd",
+			plugins = {
+				delete_buffers = true,
+			},
 		},
 	},
 	{
