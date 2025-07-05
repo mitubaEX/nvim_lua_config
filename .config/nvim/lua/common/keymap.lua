@@ -15,6 +15,3 @@ vim.keymap.set("n", "<Esc><Esc>", ":noh<CR>", { noremap = true, silent = true })
 
 -- Terminal escape
 vim.keymap.set("t", "<Esc>", "<c-\\><c-n>", { noremap = true, silent = true })
-
--- terminal
-vim.keymap.set("n", "<Leader>tt", "<cmd>belowright new<CR><cmd>terminal<CR>", { noremap = true, silent = true })
