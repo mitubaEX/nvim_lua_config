@@ -20,21 +20,22 @@ return {
 			current_line_blame = true,
 		},
 	},
-  {
-    "ThePrimeagen/git-worktree.nvim",
-    event = "BufReadPost",
-    opts = {},
-    config = function(_, opts)
-      require("git-worktree").setup(opts)
-      require("telescope").load_extension("git_worktree")
-      vim.keymap.set("n", "<leader>gw", function()
-        require('telescope').extensions.git_worktree.create_git_worktree()
-      end, { desc = "Git Worktree" })
-      vim.keymap.set("n", "<leader>gW", function()
-        require('telescope').extensions.git_worktree.git_worktrees()
-      end, { desc = "Git Worktrees" })
-    end,
-  },
+	{
+		"mitubaEX/git_worktree.nvim",
+		config = function()
+			require("git_worktree").setup()
+		end,
+		opts = {
+			cleanup_buffers = true, -- Clean up old buffers when switching
+		},
+		cmd = {
+			"GitWorktreeCreate",
+			"GitWorktreeSwitch",
+			"GitWorktreeDelete",
+			"GitWorktreeList",
+			"GitWorktreeCurrent",
+		},
+	},
 
 	-- copilot
 	{
