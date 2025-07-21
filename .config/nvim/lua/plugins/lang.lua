@@ -96,4 +96,20 @@ return {
 			require("claude-code").setup()
 		end,
 	},
+	{
+		"azorng/goose.nvim",
+		event = "BufReadPost",
+		config = function()
+			require("goose").setup({})
+		end,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			{
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					anti_conceal = { enabled = false },
+				},
+			},
+		},
+	},
 }
