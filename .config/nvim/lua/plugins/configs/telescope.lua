@@ -95,4 +95,6 @@ return function()
 	vim.keymap.set("n", "<Leader>fp", "<cmd>Telescope possession<CR>", { noremap = true, silent = false })
 
 	require("telescope").load_extension("git_worktree")
+	vim.keymap.set("n", "<Leader>gw", "<cmd>Telescope git_worktree<CR>", { noremap = true, silent = false })
+	vim.keymap.set("n", "<Leader>gwc", ":GitWorktreeCreate", { noremap = true, silent = false })
 end
