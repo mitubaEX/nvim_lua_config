@@ -85,7 +85,7 @@ return {
 			workspaces = {
 				{
 					name = "personal",
-					path = "/Users/mituba/Library/Mobile Documents/iCloud~md~obsidian/Documents/my-vault",
+					path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/my-vault",
 				},
 			},
 			daily_notes = {
