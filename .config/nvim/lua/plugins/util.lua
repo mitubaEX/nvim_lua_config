@@ -96,4 +96,19 @@ return {
 			-- see below for full list of options 👇
 		},
 	},
+	{
+		"mitubaEX/server.nvim",
+		event = "BufReadPost",
+		config = function()
+			require("server").setup({
+				servers = {
+					{
+						name = "ExampleServer",
+						command = "python3 -m http.server",
+						port = 8000,
+					},
+				},
+			})
+		end,
+	},
 }
