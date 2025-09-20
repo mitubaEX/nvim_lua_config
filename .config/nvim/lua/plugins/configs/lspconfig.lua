@@ -1,8 +1,6 @@
 return function()
 	require("fidget").setup({})
 
-	local lspconfig = require("lspconfig")
-
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 	local on_attach = function(_, buffer)
@@ -25,48 +23,68 @@ return function()
 		})
 	end
 
-	-- lspconfig
-	lspconfig.ts_ls.setup({
+	-- Using the new vim.lsp.config API (Neovim 0.11+)
+	vim.lsp.config.ts_ls = {
+		cmd = { "typescript-language-server", "--stdio" },
 		filetypes = { "typescript", "typescript.tsx", "typescriptreact" },
+		root_markers = { "tsconfig.json", "package.json", ".git" },
 		settings = { documentFormatting = false },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
-	-- lspconfig.solargraph.setup{
+	}
+	-- vim.lsp.config.solargraph = {
 	--   cmd = { 'solargraph', 'stdio' },
 	--   filetypes = {"ruby", "rakefile", "rspec"},
+	--   root_markers = { "Gemfile", ".git" },
 	--   on_attach = on_attach,
 	--   capabilities = capabilities
 	-- }
-	-- lspconfig.ruby_ls.setup{
+	-- vim.lsp.config.ruby_ls = {
 	--   cmd = { 'ruby-lsp' },
 	--   filetypes = {"ruby", "rakefile", "rspec"},
+	--   root_markers = { "Gemfile", ".git" },
 	--   capabilities = capabilities,
 	--   on_attach = on_attach,
 	-- }
-	lspconfig.sorbet.setup({
+	vim.lsp.config.sorbet = {
 		cmd = { "bundle", "exec", "srb", "tc", "--lsp" },
 		filetypes = { "ruby", "rakefile", "rspec" },
+		root_markers = { "sorbet", ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
-	lspconfig.flow.setup({
+	}
+	vim.lsp.config.flow = {
+		cmd = { "flow", "lsp" },
+		filetypes = { "javascript", "javascriptreact", "javascript.jsx" },
+		root_markers = { ".flowconfig", ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
-	lspconfig.yamlls.setup({
+	}
+	vim.lsp.config.yamlls = {
+		cmd = { "yaml-language-server", "--stdio" },
+		filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
+		root_markers = { ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
-	lspconfig.rust_analyzer.setup({
+	}
+	vim.lsp.config.rust_analyzer = {
+		cmd = { "rust-analyzer" },
+		filetypes = { "rust" },
+		root_markers = { "Cargo.toml", "rust-project.json", ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
-	lspconfig.pyright.setup({
+	}
+	vim.lsp.config.pyright = {
+		cmd = { "pyright-langserver", "--stdio" },
+		filetypes = { "python" },
+		root_markers = { "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt", ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
-	lspconfig.gopls.setup({
+	}
+	vim.lsp.config.gopls = {
+		cmd = { "gopls" },
+		filetypes = { "go", "gomod", "gowork", "gotmpl" },
+		root_markers = { "go.mod", "go.work", ".git" },
 		on_attach = on_attach,
 		settings = {
 			gopls = {
@@ -77,12 +95,18 @@ return function()
 			},
 		},
 		capabilities = capabilities,
-	})
-	lspconfig.denols.setup({
+	}
+	vim.lsp.config.denols = {
+		cmd = { "deno", "lsp" },
+		filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+		root_markers = { "deno.json", "deno.jsonc" },
 		on_attach = on_attach,
-		root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-	})
-	lspconfig.lua_ls.setup({
+		capabilities = capabilities,
+	}
+	vim.lsp.config.lua_ls = {
+		cmd = { "lua-language-server" },
+		filetypes = { "lua" },
+		root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		settings = {
@@ -105,13 +129,31 @@ return function()
 				},
 			},
 		},
-	})
-	-- lspconfig.syntax_tree.setup({
+	}
+	-- vim.lsp.config.syntax_tree = {
+	-- 	cmd = { "stree", "lsp" },
+	-- 	filetypes = { "ruby" },
+	-- 	root_markers = { ".streerc", ".git" },
 	-- 	on_attach = on_attach,
 	-- 	capabilities = capabilities,
-	-- })
-	lspconfig.hls.setup({
+	-- }
+	vim.lsp.config.hls = {
+		cmd = { "haskell-language-server-wrapper", "--lsp" },
+		filetypes = { "haskell", "lhaskell" },
+		root_markers = { "*.cabal", "stack.yaml", "cabal.project", "package.yaml", ".git" },
 		on_attach = on_attach,
 		capabilities = capabilities,
-	})
+	}
+
+	-- Enable all configured LSP servers
+	vim.lsp.enable("ts_ls")
+	vim.lsp.enable("sorbet")
+	vim.lsp.enable("flow")
+	vim.lsp.enable("yamlls")
+	vim.lsp.enable("rust_analyzer")
+	vim.lsp.enable("pyright")
+	vim.lsp.enable("gopls")
+	vim.lsp.enable("denols")
+	vim.lsp.enable("lua_ls")
+	vim.lsp.enable("hls")
 end
