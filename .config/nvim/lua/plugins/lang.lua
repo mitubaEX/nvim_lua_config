@@ -112,4 +112,11 @@ return {
 			},
 		},
 	},
+	{
+		"johnseth97/codex.nvim",
+		event = "BufReadPost",
+		config = function()
+			require("codex").setup({})
+		end,
+	},
 }
