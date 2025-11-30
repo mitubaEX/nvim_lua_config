@@ -102,14 +102,14 @@ return {
 			})
 		end,
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		event = "BufReadPost",
-		---@module "ibl"
-		---@type ibl.config
-		opts = {},
-	},
+	-- {
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	main = "ibl",
+	-- 	event = "BufReadPost",
+	-- 	---@module "ibl"
+	-- 	---@type ibl.config
+	-- 	opts = {},
+	-- },
 	{
 		"b0o/incline.nvim",
 		event = "BufReadPost",

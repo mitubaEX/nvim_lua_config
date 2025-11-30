@@ -35,15 +35,30 @@ return {
 		priority = 1000,
 		lazy = false,
 		opts = {
+			bufdelete = { enabled = true },
 			dashboard = { enabled = true },
+			gh = { enabled = true },
+			git = { enabled = true },
+			gitbrowse = { enabled = true },
 			indent = { enabled = true },
 			input = { enabled = true },
-			picker = { enabled = true },
+			picker = {
+				enabled = true,
+				win = {
+					input = {
+						keys = {
+							["<C-p>"] = { "history_back", mode = { "i", "n" } },
+							["<C-n>"] = { "history_forward", mode = { "i", "n" } },
+						},
+					},
+				},
+			},
 			notifier = { enabled = true },
 			quickfile = { enabled = true },
 			scope = { enabled = true },
 			scroll = { enabled = true },
 			statuscolumn = { enabled = true },
+			terminal = { enabled = true },
 			words = { enabled = true },
 		},
 	},
