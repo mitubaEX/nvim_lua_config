@@ -86,9 +86,22 @@ return function()
 		},
 	})
 
-	vim.keymap.set("n", "<Leader>ff", "<cmd>Telescope git_files<CR>", { noremap = true, silent = false })
-	vim.keymap.set("n", "<Leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = false })
-	vim.keymap.set("n", ";", "<cmd>Telescope buffers<CR>", { noremap = true, silent = false })
+	-- vim.keymap.set("n", "<Leader>ff", "<cmd>Telescope git_files<CR>", { noremap = true, silent = false })
+	vim.keymap.set("n", "<Leader>ff", "<cmd>lua Snacks.picker.git_files()<CR>", { noremap = true, silent = false })
+	-- vim.keymap.set("n", "<Leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = false })
+	vim.keymap.set(
+		"n",
+		"<Leader>fg",
+		"<cmd>lua Snacks.picker.grep({ hidden = true })<CR>",
+		{ noremap = true, silent = false }
+	)
+	-- vim.keymap.set("n", ";", "<cmd>Telescope buffers<CR>", { noremap = true, silent = false })
+	vim.keymap.set(
+		"n",
+		";",
+		"<cmd>lua Snacks.picker.buffers({ hidden = true })<CR>",
+		{ noremap = true, silent = false }
+	)
 
 	-- other telescope pickers
 	require("telescope").load_extension("possession")
