@@ -26,7 +26,7 @@ return {
 	},
 	{
 		"williamboman/mason.nvim",
-		lazy = false,
+		cmd = "Mason",
 		config = function()
 			require("mason").setup()
 		end,
@@ -34,7 +34,7 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "williamboman/mason.nvim" },
-		lazy = false,
+		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		config = function()
 			require("mason-lspconfig").setup()
 		end,
@@ -66,7 +66,7 @@ return {
 	-- js
 	{
 		"neoclide/vim-jsx-improve",
-		lazy = false,
+		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 	},
 
 	-- rails

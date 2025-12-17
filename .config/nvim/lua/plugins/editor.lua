@@ -1,7 +1,7 @@
 return {
 	{
 		"stevearc/conform.nvim",
-		lazy = false,
+		event = "BufWritePre",
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -14,7 +14,7 @@ return {
 	},
 	{
 		"mfussenegger/nvim-lint",
-		lazy = false,
+		event = { "BufReadPost", "BufWritePost" },
 		config = function()
 			require("lint").linters_by_ft = {
 				javascript = { "eslint" },
@@ -26,7 +26,15 @@ return {
 	},
 	{
 		"nvim-telescope/telescope.nvim",
-		lazy = false,
+		cmd = "Telescope",
+		keys = {
+			{ "<Leader>fp", "<cmd>Telescope possession<CR>", desc = "Telescope possession" },
+			{ "<Leader>gw", "<cmd>Telescope git_worktree<CR>", desc = "Git worktree" },
+			{ "<Leader>gwc", ":GitWorktreeCreate", desc = "Git worktree create" },
+			{ "<Leader>gwr", ":GitWorktreeReview", desc = "Git worktree review" },
+			{ "<Leader>fs", "<cmd>Telescope server servers<CR>", desc = "Server list" },
+			{ "<Leader>fsl", "<cmd>Telescope server logs<CR>", desc = "Server logs" },
+		},
 		dependencies = { "nvim-lua/plenary.nvim" },
 		config = require("plugins.configs.telescope"),
 	},

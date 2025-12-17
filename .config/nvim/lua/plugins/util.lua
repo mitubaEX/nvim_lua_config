@@ -1,9 +1,5 @@
 return {
 	{
-		"greymd/oscyank.vim",
-		lazy = false,
-	},
-	{
 		"AndrewRadev/linediff.vim",
 		event = "BufReadPost",
 	},
