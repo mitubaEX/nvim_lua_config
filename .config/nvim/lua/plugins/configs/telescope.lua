@@ -95,13 +95,13 @@ return function()
 		"<cmd>lua Snacks.picker.grep({ hidden = true })<CR>",
 		{ noremap = true, silent = false }
 	)
-	-- vim.keymap.set("n", ";", "<cmd>Telescope buffers<CR>", { noremap = true, silent = false })
-	vim.keymap.set(
-		"n",
-		";",
-		"<cmd>lua Snacks.picker.buffers({ hidden = true })<CR>",
-		{ noremap = true, silent = false }
-	)
+	vim.keymap.set("n", ";", "<cmd>Telescope buffers<CR>", { noremap = true, silent = false })
+	-- vim.keymap.set(
+	-- 	"n",
+	-- 	";",
+	-- 	"<cmd>lua Snacks.picker.buffers({ hidden = true })<CR>",
+	-- 	{ noremap = true, silent = false }
+	-- )
 
 	-- other telescope pickers
 	require("telescope").load_extension("possession")
