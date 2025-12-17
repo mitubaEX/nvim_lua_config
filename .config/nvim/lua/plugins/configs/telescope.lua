@@ -103,16 +103,8 @@ return function()
 		{ noremap = true, silent = false }
 	)
 
-	-- other telescope pickers
+	-- load telescope extensions
 	require("telescope").load_extension("possession")
-	vim.keymap.set("n", "<Leader>fp", "<cmd>Telescope possession<CR>", { noremap = true, silent = false })
-
 	require("telescope").load_extension("git_worktree")
-	vim.keymap.set("n", "<Leader>gw", "<cmd>Telescope git_worktree<CR>", { noremap = true, silent = false })
-	vim.keymap.set("n", "<Leader>gwc", ":GitWorktreeCreate", { noremap = true, silent = false })
-	vim.keymap.set("n", "<Leader>gwr", ":GitWorktreeReview", { noremap = true, silent = false })
-
 	require("telescope").load_extension("server")
-	vim.keymap.set("n", "<Leader>fs", "<cmd>Telescope server servers<CR>", { noremap = true, silent = false })
-	vim.keymap.set("n", "<Leader>fsl", "<cmd>Telescope server logs<CR>", { noremap = true, silent = false })
 end

@@ -2,7 +2,7 @@ return {
 	-- syntax
 	{
 		"nvim-treesitter/nvim-treesitter",
-		lazy = false,
+		event = { "BufReadPost", "BufNewFile" },
 		dependencies = { "windwp/nvim-ts-autotag", "RRethy/nvim-treesitter-endwise", "andymass/vim-matchup" },
 		build = ":TSUpdate",
 		config = function()
@@ -114,16 +114,5 @@ return {
 		"b0o/incline.nvim",
 		event = "BufReadPost",
 		opts = {},
-	},
-
-	-- startify
-	{
-		"goolord/alpha-nvim",
-		event = "BufWinEnter",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		config = function()
-			local startify = require("alpha.themes.startify")
-			require("alpha").setup(startify.opts)
-		end,
 	},
 }
