@@ -137,19 +137,6 @@ return {
 		event = { "CursorHold", "CursorHoldI" },
 	},
 	{
-		"phaazon/hop.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("hop").setup({
-				keys = "etovxqpdygfblzhckisuran",
-				term_seq_bias = 0.5,
-				create_hl_autocmd = false,
-				winblend = 0,
-			})
-			vim.keymap.set("n", "<Leader>hp", ":HopWord<CR>", { noremap = true, silent = true })
-		end,
-	},
-	{
 		"monaqa/dial.nvim",
 		event = "BufReadPost",
 		config = function()
@@ -190,7 +177,23 @@ return {
 		event = "VeryLazy",
 	},
 	{
-		"rhysd/clever-f.vim",
+		"folke/flash.nvim",
 		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{ "S", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+			{ "<Leader>S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+		},
+	},
+	{
+		"folke/todo-comments.nvim",
+		event = "BufReadPost",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
+		keys = {
+			{ "]t", function() require("todo-comments").jump_next() end, desc = "Next TODO" },
+			{ "[t", function() require("todo-comments").jump_prev() end, desc = "Prev TODO" },
+			{ "<Leader>xt", "<cmd>Trouble todo<cr>", desc = "TODO (Trouble)" },
+		},
 	},
 }
