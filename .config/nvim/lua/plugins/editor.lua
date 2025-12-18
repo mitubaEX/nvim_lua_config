@@ -26,6 +26,7 @@ return {
 	},
 	{
 		"nvim-telescope/telescope.nvim",
+		lazy = false,
 		cmd = "Telescope",
 		keys = {
 			{ "<Leader>fp", "<cmd>Telescope possession<CR>", desc = "Telescope possession" },
