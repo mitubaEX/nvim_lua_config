@@ -133,6 +133,11 @@ return {
 		end,
 	},
 	{
+		"serhez/bento.nvim",
+		lazy = false,
+		opts = {},
+	},
+	{
 		"Asheq/close-buffers.vim",
 		event = { "CursorHold", "CursorHoldI" },
 	},
@@ -181,8 +186,22 @@ return {
 		event = "VeryLazy",
 		opts = {},
 		keys = {
-			{ "S", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-			{ "<Leader>S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"<Leader>S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
 		},
 	},
 	{
@@ -191,8 +210,20 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
 		keys = {
-			{ "]t", function() require("todo-comments").jump_next() end, desc = "Next TODO" },
-			{ "[t", function() require("todo-comments").jump_prev() end, desc = "Prev TODO" },
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "Next TODO",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "Prev TODO",
+			},
 			{ "<Leader>xt", "<cmd>Trouble todo<cr>", desc = "TODO (Trouble)" },
 		},
 	},
