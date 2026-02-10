@@ -116,6 +116,9 @@ return {
 	{
 		"gbprod/substitute.nvim",
 		event = "VeryLazy",
+		config = function()
+      require('substitute').setup()
+    end,
 		keys = {
 			{ "s", "<cmd>lua require('substitute').operator()<cr>", mode = "n" },
 		},
@@ -131,11 +134,6 @@ return {
 			vim.keymap.set("o", "ie", "<Plug>CamelCaseMotion_ie", { noremap = false, silent = true })
 			vim.keymap.set("x", "ie", "<Plug>CamelCaseMotion_ie", { noremap = false, silent = true })
 		end,
-	},
-	{
-		"serhez/bento.nvim",
-		lazy = false,
-		opts = {},
 	},
 	{
 		"Asheq/close-buffers.vim",
@@ -187,20 +185,12 @@ return {
 		opts = {},
 		keys = {
 			{
-				"S",
+				"<Leader>s",
 				mode = { "n", "x", "o" },
 				function()
 					require("flash").jump()
 				end,
 				desc = "Flash",
-			},
-			{
-				"<Leader>S",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
 			},
 		},
 	},
