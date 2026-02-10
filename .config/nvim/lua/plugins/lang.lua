@@ -33,10 +33,21 @@ return {
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "williamboman/mason.nvim" },
+		dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
 		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		config = function()
-			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					"ts_ls",
+					"yamlls",
+					"rust_analyzer",
+					"pyright",
+					"gopls",
+					"denols",
+					"lua_ls",
+				},
+				automatic_enable = true,
+			})
 		end,
 	},
 	{
