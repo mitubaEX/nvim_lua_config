@@ -95,16 +95,4 @@ return {
 			require("headlines").setup()
 		end,
 	},
-
-	-- AI
-	{
-		"greggh/claude-code.nvim",
-		event = "BufReadPost",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- Required for git operations
-		},
-		config = function()
-			require("claude-code").setup()
-		end,
-	},
 }
