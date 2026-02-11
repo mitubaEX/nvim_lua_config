@@ -3,7 +3,12 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPost", "BufNewFile" },
-		dependencies = { "windwp/nvim-ts-autotag", "RRethy/nvim-treesitter-endwise", "andymass/vim-matchup" },
+		dependencies = {
+			"windwp/nvim-ts-autotag",
+			"RRethy/nvim-treesitter-endwise",
+			"andymass/vim-matchup",
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
@@ -47,6 +52,16 @@ return {
 				},
 				endwise = {
 					enable = true,
+				},
+				textobjects = {
+					move = {
+						enable = true,
+						set_jumps = true,
+					},
+					select = {
+						enable = true,
+						lookahead = true,
+					},
 				},
 			})
 		end,
