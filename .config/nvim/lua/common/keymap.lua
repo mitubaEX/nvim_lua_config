@@ -4,11 +4,11 @@
 vim.keymap.set("n", "<Leader>w", ":w<CR>", { noremap = true, silent = false })
 vim.keymap.set("i", "jj", "<ESC>", { noremap = true, silent = true })
 
--- Copy from register 0
-local bufopts = { noremap = true, silent = true, buffer = 0 }
-vim.keymap.set("n", "<Leader>p", '"0p', bufopts)
-vim.keymap.set("n", "<Leader>P", '"0P', bufopts)
-vim.keymap.set("v", "<Leader>p", '"0p', bufopts)
+-- Paste from yank register (register 0) to avoid pollution by d/c/x
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "<Leader>p", '"0p', opts)
+vim.keymap.set("n", "<Leader>P", '"0P', opts)
+vim.keymap.set("v", "<Leader>p", '"0p', opts)
 
 -- Clear highlight
 vim.keymap.set("n", "<Esc><Esc>", ":noh<CR>", { noremap = true, silent = true })

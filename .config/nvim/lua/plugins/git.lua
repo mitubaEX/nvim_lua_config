@@ -51,7 +51,7 @@ return {
 						accept = "<Tab>",
 					},
 				},
-        copilot_node_command = vim.fn.expand("$HOME") .. "/.asdf/installs/nodejs/24.7.0/bin/node",
+				copilot_node_command = vim.fn.expand("$HOME") .. "/.asdf/installs/nodejs/24.7.0/bin/node",
 				filetypes = {
 					markdown = true,
 					help = true,
