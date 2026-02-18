@@ -65,11 +65,11 @@ return function()
 		},
 	})
 
-	-- vim.lsp.config("eslint", {
-	-- 	settings = {
-	-- 		workingDirectory = { mode = "auto" },
-	-- 	},
-	-- })
+	vim.lsp.config("eslint", {
+		settings = {
+			workingDirectory = { mode = "auto" },
+		},
+	})
 
 	-- Mason 管理外のサーバー（手動で設定・有効化が必要）
 	vim.lsp.config("sorbet", {
