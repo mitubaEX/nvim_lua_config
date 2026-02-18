@@ -3,29 +3,30 @@ return function()
 
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-	local on_attach = function(_, buffer)
-		local bufopts = { noremap = true, silent = true, buffer = buffer }
-
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-		vim.keymap.set("n", "gl", vim.lsp.buf.references, bufopts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.rename, bufopts)
-		vim.keymap.set("n", "ga", vim.lsp.buf.code_action, bufopts)
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, bufopts)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, bufopts)
-
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			border = "single",
-		})
-	end
-
 	-- 全サーバー共通の設定
 	vim.lsp.config("*", {
-		on_attach = on_attach,
 		capabilities = capabilities,
+	})
+
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback = function(args)
+			local bufopts = { noremap = true, silent = true, buffer = args.buf }
+
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+			vim.keymap.set("n", "gl", vim.lsp.buf.references, bufopts)
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+			vim.keymap.set("n", "gr", vim.lsp.buf.rename, bufopts)
+			vim.keymap.set("n", "ga", vim.lsp.buf.code_action, bufopts)
+			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+
+			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, bufopts)
+			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, bufopts)
+
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+				border = "single",
+			})
+		end,
 	})
 
 	-- サーバー固有の設定（カスタマイズが必要なもののみ）
@@ -64,11 +65,11 @@ return function()
 		},
 	})
 
-	vim.lsp.config("eslint", {
-		settings = {
-			workingDirectory = { mode = "auto" },
-		},
-	})
+	-- vim.lsp.config("eslint", {
+	-- 	settings = {
+	-- 		workingDirectory = { mode = "auto" },
+	-- 	},
+	-- })
 
 	-- Mason 管理外のサーバー（手動で設定・有効化が必要）
 	vim.lsp.config("sorbet", {
