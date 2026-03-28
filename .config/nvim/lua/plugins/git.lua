@@ -45,10 +45,16 @@ return {
 		event = "InsertEnter",
 		config = function()
 			require("copilot").setup({
+				panel = {
+					enabled = false,
+				},
 				suggestion = {
 					auto_trigger = true,
 					keymap = {
-						accept = "<Tab>",
+						accept = "<M-l>",
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
 					},
 				},
 				copilot_node_command = vim.fn.expand("$HOME") .. "/.asdf/installs/nodejs/24.7.0/bin/node",
@@ -59,6 +65,8 @@ return {
 					gitcommit = true,
 				},
 			})
+
+			vim.keymap.set("n", "<Leader>ac", "<cmd>Copilot toggle<CR>", { desc = "Toggle Copilot" })
 		end,
 	},
 
