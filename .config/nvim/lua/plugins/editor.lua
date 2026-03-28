@@ -3,11 +3,30 @@ return {
 		"stevearc/conform.nvim",
 		event = "BufWritePre",
 		opts = {
+			notify_on_error = true,
+			format_on_save = function(bufnr)
+				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+					return
+				end
+
+				return {
+					timeout_ms = 1500,
+					lsp_format = "fallback",
+				}
+			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
 				-- Use a sub-list to run only the first available formatter
 				javascript = { "prettierd", "prettier" },
 				typescript = { "prettierd", "prettier" },
+				javascriptreact = { "prettierd", "prettier" },
+				typescriptreact = { "prettierd", "prettier" },
+				json = { "prettierd", "prettier" },
+				yaml = { "prettierd", "prettier" },
+				markdown = { "prettierd", "prettier" },
+				sh = { "shfmt" },
+				ruby = { "rubocop" },
+				python = { "ruff_format", "black" },
 				go = { "gofmt" },
 			},
 		},
@@ -16,12 +35,26 @@ return {
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPost", "BufWritePost" },
 		config = function()
-			require("lint").linters_by_ft = {
+			local lint = require("lint")
+
+			lint.linters_by_ft = {
 				javascript = { "eslint" },
 				typescript = { "eslint" },
+				javascriptreact = { "eslint" },
+				typescriptreact = { "eslint" },
 				lua = { "luacheck" },
 				ruby = { "rubocop" },
+				python = { "ruff" },
+				go = { "golangcilint" },
 			}
+
+			local lint_augroup = vim.api.nvim_create_augroup("nvim-lint", { clear = true })
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+				group = lint_augroup,
+				callback = function()
+					lint.try_lint()
+				end,
+			})
 		end,
 	},
 	{
@@ -69,6 +102,18 @@ return {
 			statuscolumn = { enabled = true },
 			terminal = { enabled = true },
 			words = { enabled = true },
+		},
+		keys = {
+			{
+				"<Leader>ft",
+				"<cmd>TodoTelescope<CR>",
+				desc = "Find TODOs",
+			},
+			{
+				"<Leader>fr",
+				"<cmd>Telescope resume<CR>",
+				desc = "Resume picker",
+			},
 		},
 	},
 	{

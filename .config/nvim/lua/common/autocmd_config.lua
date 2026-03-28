@@ -10,18 +10,24 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=700}",
 })
 
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+	pattern = "*",
+	command = "checktime",
+})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	pattern = "*",
+	callback = function()
+		vim.opt_local.number = false
+		vim.opt_local.relativenumber = false
+	end,
+})
+
 -- restore cursor shape
 -- https://vi.stackexchange.com/questions/25103/neovim-does-not-restore-terminal-cursor-on-exit
 vim.api.nvim_create_autocmd({ "VimLeave" }, {
 	pattern = { "*" },
 	command = "silent! lua vim.opt.guicursor = 'a:hor20'",
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
 })
 
 -- join wrapped lines when yanking from terminal buffer (preserve empty lines as line breaks)
