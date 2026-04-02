@@ -7,7 +7,6 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-nvim-lsp",
 			"rafamadriz/friendly-snippets",
-			"zbirenbaum/copilot-cmp",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -23,7 +22,6 @@ return {
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = cmp.config.sources({
-					{ name = "copilot", priority = 1000 },
 					{ name = "nvim_lsp", priority = 900 },
 					{ name = "path", priority = 700 },
 				}, {
@@ -46,7 +44,6 @@ return {
 				formatting = {
 					format = function(entry, vim_item)
 						vim_item.menu = ({
-							copilot = "[Copilot]",
 							nvim_lsp = "[LSP]",
 							buffer = "[Buffer]",
 							path = "[Path]",
