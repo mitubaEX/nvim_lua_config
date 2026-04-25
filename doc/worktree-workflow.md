@@ -33,16 +33,26 @@ worktree は一律 `<repo_root>/.worktrees/<branch_safe_name>/` に作られる
 （`/` は `_` に置換）。元リポを汚さないので `.gitignore` に
 `.worktrees/` を入れておくと安全。
 
-## 言語別レシピ
+## `.envrc` プロファイル（オプトイン）
 
-このリポの [`doc/worktree-profiles/`](./worktree-profiles/) に雛形あり。
-プロジェクト側にコピーして使う。
+`.envrc` は完全にプロジェクト側の責務。標準で何かを置くことはしない。
+**必要だと判断したときだけ** `:WorktreeProfile <lang>` で雛形を `cwd/.envrc` に
+落とし、編集して `direnv allow` する。
 
-### 共通: `.envrc` で worktree ごとに port / DB を分ける
+```vim
+:WorktreeProfile rails   " or node, go
+```
+
+雛形の中身は最小: ブランチ名から決定的に `PORT` / `DATABASE_URL` を導出する
+だけのもの。Tab 補完あり。既存の `.envrc` がある場合は上書き確認をする。
+
+### 共通: ブランチごとに port / DB を分ける
 
 `git_worktree.nvim` は worktree 作成時に元リポの `.envrc` を新 worktree に
-コピーするので、`direnv` 前提でブランチ名から決定的に値を導出する書き方が
-便利:
+**自動コピー**する。direnv はセキュリティ上コピー先を信用しないので、
+新しい worktree 側で 1 回だけ `direnv allow` が必要。
+
+雛形のキモはブランチ名ハッシュ:
 
 ```sh
 WT_BRANCH=$(git rev-parse --abbrev-ref HEAD | tr '/' '_')
@@ -52,9 +62,10 @@ export PORT=$((3000 + WT_HASH % 1000))
 
 これで dev サーバを複数 worktree で同時起動してもポート衝突しない。
 
-post-create のセットアップ（依存解決・DB 準備）は、各プロジェクトに既にある
-`bin/setup` / `Makefile` / `package.json` の script をそのまま使うのが簡単。
-worktree 作成時にこう繋げる:
+### post-create のセットアップ
+
+依存解決・DB 準備はプロジェクトに既にある `bin/setup` / `Makefile` /
+`package.json` の script をそのまま使う:
 
 ```
 :GitWorktreeCreate feature/foo --command "!bin/setup"
@@ -62,40 +73,15 @@ worktree 作成時にこう繋げる:
 :GitWorktreeCreate feature/foo --command "!make setup"
 ```
 
-### Rails
+### 言語別の留意点
 
-雛形: [`rails.envrc`](./worktree-profiles/rails.envrc)
-
-要点:
-
-- **DB は worktree ごとに分離**（`myapp_<branch>`）。マイグレーションを
-  並行ブランチで触っても壊れない。
-- **bundle path はグローバル共有**（`bundle config set --global path
-  ~/.bundle`）。worktree ごとに `vendor/bundle` を持たない。
-- post-create は `bin/setup` を `--command "!bin/setup"` で呼ぶ。
-
-### Node / React
-
-雛形: [`node.envrc`](./worktree-profiles/node.envrc)
-
-要点:
-
-- **pnpm のグローバル store を使う**（`pnpm config set store-dir
-  ~/.pnpm-store`）と、worktree ごとに `pnpm install` しても実体はハードリンク。
-- Vite/Next の `PORT` を `.envrc` で分離。Next.js を複数 worktree で
-  同時起動するなら `NEXT_BUILD_DIR` も分けると `.next/` の取り合いが消える。
-- `.env.local` が必要なら `cp .env.example .env.local` を `--command` で
-  ワンショット実行。
-
-### Go
-
-雛形: [`go.envrc`](./worktree-profiles/go.envrc)
-
-要点:
-
-- module cache (`$GOMODCACHE`) と build cache はもともと content-addressable
-  なので worktree 横断で勝手に共有される。**post-create は基本不要**。
-- `PORT` だけ `.envrc` で分けておけばよい。
+- **Rails**: 雛形は DB を `myapp_<branch>` に分離。`bundle config set
+  --global path ~/.bundle` で gem path を共有すると `bundle install` が速い。
+- **Node / React**: 雛形は `PORT` のみ。`pnpm config set store-dir
+  ~/.pnpm-store` で store 共有するとディスクも時間も節約。Next.js を複数
+  worktree で同時起動するなら `NEXT_BUILD_DIR` を分ける（雛形にコメントあり）。
+- **Go**: module/build cache が元から global なので post-create はほぼ不要。
+  `PORT` を分けたいときだけ雛形を落とす。
 
 ## Claude (`:terminal`) 連携
 
@@ -145,7 +131,9 @@ worktree 作成時の `--command` 経由でも呼べる:
 
 1. main worktree で作業中、別 issue が割り込み: `<leader>gwa`
    → ブランチ名入力。worktree が作られ、その cwd で claude が起動。
-   `.envrc` も自動コピーされるので `direnv allow` で port/DB 分離。
+   `.envrc` がプロジェクトにあれば自動コピーされる（新 worktree で
+   `direnv allow` を 1 回）。`.envrc` を持たないプロジェクトでは
+   `:WorktreeProfile rails` 等で必要なときだけ落とす。
 2. 依存もまとめてセットアップしたいときは
    `:GitWorktreeCreate xxx --command "!bin/setup"` のようにプロジェクトの
    既存スクリプトを直接呼ぶ。そこから `<leader>cc` で claude を立ち上げる。
