@@ -52,10 +52,19 @@ export PORT=$((3000 + WT_HASH % 1000))
 
 これで dev サーバを複数 worktree で同時起動してもポート衝突しない。
 
+post-create のセットアップ（依存解決・DB 準備）は、各プロジェクトに既にある
+`bin/setup` / `Makefile` / `package.json` の script をそのまま使うのが簡単。
+worktree 作成時にこう繋げる:
+
+```
+:GitWorktreeCreate feature/foo --command "!bin/setup"
+:GitWorktreeCreate feature/foo --command "!pnpm install"
+:GitWorktreeCreate feature/foo --command "!make setup"
+```
+
 ### Rails
 
-雛形: [`rails.envrc`](./worktree-profiles/rails.envrc) /
-[`init-rails.sh`](./worktree-profiles/init-rails.sh)
+雛形: [`rails.envrc`](./worktree-profiles/rails.envrc)
 
 要点:
 
@@ -63,15 +72,11 @@ export PORT=$((3000 + WT_HASH % 1000))
   並行ブランチで触っても壊れない。
 - **bundle path はグローバル共有**（`bundle config set --global path
   ~/.bundle`）。worktree ごとに `vendor/bundle` を持たない。
-- 作成直後は次のように:
-  ```
-  :GitWorktreeCreate feature/foo --command "!./.worktree-init.sh"
-  ```
+- post-create は `bin/setup` を `--command "!bin/setup"` で呼ぶ。
 
 ### Node / React
 
-雛形: [`node.envrc`](./worktree-profiles/node.envrc) /
-[`init-node.sh`](./worktree-profiles/init-node.sh)
+雛形: [`node.envrc`](./worktree-profiles/node.envrc)
 
 要点:
 
@@ -79,17 +84,17 @@ export PORT=$((3000 + WT_HASH % 1000))
   ~/.pnpm-store`）と、worktree ごとに `pnpm install` しても実体はハードリンク。
 - Vite/Next の `PORT` を `.envrc` で分離。Next.js を複数 worktree で
   同時起動するなら `NEXT_BUILD_DIR` も分けると `.next/` の取り合いが消える。
-- `.env.local` は雛形 (`init-node.sh`) で `.env.example` から生成。
+- `.env.local` が必要なら `cp .env.example .env.local` を `--command` で
+  ワンショット実行。
 
 ### Go
 
-雛形: [`go.envrc`](./worktree-profiles/go.envrc) /
-[`init-go.sh`](./worktree-profiles/init-go.sh)
+雛形: [`go.envrc`](./worktree-profiles/go.envrc)
 
 要点:
 
 - module cache (`$GOMODCACHE`) と build cache はもともと content-addressable
-  なので worktree 横断で勝手に共有される。**ほぼ何もする必要がない**。
+  なので worktree 横断で勝手に共有される。**post-create は基本不要**。
 - `PORT` だけ `.envrc` で分けておけばよい。
 
 ## Claude (`:terminal`) 連携
@@ -115,7 +120,7 @@ export PORT=$((3000 + WT_HASH % 1000))
 `:Claude [prompt]`, `:ClaudeContinue`, `:ClaudeResume [id]`,
 `:ClaudeFromPR <num>`, `:ClaudeToggle`, `:ClaudeKill`, `:ClaudeSend <text>`。
 
-`init-*.sh` などからも、worktree 作成時の `--command` 経由で呼べる:
+worktree 作成時の `--command` 経由でも呼べる:
 
 ```
 :GitWorktreeCreate feature/x --command "Claude \"summarize TODO.md\""
@@ -142,8 +147,8 @@ export PORT=$((3000 + WT_HASH % 1000))
    → ブランチ名入力。worktree が作られ、その cwd で claude が起動。
    `.envrc` も自動コピーされるので `direnv allow` で port/DB 分離。
 2. 依存もまとめてセットアップしたいときは
-   `:GitWorktreeCreate xxx --command "!./.worktree-init.sh"` を先に走らせ、
-   そこから `<leader>cc` で claude を立ち上げる。
+   `:GitWorktreeCreate xxx --command "!bin/setup"` のようにプロジェクトの
+   既存スクリプトを直接呼ぶ。そこから `<leader>cc` で claude を立ち上げる。
 3. 元の作業に戻る: `<leader>gws` で worktree 切替 → `<leader>cc` で
    そのブランチの claude セッションへ。
 4. PR レビュー: `<leader>gwR` → PR 番号入力。fork からの PR でも
