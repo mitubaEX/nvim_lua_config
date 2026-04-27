@@ -1,7 +1,6 @@
 # nvim x git worktree workflow
 
-`mitubaEX/git_worktree.nvim` をベースに、Rails / Node / React / Go のリポで
-worktree を多用するための運用メモ。
+`mitubaEX/git_worktree.nvim` をベースに、worktree を多用するための運用メモ。
 
 ## キーマップ
 
@@ -33,55 +32,38 @@ worktree は一律 `<repo_root>/.worktrees/<branch_safe_name>/` に作られる
 （`/` は `_` に置換）。元リポを汚さないので `.gitignore` に
 `.worktrees/` を入れておくと安全。
 
-## `.envrc` プロファイル（オプトイン）
+## `.worktreeinclude`: 新 worktree にコピーするファイルを宣言
 
-`.envrc` は完全にプロジェクト側の責務。標準で何かを置くことはしない。
-**必要だと判断したときだけ** `:WorktreeProfile <lang>` で雛形を `cwd/.envrc` に
-落とし、編集して `direnv allow` する。
+`git_worktree.nvim` は worktree 作成時、リポジトリルートにある
+`.worktreeinclude` を読み、そこに書かれたパスを新 worktree にコピーする
+（`:GitWorktreeReview` のレビュー用 worktree でも同じ）。`.envrc` を
+暗黙にコピーしていた旧挙動は廃止されているので、必要なものは明示する。
 
-```vim
-:WorktreeProfile rails   " or node, go
-```
+- 1 行 1 パス、リポジトリルート相対
+- `#` 始まりと空行は無視
+- ファイルもディレクトリも OK
+- 既存ファイルは上書きしない（target に同名があればスキップ）
+- 絶対パスや `..` を含むパスは安全のため拒否
 
-雛形の中身は最小: ブランチ名から決定的に `PORT` / `DATABASE_URL` を導出する
-だけのもの。Tab 補完あり。既存の `.envrc` がある場合は上書き確認をする。
-
-### 共通: ブランチごとに port / DB を分ける
-
-`git_worktree.nvim` は worktree 作成時に元リポの `.envrc` を新 worktree に
-**自動コピー**する。direnv はセキュリティ上コピー先を信用しないので、
-新しい worktree 側で 1 回だけ `direnv allow` が必要。
-
-雛形のキモはブランチ名ハッシュ:
-
-```sh
-WT_BRANCH=$(git rev-parse --abbrev-ref HEAD | tr '/' '_')
-WT_HASH=$(printf '%s' "$WT_BRANCH" | cksum | cut -d' ' -f1)
-export PORT=$((3000 + WT_HASH % 1000))
-```
-
-これで dev サーバを複数 worktree で同時起動してもポート衝突しない。
-
-### post-create のセットアップ
-
-依存解決・DB 準備はプロジェクトに既にある `bin/setup` / `Makefile` /
-`package.json` の script をそのまま使う:
+例:
 
 ```
-:GitWorktreeCreate feature/foo --command "!bin/setup"
-:GitWorktreeCreate feature/foo --command "!pnpm install"
-:GitWorktreeCreate feature/foo --command "!make setup"
+# direnv / ローカル環境
+.envrc
+.envrc.local
+.env.development
+
+# エディタ / ツール状態
+.vscode
+.idea/runConfigurations
+
+# ローカル用スクリプト
+scripts/dev-secrets.sh
 ```
 
-### 言語別の留意点
-
-- **Rails**: 雛形は DB を `myapp_<branch>` に分離。`bundle config set
-  --global path ~/.bundle` で gem path を共有すると `bundle install` が速い。
-- **Node / React**: 雛形は `PORT` のみ。`pnpm config set store-dir
-  ~/.pnpm-store` で store 共有するとディスクも時間も節約。Next.js を複数
-  worktree で同時起動するなら `NEXT_BUILD_DIR` を分ける（雛形にコメントあり）。
-- **Go**: module/build cache が元から global なので post-create はほぼ不要。
-  `PORT` を分けたいときだけ雛形を落とす。
+`.worktreeinclude` 自体は git 管理に入れて共有してよい（中身は単なるパス
+リスト）。コピーされる `.envrc` などは個人ごとなので `.gitignore` 側で
+ignore するのが普通。
 
 ## Claude (`:terminal`) 連携
 
@@ -131,26 +113,16 @@ worktree 作成時の `--command` 経由でも呼べる:
 
 1. main worktree で作業中、別 issue が割り込み: `<leader>gwa`
    → ブランチ名入力。worktree が作られ、その cwd で claude が起動。
-   `.envrc` がプロジェクトにあれば自動コピーされる（新 worktree で
-   `direnv allow` を 1 回）。`.envrc` を持たないプロジェクトでは
-   `:WorktreeProfile rails` 等で必要なときだけ落とす。
-2. 依存もまとめてセットアップしたいときは
-   `:GitWorktreeCreate xxx --command "!bin/setup"` のようにプロジェクトの
-   既存スクリプトを直接呼ぶ。そこから `<leader>cc` で claude を立ち上げる。
-3. 元の作業に戻る: `<leader>gws` で worktree 切替 → `<leader>cc` で
+   リポジトリルートに `.worktreeinclude` があれば、そこに列挙したファイルが
+   新 worktree にコピーされる。
+2. 元の作業に戻る: `<leader>gws` で worktree 切替 → `<leader>cc` で
    そのブランチの claude セッションへ。
-4. PR レビュー: `<leader>gwR` → PR 番号入力。fork からの PR でも
+3. PR レビュー: `<leader>gwR` → PR 番号入力。fork からの PR でも
    remote を自動追加し、`--from-pr` で対応セッションを開く。
-5. 終わった worktree は `<leader>gwd` または `<leader>gwX` で一括掃除。
+4. 終わった worktree は `<leader>gwd` または `<leader>gwX` で一括掃除。
 
 ## トレードオフ
 
-- **依存共有 vs. 独立**: pnpm store / 共通 bundle path はディスクと時間を
-  大幅に節約するが、ネイティブ拡張の ABI ズレが起きると複数 worktree が
-  同時に壊れる。怪しくなったら該当言語だけ独立配置に戻す。
-- **post-create 自動実行 vs. 明示**: Rails の `bin/setup` は数十秒かかる。
-  作成キーを `<leader>gwc`（軽い）と「init 付き」を別キーにする運用も可。
-  現状は明示的に `--command` を渡す前提。
 - **claude を auto-open するか**: `<leader>gwa/A/R` は明示的に「+ claude」した
   ときだけ起動。素の `<leader>gwc` は claude を開かないので、ターミナル
   ペインを汚したくない用途と分けられる。
