@@ -38,3 +38,4 @@ require("lazy").setup({
 require("common.keymap")
 require("common.set_config")
 require("common.autocmd_config")
+require("common.claude")

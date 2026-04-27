@@ -22,18 +22,83 @@ return {
 	},
 	{
 		"mitubaEX/git_worktree.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
 		config = function()
-			require("git_worktree").setup()
+			require("git_worktree").setup({
+				cleanup_buffers = true, -- Clean up old buffers when switching
+				worktreeinclude_file = ".worktreeinclude", -- Copy paths listed here into new worktrees
+			})
 		end,
-		opts = {
-			cleanup_buffers = true, -- Clean up old buffers when switching
-		},
 		cmd = {
 			"GitWorktreeCreate",
 			"GitWorktreeSwitch",
 			"GitWorktreeDelete",
 			"GitWorktreeList",
 			"GitWorktreeCurrent",
+			"GitWorktreeReview",
+			"GitWorktreeCleanup",
+			"GitWorktreeForceCleanup",
+		},
+		keys = {
+			{
+				"<leader>gwc",
+				function()
+					require("plugins.configs.worktree").create()
+				end,
+				desc = "Worktree: create",
+			},
+			{
+				"<leader>gwC",
+				function()
+					require("plugins.configs.worktree").create_from_default()
+				end,
+				desc = "Worktree: create from default branch",
+			},
+			{
+				"<leader>gws",
+				function()
+					require("plugins.configs.worktree").switch()
+				end,
+				desc = "Worktree: switch (Telescope)",
+			},
+			{
+				"<leader>gwd",
+				function()
+					require("plugins.configs.worktree").delete()
+				end,
+				desc = "Worktree: delete by branch",
+			},
+			{ "<leader>gwl", "<cmd>GitWorktreeList<CR>", desc = "Worktree: list" },
+			{ "<leader>gw.", "<cmd>GitWorktreeCurrent<CR>", desc = "Worktree: show current" },
+			{
+				"<leader>gwr",
+				function()
+					require("plugins.configs.worktree").review_pr()
+				end,
+				desc = "Worktree: review PR",
+			},
+			{
+				"<leader>gwa",
+				function()
+					require("plugins.configs.worktree").create_with_claude()
+				end,
+				desc = "Worktree: create + open claude",
+			},
+			{
+				"<leader>gwA",
+				function()
+					require("plugins.configs.worktree").create_from_default_with_claude()
+				end,
+				desc = "Worktree: create (from default) + claude",
+			},
+			{
+				"<leader>gwR",
+				function()
+					require("plugins.configs.worktree").review_pr_with_claude()
+				end,
+				desc = "Worktree: review PR + claude --from-pr",
+			},
+			{ "<leader>gwX", "<cmd>GitWorktreeCleanup<CR>", desc = "Worktree: cleanup all" },
 		},
 	},
 
