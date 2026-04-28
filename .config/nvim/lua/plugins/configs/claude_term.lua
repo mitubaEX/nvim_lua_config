@@ -89,8 +89,10 @@ function M.open(opts)
 	end
 
 	open_split()
+	-- Need a fresh buffer for the terminal; the split inherited the previous one.
+	vim.cmd("enew")
 	local cmd = build_cmd(opts)
-	local job_id = vim.fn.termopen(cmd, { cwd = cwd })
+	local job_id = vim.fn.jobstart(cmd, { cwd = cwd, term = true })
 	if job_id <= 0 then
 		vim.api.nvim_err_writeln("Failed to start claude (job_id=" .. job_id .. ")")
 		return
