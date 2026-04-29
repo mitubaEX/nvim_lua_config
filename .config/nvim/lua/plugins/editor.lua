@@ -75,8 +75,18 @@ return {
 		"tyru/columnskip.vim",
 		event = "VeryLazy",
 		config = function()
-			vim.keymap.set("n", "<Leader>j", "<Plug>(columnskip:nonblank:next)", { noremap = false, silent = true })
-			vim.keymap.set("n", "<Leader>k", "<Plug>(columnskip:nonblank:prev)", { noremap = false, silent = true })
+			vim.keymap.set(
+				"n",
+				"<Leader>j",
+				"<Plug>(columnskip:nonblank:next)",
+				{ noremap = false, silent = true, desc = "Column skip down (non-blank)" }
+			)
+			vim.keymap.set(
+				"n",
+				"<Leader>k",
+				"<Plug>(columnskip:nonblank:prev)",
+				{ noremap = false, silent = true, desc = "Column skip up (non-blank)" }
+			)
 		end,
 	},
 	{
@@ -91,15 +101,20 @@ return {
 			vim.g.any_jump_disable_default_keybindings = "1"
 		end,
 		config = function()
-			vim.keymap.set("n", "<Leader>an", ":AnyJump<CR>", { noremap = true, silent = false })
+			vim.keymap.set(
+				"n",
+				"<Leader>an",
+				":AnyJump<CR>",
+				{ noremap = true, silent = false, desc = "AnyJump: jump to definition" }
+			)
 		end,
 	},
 	{
 		"t9md/vim-quickhl",
 		event = "BufReadPost",
 		keys = {
-			{ "<Leader>h", "<Plug>(quickhl-manual-this)", mode = "n" },
-			{ "<Leader>H", "<Plug>(quickhl-manual-reset)", mode = "n" },
+			{ "<Leader>h", "<Plug>(quickhl-manual-this)", mode = "n", desc = "Quickhl: highlight word" },
+			{ "<Leader>H", "<Plug>(quickhl-manual-reset)", mode = "n", desc = "Quickhl: clear" },
 		},
 	},
 	{
@@ -206,8 +221,10 @@ return {
 			preset = "modern",
 			spec = {
 				{ "<leader>f", group = "find" },
+				{ "<leader>fs", group = "server" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>gw", group = "worktree" },
+				{ "<leader>s", group = "server / flash" },
 				{ "<leader>t", group = "test" },
 				{ "<leader>x", group = "trouble" },
 				{ "<leader>a", group = "aerial / any-jump" },

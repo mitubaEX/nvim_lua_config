@@ -7,8 +7,8 @@ return {
 		"vim-test/vim-test",
 		event = "BufReadPost",
 		keys = {
-			{ "<Leader>tn", ":TestNearest RAILS_ENV=test<CR>", mode = "n" },
-			{ "<Leader>tf", ":TestFile RAILS_ENV=test<CR>", mode = "n" },
+			{ "<Leader>tn", ":TestNearest RAILS_ENV=test<CR>", mode = "n", desc = "Test: nearest" },
+			{ "<Leader>tf", ":TestFile RAILS_ENV=test<CR>", mode = "n", desc = "Test: file" },
 		},
 		config = function()
 			vim.api.nvim_set_var("test#strategy", "neovim")
