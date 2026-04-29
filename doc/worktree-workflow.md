@@ -18,6 +18,8 @@
 | `<leader>gwa`  | 新規 worktree 作成 + claude を起動         |
 | `<leader>gwA`  | default branch 起点で作成 + claude         |
 | `<leader>gwR`  | PR レビュー用 worktree + `claude --from-pr`|
+| `<leader>gwt`  | タスク文を渡して claude にブランチ名を決めさせ作業開始 |
+| `<leader>gwT`  | `<leader>gwt` の default branch 起点版     |
 | `<leader>gwX`  | 現在以外の worktree を一括削除（確認あり） |
 
 Telescope picker（`<leader>gws`）では `<C-d>` で削除も可能。
@@ -102,6 +104,10 @@ worktree 作成時の `--command` 経由でも呼べる:
 - `<leader>gwR` — PR レビュー: 当該 PR の worktree を作り、その上で
   `claude --from-pr <num>` を起動。Claude が PR にひも付いた既存セッションを
   あれば再開、なければ新規作成する
+- `<leader>gwt` — ブランチ名の代わりに「やりたいこと」を入力。`claude -p`
+  を裏で叩いて kebab-case のブランチ名候補を1つもらい、その候補（編集可）
+  で確定すると worktree が作られ、claude にそのタスク文がそのまま初期
+  prompt として渡される。`<leader>gwT` は default branch 起点版。
 
 ### セッション継続
 
