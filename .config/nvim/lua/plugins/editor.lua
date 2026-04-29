@@ -196,6 +196,34 @@ return {
 		},
 	},
 	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {
+			preset = "modern",
+			spec = {
+				{ "<leader>f", group = "find" },
+				{ "<leader>g", group = "git" },
+				{ "<leader>gw", group = "worktree" },
+				{ "<leader>t", group = "test" },
+				{ "<leader>x", group = "trouble" },
+				{ "<leader>a", group = "aerial / any-jump" },
+			},
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Keymaps (which-key)",
+			},
+		},
+	},
+	{
 		"folke/todo-comments.nvim",
 		event = "BufReadPost",
 		dependencies = { "nvim-lua/plenary.nvim" },
