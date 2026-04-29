@@ -30,9 +30,6 @@ return {
 		cmd = "Telescope",
 		keys = {
 			{ "<Leader>fp", "<cmd>Telescope possession<CR>", desc = "Telescope possession" },
-			{ "<Leader>gw", "<cmd>Telescope git_worktree<CR>", desc = "Git worktree" },
-			{ "<Leader>gwc", ":GitWorktreeCreate", desc = "Git worktree create" },
-			{ "<Leader>gwr", ":GitWorktreeReview", desc = "Git worktree review" },
 			{ "<Leader>fs", "<cmd>Telescope server servers<CR>", desc = "Server list" },
 			{ "<Leader>fsl", "<cmd>Telescope server logs<CR>", desc = "Server logs" },
 		},
