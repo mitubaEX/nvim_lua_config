@@ -182,4 +182,85 @@ function M.review_pr_with_claude()
 	end)
 end
 
+local function sanitize_branch(name)
+	name = name:gsub('^["`\']+', ""):gsub('["`\']+$', "")
+	name = name:gsub("^%s+", ""):gsub("%s+$", "")
+	-- git refs forbid spaces and many specials; keep only the safe set.
+	name = name:gsub("[^A-Za-z0-9_/%-]+", "-")
+	name = name:gsub("%-+", "-"):gsub("^%-", ""):gsub("%-$", "")
+	return name
+end
+
+local function suggest_branch_name(task, on_done)
+	local prompt = table.concat({
+		"Suggest ONE short kebab-case git branch name for this task.",
+		"Output ONLY the branch name on a single line — no quotes,",
+		"no prefix like 'feature/' or 'fix/', no explanation, no markdown fence.",
+		"Keep it under 40 characters and ASCII only.",
+		"",
+		"Task: " .. task,
+	}, "\n")
+
+	vim.notify("claude: choosing a branch name…")
+	vim.system(
+		{ "claude", "-p", prompt },
+		{ text = true },
+		vim.schedule_wrap(function(out)
+			if out.code ~= 0 then
+				vim.notify(
+					"claude -p failed (exit " .. tostring(out.code) .. "): " .. (out.stderr or ""),
+					vim.log.levels.ERROR
+				)
+				return
+			end
+			local first
+			for line in (out.stdout or ""):gmatch("[^\r\n]+") do
+				if line:match("%S") then
+					first = line
+					break
+				end
+			end
+			local branch = first and sanitize_branch(first) or ""
+			if branch == "" then
+				vim.notify("claude returned no usable branch name", vim.log.levels.ERROR)
+				return
+			end
+			on_done(branch)
+		end)
+	)
+end
+
+local function create_from_task(from_default)
+	local prompt = from_default and "Task (claude picks branch, from default): "
+		or "Task (claude picks branch): "
+	input(prompt, function(task)
+		suggest_branch_name(task, function(branch)
+			vim.ui.input({
+				prompt = "Create worktree with branch: ",
+				default = branch,
+			}, function(confirmed)
+				if not confirmed or confirmed == "" then
+					return
+				end
+				local create_cmd = "GitWorktreeCreate " .. confirmed
+				if from_default then
+					create_cmd = create_cmd .. " --from-default"
+				end
+				in_new_tab(function()
+					vim.cmd(create_cmd)
+					claude().open({ prompt = task })
+				end)
+			end)
+		end)
+	end)
+end
+
+function M.create_with_task()
+	create_from_task(false)
+end
+
+function M.create_from_default_with_task()
+	create_from_task(true)
+end
+
 return M

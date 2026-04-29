@@ -98,6 +98,20 @@ return {
 				end,
 				desc = "Worktree: review PR + claude --from-pr",
 			},
+			{
+				"<leader>gwt",
+				function()
+					require("plugins.configs.worktree").create_with_task()
+				end,
+				desc = "Worktree: task -> claude picks branch + opens claude",
+			},
+			{
+				"<leader>gwT",
+				function()
+					require("plugins.configs.worktree").create_from_default_with_task()
+				end,
+				desc = "Worktree: task (from default) -> claude picks branch + opens claude",
+			},
 			{ "<leader>gwX", "<cmd>GitWorktreeCleanup<CR>", desc = "Worktree: cleanup all" },
 		},
 	},
