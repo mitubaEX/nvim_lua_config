@@ -170,7 +170,6 @@ return function()
 	-- )
 
 	-- load telescope extensions
-	require("telescope").load_extension("possession")
 	require("telescope").load_extension("git_worktree")
 	require("telescope").load_extension("server")
 end

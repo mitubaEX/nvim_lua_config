@@ -29,7 +29,6 @@ return {
 		lazy = false,
 		cmd = "Telescope",
 		keys = {
-			{ "<Leader>fp", "<cmd>Telescope possession<CR>", desc = "Telescope possession" },
 			{ "<Leader>fs", "<cmd>Telescope server servers<CR>", desc = "Server list" },
 			{ "<Leader>fsl", "<cmd>Telescope server logs<CR>", desc = "Server logs" },
 		},
@@ -147,22 +146,6 @@ return {
 				require("dial.map").manipulate("decrement", "normal")
 			end)
 		end,
-	},
-	{
-		"jedrzejboczar/possession.nvim",
-		event = "BufReadPost",
-		opts = {
-			autosave = {
-				current = true,
-				cwd = function()
-					return not require("possession.session").exists(require("possession.paths").cwd_session_name())
-				end,
-			},
-			autoload = "auto_cwd",
-			plugins = {
-				delete_buffers = true,
-			},
-		},
 	},
 	{
 		"rhysd/accelerated-jk",

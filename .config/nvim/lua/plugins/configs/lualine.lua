@@ -110,11 +110,6 @@ return function()
 					separator = "",
 				},
 				{ "diagnostics", sources = { "nvim_diagnostic" } },
-				{
-					function()
-						return require("possession.session").get_session_name() or ""
-					end,
-				},
 			},
 			lualine_x = { "encoding", "fileformat", "filetype" },
 			lualine_y = { "progress" },
