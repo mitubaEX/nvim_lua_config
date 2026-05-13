@@ -112,6 +112,13 @@ return {
 				end,
 				desc = "Worktree: task (from default) -> claude picks branch + opens claude",
 			},
+			{
+				"<leader>gwq",
+				function()
+					require("plugins.configs.worktree").close_tabs()
+				end,
+				desc = "Worktree: close tabs (Telescope, multi-select)",
+			},
 			{ "<leader>gwX", "<cmd>GitWorktreeCleanup<CR>", desc = "Worktree: cleanup all" },
 		},
 	},
