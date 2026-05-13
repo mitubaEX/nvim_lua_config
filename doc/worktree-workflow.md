@@ -23,6 +23,10 @@
 | `<leader>gwX`  | 現在以外の worktree を一括削除（確認あり） |
 
 Telescope picker（`<leader>gws`）では `<C-d>` で削除も可能。
+各行はこの並びで表示される: `<状態> <branch> <PR ラベル> <path>`。`<状態>` は
+`*`（現 cwd）/ `T`（既にタブで開いている）/ ` `（その他）。`<PR ラベル>` は
+`gh pr list` の結果から、open は `#25`、draft は `#25(D)`、merged は `#25(M)`、
+PR 無し / closed は空欄。`gh` 未インストール・未認証時は全行で空欄になる。
 
 実体は
 [`lua/plugins/configs/worktree.lua`](../.config/nvim/lua/plugins/configs/worktree.lua)

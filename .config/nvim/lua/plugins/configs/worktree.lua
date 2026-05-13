@@ -70,6 +70,55 @@ local function list_worktrees()
 	return result
 end
 
+-- Returns { [branch] = { number, state, isDraft } } from `gh pr list`.
+-- Empty on any failure (gh missing, not a GH repo, network down).
+local function fetch_prs_by_branch()
+	if vim.fn.executable("gh") ~= 1 then
+		return {}
+	end
+	local out = vim.fn.systemlist({
+		"gh",
+		"pr",
+		"list",
+		"--state",
+		"all",
+		"--json",
+		"number,headRefName,state,isDraft",
+		"--limit",
+		"200",
+	})
+	if vim.v.shell_error ~= 0 then
+		return {}
+	end
+	local ok, decoded = pcall(vim.json.decode, table.concat(out, "\n"))
+	if not ok or type(decoded) ~= "table" then
+		return {}
+	end
+	-- gh returns newest first; keep the most recent entry per branch so a
+	-- reopened branch shows its current PR rather than an old merged one.
+	local by_branch = {}
+	for _, pr in ipairs(decoded) do
+		if pr.headRefName and not by_branch[pr.headRefName] then
+			by_branch[pr.headRefName] = pr
+		end
+	end
+	return by_branch
+end
+
+local function format_pr_label(pr)
+	if not pr then
+		return ""
+	end
+	if pr.state == "OPEN" then
+		return pr.isDraft and string.format("#%d(D)", pr.number) or string.format("#%d", pr.number)
+	end
+	if pr.state == "MERGED" then
+		return string.format("#%d(M)", pr.number)
+	end
+	-- CLOSED (un-merged): not surfaced.
+	return ""
+end
+
 --- Switch to a tab already pinned to `path`, or open a new tab pinned to it.
 function M.switch_to(path, branch)
 	local existing = find_tab_for(path)
@@ -93,6 +142,10 @@ function M.switch()
 	local actions = require("telescope.actions")
 	local action_state = require("telescope.actions.state")
 
+	-- One synchronous `gh` call per picker invocation; misses (no gh, offline)
+	-- degrade to an empty map and an empty PR column rather than failing.
+	local prs = fetch_prs_by_branch()
+
 	pickers
 		.new({}, {
 			prompt_title = "Git Worktrees (tab-aware)",
@@ -108,10 +161,12 @@ function M.switch()
 					else
 						prefix = "  "
 					end
+					local pr_label = format_pr_label(prs[entry.branch])
+					local display = string.format("%s%-24s %-8s %s", prefix, entry.branch, pr_label, entry.path)
 					return {
 						value = entry,
-						display = prefix .. entry.display,
-						ordinal = entry.branch .. " " .. entry.path,
+						display = display,
+						ordinal = entry.branch .. " " .. pr_label .. " " .. entry.path,
 					}
 				end,
 			}),
