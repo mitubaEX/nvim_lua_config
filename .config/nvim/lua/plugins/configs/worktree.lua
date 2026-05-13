@@ -9,6 +9,16 @@ local function input(prompt, on_confirm)
 	end)
 end
 
+-- Run `action` in a fresh tab whose cwd is the resulting worktree.
+-- The current tab is pinned with :tcd first so the global :cd done by
+-- GitWorktreeCreate doesn't drag it along.
+local function in_new_tab(action)
+	vim.cmd("tcd " .. vim.fn.fnameescape(vim.fn.getcwd()))
+	vim.cmd("tabnew")
+	action()
+	vim.cmd("tcd " .. vim.fn.fnameescape(vim.fn.getcwd()))
+end
+
 function M.create()
 	input("New worktree branch: ", function(branch)
 		vim.cmd("GitWorktreeCreate " .. branch)
@@ -137,22 +147,14 @@ end
 
 function M.review_pr()
 	input("Review PR #: ", function(pr)
-		vim.cmd("GitWorktreeReview " .. pr)
+		in_new_tab(function()
+			vim.cmd("GitWorktreeReview " .. pr)
+		end)
 	end)
 end
 
 local function claude()
 	return require("plugins.configs.claude_term")
-end
-
--- Run `action` in a fresh tab whose cwd is the resulting worktree.
--- The current tab is pinned with :tcd first so the global :cd done by
--- GitWorktreeCreate doesn't drag it along.
-local function in_new_tab(action)
-	vim.cmd("tcd " .. vim.fn.fnameescape(vim.fn.getcwd()))
-	vim.cmd("tabnew")
-	action()
-	vim.cmd("tcd " .. vim.fn.fnameescape(vim.fn.getcwd()))
 end
 
 function M.create_with_claude()
