@@ -145,6 +145,108 @@ function M.delete()
 	end)
 end
 
+-- Build a {normalized cwd -> branch} map from `git worktree list` so the
+-- close-tabs picker can show the branch alongside the tab's pinned directory.
+local function branch_by_cwd()
+	local map = {}
+	for _, wt in ipairs(list_worktrees()) do
+		map[normalize_path(wt.path)] = wt.branch
+	end
+	return map
+end
+
+local function list_open_tabs()
+	local current = vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+	local branch_for = branch_by_cwd()
+	local result = {}
+	for _, tabid in ipairs(vim.api.nvim_list_tabpages()) do
+		local tabnr = vim.api.nvim_tabpage_get_number(tabid)
+		local cwd = vim.fn.getcwd(-1, tabnr)
+		local branch = branch_for[normalize_path(cwd)] or "-"
+		table.insert(result, {
+			tabnr = tabnr,
+			cwd = cwd,
+			branch = branch,
+			basename = vim.fn.fnamemodify(cwd, ":t"),
+			is_current = tabnr == current,
+		})
+	end
+	return result
+end
+
+--- Telescope picker that closes selected tabs (multi-select with <Tab>).
+--- Leaves the worktree on disk; use `<leader>gwd` for actual deletion.
+function M.close_tabs()
+	if #vim.api.nvim_list_tabpages() <= 1 then
+		vim.notify("Only one tab open", vim.log.levels.INFO)
+		return
+	end
+
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local conf = require("telescope.config").values
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+
+	pickers
+		.new({}, {
+			prompt_title = "Close Tabs (<Tab>: multi-select, <CR>: close)",
+			finder = finders.new_table({
+				results = list_open_tabs(),
+				entry_maker = function(entry)
+					local prefix = entry.is_current and "* " or "  "
+					local display =
+						string.format("%s%2d  %-24s %s", prefix, entry.tabnr, entry.branch, entry.basename)
+					return {
+						value = entry,
+						display = display,
+						ordinal = entry.branch .. " " .. entry.cwd,
+					}
+				end,
+			}),
+			sorter = conf.generic_sorter({}),
+			attach_mappings = function(prompt_bufnr, _)
+				actions.select_default:replace(function()
+					local picker = action_state.get_current_picker(prompt_bufnr)
+					local selections = picker:get_multi_selection()
+					if #selections == 0 then
+						local entry = action_state.get_selected_entry()
+						if entry then
+							selections = { entry }
+						end
+					end
+					actions.close(prompt_bufnr)
+
+					-- Close from largest tabnr to smallest so earlier closes
+					-- don't shift the numbers of tabs still queued.
+					local tabnrs = {}
+					for _, sel in ipairs(selections) do
+						table.insert(tabnrs, sel.value.tabnr)
+					end
+					table.sort(tabnrs, function(a, b)
+						return a > b
+					end)
+
+					local closed = 0
+					for _, tnr in ipairs(tabnrs) do
+						if #vim.api.nvim_list_tabpages() <= 1 then
+							break
+						end
+						local ok = pcall(vim.cmd, tnr .. "tabclose")
+						if ok then
+							closed = closed + 1
+						end
+					end
+					if closed > 0 then
+						vim.notify(string.format("Closed %d tab%s", closed, closed == 1 and "" or "s"))
+					end
+				end)
+				return true
+			end,
+		})
+		:find()
+end
+
 function M.review_pr()
 	input("Review PR #: ", function(pr)
 		in_new_tab(function()
