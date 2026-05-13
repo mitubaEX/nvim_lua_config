@@ -149,12 +149,18 @@ return {
 				always_show_bufferline = true,
 				indicator = { style = "underline" },
 				name_formatter = function(opts)
+					-- Closing a tab can cause bufferline to re-render with a
+					-- stale `tabnr` that no longer exists. `vim.fn.getcwd(-1, tabnr)`
+					-- raises E5000 in that case, surfacing as E5108. Guard with a
+					-- range check and pcall, falling back to the buffer name.
 					local tabnr = opts.tabnr
-					if tabnr then
-						local cwd = vim.fn.getcwd(-1, tabnr)
-						local label = vim.fn.fnamemodify(cwd, ":t")
-						if label ~= "" then
-							return label
+					if tabnr and tabnr >= 1 and tabnr <= vim.fn.tabpagenr("$") then
+						local ok, cwd = pcall(vim.fn.getcwd, -1, tabnr)
+						if ok then
+							local label = vim.fn.fnamemodify(cwd, ":t")
+							if label ~= "" then
+								return label
+							end
 						end
 					end
 					return opts.name
