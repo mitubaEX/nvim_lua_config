@@ -10,7 +10,15 @@ return {
 			-- Only one of these is needed, not both.
 			"ibhagwan/fzf-lua", -- optional
 		},
-		opts = {},
+		-- Neogit defaults to `kind = "tab"`, which spawns a new Vim tab page.
+		-- That collides with bufferline.nvim's `mode = "tabs"` setup (see
+		-- ui.lua): a worktree tab and the Neogit tab share the same cwd, so
+		-- they render with the same name_formatter label and the tab-aware
+		-- `<leader>gws` picker can't tell them apart. Replace the current
+		-- buffer instead — `:q` returns to the prior buffer.
+		opts = {
+			kind = "replace",
+		},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
