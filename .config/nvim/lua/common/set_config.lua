@@ -33,8 +33,9 @@ vim.opt.virtualedit = "block"
 vim.opt.backspace = "indent,eol,start"
 vim.opt.whichwrap = "b,s,<,>,[,],h,l"
 
--- disable mouse
-vim.opt.mouse = ""
+-- mouse: normal mode only — enables tabline (bufferline) click without
+-- hijacking selection/copy in insert & visual modes.
+vim.opt.mouse = "n"
 
 vim.opt.swapfile = false
 

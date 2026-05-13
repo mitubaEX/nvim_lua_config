@@ -130,4 +130,36 @@ return {
 		event = "BufReadPost",
 		opts = {},
 	},
+	-- Tab page bar: shows Vim tabs (each tab ≈ a worktree in this config).
+	-- Labels render the tab's cwd basename so a worktree tab reads as the
+	-- branch/dir name (e.g. `add_tab_bar_plugin`) instead of the active buffer.
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		event = "VeryLazy",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			options = {
+				mode = "tabs",
+				style_preset = "default",
+				diagnostics = "nvim_lsp",
+				show_buffer_close_icons = false,
+				show_close_icon = false,
+				separator_style = "thin",
+				always_show_bufferline = true,
+				indicator = { style = "underline" },
+				name_formatter = function(opts)
+					local tabnr = opts.tabnr
+					if tabnr then
+						local cwd = vim.fn.getcwd(-1, tabnr)
+						local label = vim.fn.fnamemodify(cwd, ":t")
+						if label ~= "" then
+							return label
+						end
+					end
+					return opts.name
+				end,
+			},
+		},
+	},
 }
