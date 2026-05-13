@@ -66,7 +66,9 @@ local function open_split()
 end
 
 --- Open (or focus) a claude terminal for the current cwd.
---- @param opts table|nil { prompt, continue, resume, from_pr, append_system_prompt, name }
+--- @param opts table|nil { prompt, continue, resume, from_pr, append_system_prompt, name, no_split }
+--- `no_split = true` reuses the current window instead of opening a vsplit
+--- (used by the worktree-tab flow where the new tab already exists for claude).
 function M.open(opts)
 	opts = opts or {}
 	local cwd = vim.fn.getcwd()
@@ -77,7 +79,9 @@ function M.open(opts)
 		if #wins > 0 then
 			vim.api.nvim_set_current_win(wins[1])
 		else
-			open_split()
+			if not opts.no_split then
+				open_split()
+			end
 			vim.api.nvim_win_set_buf(0, entry.buf)
 		end
 		vim.cmd("startinsert")
@@ -88,8 +92,10 @@ function M.open(opts)
 		opts.name = current_branch()
 	end
 
-	open_split()
-	-- Need a fresh buffer for the terminal; the split inherited the previous one.
+	if not opts.no_split then
+		open_split()
+	end
+	-- Need a fresh buffer for the terminal; the split (or tab) inherited the previous one.
 	vim.cmd("enew")
 	local cmd = build_cmd(opts)
 	local job_id = vim.fn.jobstart(cmd, { cwd = cwd, term = true })
