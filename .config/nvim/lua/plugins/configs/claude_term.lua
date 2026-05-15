@@ -107,6 +107,8 @@ function M.open(opts)
 	pcall(vim.api.nvim_buf_set_name, buf, "claude://" .. cwd)
 	terms[cwd] = { buf = buf, job_id = job_id }
 
+	require("plugins.configs.claude_notification").watch(buf, cwd)
+
 	vim.api.nvim_create_autocmd("BufWipeout", {
 		buffer = buf,
 		once = true,
