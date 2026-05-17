@@ -41,7 +41,7 @@ return {
 		lazy = false,
 		opts = {
 			bufdelete = { enabled = true },
-			dashboard = { enabled = true },
+			dashboard = { enabled = false },
 			gh = { enabled = true },
 			git = { enabled = true },
 			gitbrowse = { enabled = true },
