@@ -1,71 +1,20 @@
-local function normalize_path(p)
-	if not p or p == "" then
-		return ""
-	end
-	return (vim.fn.fnamemodify(p, ":p"):gsub("/+$", ""))
-end
-
--- Each worktree tab pins itself with `tcd`, so the tab's local cwd uniquely
--- identifies the worktree. Treat that cwd as the grouping key.
-local function tab_cwd()
-	return normalize_path(vim.fn.getcwd(-1, 0))
-end
-
-local function buf_under(buf, base)
-	if base == "" then
-		return true
-	end
-	local name = vim.api.nvim_buf_get_name(buf)
-	if name == "" then
-		return false
-	end
-	-- Terminal buffers carry their launch cwd in the name. Two schemes:
-	--   term://CWD//PID:CMD       (default :terminal / jobstart-term)
-	--   claude://CWD              (renamed by plugins/configs/claude_term.lua)
-	if vim.bo[buf].buftype == "terminal" then
-		local term_cwd = name:match("^term://(.-)//") or name:match("^claude://(.*)$")
-		if not term_cwd then
-			return false
-		end
-		name = normalize_path(term_cwd)
-	else
-		name = normalize_path(name)
-	end
-	return name == base or name:sub(1, #base + 1) == base .. "/"
-end
-
--- Mirrors telescope.builtin.buffers but uses buf_under() to scope to the
--- current worktree tab. Unlike telescope's `cwd_only`, this understands
--- terminal URI schemes (term://, claude://) so terminal buffers are
--- included instead of silently filtered out by raw name-prefix matching.
-local function pick_buffers(opts)
+-- Picker scoped to terminal buffers only. Mirrors telescope.builtin.buffers
+-- but pre-filters by buftype since telescope has no native terminal filter.
+local function pick_terminal_buffers(opts)
 	opts = opts or {}
 	local pickers = require("telescope.pickers")
 	local finders = require("telescope.finders")
 	local conf = require("telescope.config").values
 	local make_entry = require("telescope.make_entry")
 
-	local terminal_only = opts.terminal_only
-	local cwd = tab_cwd()
 	local bufnrs = {}
 	for _, b in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_valid(b) and buf_under(b, cwd) then
-			local include
-			if terminal_only then
-				include = vim.bo[b].buftype == "terminal"
-			else
-				include = vim.fn.buflisted(b) == 1
-			end
-			if include then
-				table.insert(bufnrs, b)
-			end
+		if vim.api.nvim_buf_is_valid(b) and vim.bo[b].buftype == "terminal" then
+			table.insert(bufnrs, b)
 		end
 	end
 	if not next(bufnrs) then
-		vim.notify(
-			terminal_only and "No terminal buffers in this worktree" or "No buffers in this worktree",
-			vim.log.levels.INFO
-		)
+		vim.notify("No terminal buffers", vim.log.levels.INFO)
 		return
 	end
 
@@ -87,7 +36,7 @@ local function pick_buffers(opts)
 
 	pickers
 		.new(opts, {
-			prompt_title = terminal_only and "🖥  Terminal Buffers (worktree)" or "✨ Search Buffers ✨",
+			prompt_title = "🖥  Terminal Buffers",
 			finder = finders.new_table({
 				results = buffers,
 				entry_maker = opts.entry_maker or make_entry.gen_from_buffer(opts),
@@ -195,21 +144,18 @@ return function()
 		"<cmd>lua Snacks.picker.grep({ hidden = true })<CR>",
 		{ noremap = true, silent = false }
 	)
-	-- Each worktree pins its tab via `tcd`, so scoping to tab cwd narrows the
-	-- buffer list to just the buffers opened inside this worktree. Use
-	-- <Leader>: to escape the grouping when you really want everything.
-	vim.keymap.set("n", ";", function()
-		pick_buffers()
-	end, { noremap = true, silent = false, desc = "Telescope: buffers in current worktree" })
-	vim.keymap.set("n", "<Leader>:", function()
-		require("telescope.builtin").buffers()
-	end, { noremap = true, silent = false, desc = "Telescope: all buffers (every worktree)" })
+	vim.keymap.set(
+		"n",
+		";",
+		"<cmd>Telescope buffers<CR>",
+		{ noremap = true, silent = false, desc = "Telescope: buffers" }
+	)
 	vim.api.nvim_create_user_command("TelescopeTerminals", function()
-		pick_buffers({ terminal_only = true })
+		pick_terminal_buffers()
 	end, { desc = "Telescope picker over terminal buffers only" })
 	vim.keymap.set("n", "<Leader>;", function()
-		pick_buffers({ terminal_only = true })
-	end, { noremap = true, silent = true, desc = "Telescope: terminal buffers in current worktree" })
+		pick_terminal_buffers()
+	end, { noremap = true, silent = true, desc = "Telescope: terminal buffers" })
 	-- vim.keymap.set(
 	-- 	"n",
 	-- 	";",
