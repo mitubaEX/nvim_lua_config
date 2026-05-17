@@ -6,6 +6,13 @@ pcall(function()
 	vim.loader.enable()
 end)
 
+-- nvim 0.12-dev builds expose `vim.text` before `vim.text.diff` is added,
+-- but `has('nvim-0.12') == 1` already returns true. conform.nvim crashes
+-- in that window; alias the still-working `vim.diff` so callers succeed.
+if vim.text and not vim.text.diff and vim.diff then
+	vim.text.diff = vim.diff
+end
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
