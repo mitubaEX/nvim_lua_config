@@ -44,8 +44,6 @@ local function pick_buffers(opts)
 	local finders = require("telescope.finders")
 	local conf = require("telescope.config").values
 	local make_entry = require("telescope.make_entry")
-	local actions = require("telescope.actions")
-	local action_state = require("telescope.actions.state")
 
 	local terminal_only = opts.terminal_only
 	local cwd = tab_cwd()
@@ -96,16 +94,6 @@ local function pick_buffers(opts)
 			}),
 			sorter = conf.generic_sorter(opts),
 			previewer = conf.grep_previewer(opts),
-			attach_mappings = function(prompt_bufnr, _)
-				actions.select_default:replace(function()
-					local entry = action_state.get_selected_entry()
-					actions.close(prompt_bufnr)
-					if entry and entry.bufnr and vim.api.nvim_buf_is_valid(entry.bufnr) then
-						vim.api.nvim_set_current_buf(entry.bufnr)
-					end
-				end)
-				return true
-			end,
 		})
 		:find()
 end
