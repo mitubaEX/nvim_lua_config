@@ -314,11 +314,52 @@ local function claude()
 	return require("plugins.configs.claude_term")
 end
 
+-- worktree+claude 経路で毎回 claude に渡す built-in な自走指示。
+-- 「リポジトリ自体を見て起動方法を見つけ、検証して PR まで作って終わる」を
+-- claude に任せる前提なので、リポジトリ側に追加ファイル (.claude-worktree.md
+-- 等) を置かなくて済むよう汎用に書く。
+-- vim.g.claude_worktree_prompt で完全上書き、`false` を入れると disable。
+local DEFAULT_WORKFLOW_PROMPT = table.concat({
+	"あなたはこの worktree タブで 1 タスクを end-to-end で完結させてください。",
+	"",
+	"1. 最初に必要なら package.json / Makefile / Procfile / docker-compose.yml /",
+	"   README / .envrc などを見て、このリポジトリの dev サーバー起動方法と",
+	"   テストコマンドを調べてください。CLAUDE.md があれば最優先で従う。",
+	"2. 実装後、上で見つけた手順で dev サーバーを起動し、変更箇所が動いていることを",
+	"   curl / status code / ログ出力 のいずれかで確認してください (UI なら",
+	"   describe するだけでも可)。",
+	"3. テストコマンドがあれば走らせて pass を確認してください。",
+	"4. `git add -A && git commit -m \"<concise message>\"` → `git push -u origin HEAD` →",
+	"   `gh pr create --fill` で PR を作成し、URL を出力してユーザに伝えてください。",
+	"",
+	"途中で判断に迷ったら勝手に進めず、何が分からないかをユーザに質問してください。",
+}, "\n")
+
+function M.workflow_prompt()
+	local override = vim.g.claude_worktree_prompt
+	if override == false then
+		return nil
+	end
+	if type(override) == "string" and override ~= "" then
+		return override
+	end
+	return DEFAULT_WORKFLOW_PROMPT
+end
+
+-- claude.open に渡す opts に append_system_prompt を仕込んだ table を返す。
+local function with_workflow(opts)
+	opts = opts or {}
+	if not opts.append_system_prompt then
+		opts.append_system_prompt = M.workflow_prompt()
+	end
+	return opts
+end
+
 function M.create_with_claude()
 	input("New worktree branch (+ claude): ", function(branch)
 		in_new_tab(function()
 			vim.cmd("GitWorktreeCreate " .. branch)
-			claude().open({ no_split = true })
+			claude().open(with_workflow({ no_split = true }))
 		end)
 	end)
 end
@@ -327,7 +368,7 @@ function M.create_from_default_with_claude()
 	input("New worktree branch (from default + claude): ", function(branch)
 		in_new_tab(function()
 			vim.cmd("GitWorktreeCreate " .. branch .. " --from-default")
-			claude().open({ no_split = true })
+			claude().open(with_workflow({ no_split = true }))
 		end)
 	end)
 end
@@ -336,6 +377,8 @@ function M.review_pr_with_claude()
 	input("Review PR # (+ claude --from-pr): ", function(pr)
 		in_new_tab(function()
 			vim.cmd("GitWorktreeReview " .. pr)
+			-- レビュー経路は "PR を作る" 目的ではないので自走 prompt は渡さない。
+			-- claude --from-pr が既存セッションを拾ってくれるのでそれだけで足りる。
 			claude().open({ from_pr = pr, no_split = true })
 		end)
 	end)
@@ -407,7 +450,7 @@ local function create_from_task(from_default)
 				end
 				in_new_tab(function()
 					vim.cmd(create_cmd)
-					claude().open({ prompt = task, no_split = true })
+					claude().open(with_workflow({ prompt = task, no_split = true }))
 				end)
 			end)
 		end)
