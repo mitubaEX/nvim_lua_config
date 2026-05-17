@@ -153,52 +153,15 @@ vim.g.claude_worktree_prompt = false
    新 worktree にコピーされる。
 2. 元の作業に戻る: `<leader>gws` で worktree 切替 → `<leader>cc` で
    そのブランチの claude セッションへ。
-3. 動作確認: `<leader>ss`（または `:ServerStart <cmd>`）で cwd 専用の
-   server :terminal を立てる。各 worktree タブで独立に動くので、複数
-   ブランチを並列でローカル検証できる。port 衝突は `.envrc` や
-   ブランチ依存の起動スクリプト側で吸収する前提。
-4. 問題なければ PR を作る: `<leader>gpc`（または `<leader>gpC` で
-   claude にレビュー依頼まで一筆書き）。URL は `+` register に入る。
-5. PR レビュー: 他人 PR は `<leader>gwR` → PR 番号。fork PR も
+3. 検証 → PR 作成は claude 任せ。自走指示が `gh pr create --fill` まで
+   含むので、claude が dev サーバー起動 → 動作確認 → コミット → push →
+   PR 作成まで連続でやる。PR URL は claude が出力。
+4. PR レビュー (他人 PR): `<leader>gwR` → PR 番号。fork PR も
    remote 自動追加で `--from-pr` で開ける。
-6. 終わった worktree は `<leader>gwd` または `<leader>gwX` で一括掃除。
-
-## PR step (`<leader>gp*`)
-
-`gh` CLI を叩く軽い wrapper。worktree タブで作業を済ませた後、その cwd で
-そのまま PR を作って claude にレビューを依頼するまでを 1〜2 キーで通せる。
-
-| key            | 動作                                       |
-| -------------- | ------------------------------------------ |
-| `<leader>gpc`  | push + `gh pr create --fill`                |
-| `<leader>gpC`  | push + create + 同タブ claude にレビュー依頼 |
-| `<leader>gpd`  | `--draft` で作成                            |
-| `<leader>gpv`  | 現ブランチの PR を browser で開く           |
-| `<leader>gps`  | `gh pr status`                              |
-| `<leader>gpr`  | 既存 PR を claude にレビュー依頼             |
-
-user commands も同じ動線: `:PRCreate[!]` / `:PRCreateReview[!]` /
-`:PRView` / `:PRStatus` / `:PRReview`。`!` は `--draft` 相当。
-
-実体は
-[`lua/plugins/configs/pr.lua`](../.config/nvim/lua/plugins/configs/pr.lua)、
-配線は [`lua/common/pr.lua`](../.config/nvim/lua/common/pr.lua)。
-
-### 仕様メモ
-
-- 既に open PR があるブランチで `:PRCreate` を叩くと、既存 PR を再利用して
-  `on_success` に流す（`<leader>gpC` 経路でレビュー依頼だけ走らせ直したい
-  ケースで便利）。
-- `gh` 未インストール / 未認証は早期 `vim.notify(... ERROR)` で抜ける
-  ので、ワークフロー全体は壊れない。
-- レビュー prompt は `M.review_prompt(n)` に切り出してあるので、
-  好みで書き換えると `<leader>gpr` / `<leader>gpC` の口調が変わる。
+5. 終わった worktree は `<leader>gwd` または `<leader>gwX` で一括掃除。
 
 ## トレードオフ
 
 - **claude を auto-open するか**: `<leader>gwa/A/R` は明示的に「+ claude」した
   ときだけ起動。素の `<leader>gwc` は claude を開かないので、ターミナル
   ペインを汚したくない用途と分けられる。
-- **PR 作成と claude レビューを分けるか合体するか**: `<leader>gpc` と
-  `<leader>gpC` の両方を用意。「自分で見直してから出す」場合は
-  `gpc` → 自分で diff 確認 → `gpr`、流して投げる場合は `gpC` で一発。
