@@ -159,7 +159,7 @@ return {
 						if ok then
 							local label = vim.fn.fnamemodify(cwd, ":t")
 							if label ~= "" then
-								local ok_notif, notif = pcall(require, "plugins.configs.claude_notification")
+								local ok_notif, notif = pcall(require, "claude_workflow")
 								if ok_notif and notif.pending(cwd) then
 									label = "● " .. label
 								end
