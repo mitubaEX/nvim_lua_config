@@ -311,7 +311,7 @@ function M.review_pr()
 end
 
 local function claude()
-	return require("plugins.configs.claude_term")
+	return require("claude_workflow")
 end
 
 -- worktree+claude 経路で毎回 claude に渡す built-in な自走指示。
