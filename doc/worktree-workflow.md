@@ -100,6 +100,32 @@ worktree 作成時の `--command` 経由でも呼べる:
 :GitWorktreeCreate feature/x --command "Claude \"summarize TODO.md\""
 ```
 
+### claude を「自走モード」で立ち上げる
+
+`<leader>gwa / gwA / gwt / gwT` は worktree+claude を開くとき、`worktree.lua`
+内に埋め込んだ汎用の自走指示を `claude --append-system-prompt` に流す。
+リポジトリごとに設定ファイルを置く必要はなく、claude 側で
+`package.json` / `Makefile` / `Procfile` / `docker-compose.yml` / `README` /
+`.envrc` / `CLAUDE.md` を見て起動方法とテストコマンドを **その場で調査** し、
+実装 → サーバー起動 → 動作確認 → `gh pr create --fill` までを 1 セッションで
+完結させる、という指示が入っている。
+
+実体は `lua/plugins/configs/worktree.lua` の `DEFAULT_WORKFLOW_PROMPT`。
+中身を変えたい / 黙らせたい場合:
+
+```lua
+-- 上書き
+vim.g.claude_worktree_prompt = [[
+  あなたのプロジェクト固有の指示をここに...
+]]
+
+-- 自走モード自体を無効化（手動でやりたい）
+vim.g.claude_worktree_prompt = false
+```
+
+`<leader>gwR` (PR レビュー経路) には自走指示は **渡さない**。`claude --from-pr`
+が既存セッションを拾うので、レビューの文脈を二重に上書きしないため。
+
 ### worktree との合わせ技
 
 - `<leader>gwa` — 新規 worktree 作成と同時に claude を起動（branch 名が
@@ -127,9 +153,12 @@ worktree 作成時の `--command` 経由でも呼べる:
    新 worktree にコピーされる。
 2. 元の作業に戻る: `<leader>gws` で worktree 切替 → `<leader>cc` で
    そのブランチの claude セッションへ。
-3. PR レビュー: `<leader>gwR` → PR 番号入力。fork からの PR でも
-   remote を自動追加し、`--from-pr` で対応セッションを開く。
-4. 終わった worktree は `<leader>gwd` または `<leader>gwX` で一括掃除。
+3. 検証 → PR 作成は claude 任せ。自走指示が `gh pr create --fill` まで
+   含むので、claude が dev サーバー起動 → 動作確認 → コミット → push →
+   PR 作成まで連続でやる。PR URL は claude が出力。
+4. PR レビュー (他人 PR): `<leader>gwR` → PR 番号。fork PR も
+   remote 自動追加で `--from-pr` で開ける。
+5. 終わった worktree は `<leader>gwd` または `<leader>gwX` で一括掃除。
 
 ## トレードオフ
 
