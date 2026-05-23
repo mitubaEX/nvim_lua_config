@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regression: common/treesitter_compat.lua must (a) unwrap the new
+# Regression: config/treesitter_compat.lua must (a) unwrap the new
 # Neovim 0.10+ TSMatch shape (TSNode[]) and (b) re-register the directives
 # that crash vim-matchup with E5108 ("attempt to call method 'range' on nil").
 set -euo pipefail
@@ -11,7 +11,7 @@ trap 'rm -f "$tmp_lua"' EXIT
 cat >"$tmp_lua" <<'LUA'
 vim.opt.runtimepath:prepend(os.getenv("REPO_ROOT") .. "/.config/nvim")
 
-local ok, m = pcall(require, "common.treesitter_compat")
+local ok, m = pcall(require, "config.treesitter_compat")
 if not ok then
   io.stderr:write("require failed: " .. tostring(m))
   os.exit(1)
