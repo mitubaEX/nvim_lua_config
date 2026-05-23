@@ -14,7 +14,7 @@ return {
 			-- archived nvim-treesitter master の query_predicates が Neovim 0.10+ の
 			-- TSMatch 新形式 (TSNode[]) に未対応で、vim-matchup 経由で E5108 が出るため
 			-- 該当 directive を上書きする。
-			require("common.treesitter_compat").apply()
+			require("config.treesitter_compat").apply()
 
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {

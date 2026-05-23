@@ -42,8 +42,8 @@ require("lazy").setup({
 	change_detection = { notify = false },
 })
 
-require("common.keymap")
-require("common.set_config")
-require("common.autocmd_config")
-require("common.claude")
-require("common.server")
+require("config.keymaps")
+require("config.options")
+require("config.autocmds")
+require("config.claude")
+require("config.server")
