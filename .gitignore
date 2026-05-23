@@ -1,3 +1,10 @@
 .git
 .config/nvim/lua/.luarc.json
 .config/nvim/lazy-lock.json
+
+# repo-local XDG dirs used by tests/ (run_nv pins data/state/cache here)
+.local/
+.cache/
+
+# personal scratch task notes (not part of the repo)
+tmp_task.md
