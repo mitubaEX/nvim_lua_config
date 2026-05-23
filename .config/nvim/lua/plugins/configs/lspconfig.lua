@@ -1,7 +1,11 @@
 return function()
 	require("fidget").setup({})
 
-	local capabilities = require("cmp_nvim_lsp").default_capabilities()
+	-- Completion capabilities now come from blink.cmp (was cmp_nvim_lsp). Fall
+	-- back to plain client capabilities if blink isn't loaded yet so LspAttach
+	-- never errors.
+	local ok, blink = pcall(require, "blink.cmp")
+	local capabilities = ok and blink.get_lsp_capabilities() or vim.lsp.protocol.make_client_capabilities()
 
 	-- 全サーバー共通の設定
 	vim.lsp.config("*", {
