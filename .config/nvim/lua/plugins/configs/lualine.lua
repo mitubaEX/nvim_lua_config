@@ -7,7 +7,7 @@ local sep = "/"
 local function find_git_dir_for(dir)
 	while dir and dir ~= "" and dir ~= "/" do
 		local git_path = dir .. sep .. ".git"
-		local stat = vim.loop.fs_stat(git_path)
+		local stat = (vim.uv or vim.loop).fs_stat(git_path)
 		if stat then
 			if stat.type == "directory" then
 				return git_path
@@ -86,7 +86,7 @@ return function()
 					-- ref: https://gist.github.com/shadmansaleh/cd526bc166237a5cbd51429cc1f6291b
 					function()
 						local msg = "No Active Lsp"
-						local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+						local buf_ft = vim.bo.filetype
 						local clients = vim.lsp.get_clients()
 						if next(clients) == nil then
 							return msg
