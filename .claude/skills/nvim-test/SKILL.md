@@ -25,26 +25,37 @@ description: このリポジトリの nvim Lua 設定に対する動作担保テ
 
 ## Repo の前提
 
-- 設定本体は `.config/nvim/` 配下。テストでは
-  `XDG_CONFIG_HOME="$PWD/.config"` を渡して、リポジトリ内の `init.lua` を
-  そのままロードさせる。
+- 設定本体は `.config/nvim/` 配下。テストでは XDG 系をすべてリポジトリ内に
+  向けて (`XDG_CONFIG_HOME` だけでなく `XDG_DATA_HOME` / `XDG_STATE_HOME` /
+  `XDG_CACHE_HOME` も) リポジトリ内の `init.lua` をそのままロードさせる。
+  こうすると「普段の config を実起動に近い形で読むが、ホスト環境
+  (`~/.local/share/nvim` 等) には一切触れない／依存しない」になる。
+  `XDG_CONFIG_HOME` だけだと `stdpath("data")` が `$HOME` 側を向き、
+  lazy.nvim や shada が repo 外に漏れるので注意 (`run_nv` 参照)。
 - lazy.nvim は `defaults = { lazy = true }`。コマンド／キーマップ確認の
   前に `Lazy load <plugin>` で明示的にロードする必要がある。
-- `init.lua` は起動時に `lazy.nvim` を `stdpath("data")/lazy/lazy.nvim` に
-  clone しようとする。CI 等で未 clone なら `nvim --headless` を一度走らせて
-  install を済ませてから本テストに入る。
+- **install は別 step**。`init.lua` は起動時に `lazy.nvim` を
+  `stdpath("data")/lazy/lazy.nvim` に clone するが、残りのプラグインは
+  入らない。テスト前に `bash tests/setup.sh` (中身は `Lazy! sync`) を一度
+  走らせて repo-local data に install を済ませる。`run.sh` は install 済み
+  前提で、テスト中にネットワーク sync を走らせない。
+- この repo では `tmp_task.md` を作業メモとして使う運用がある (タスクごとに
+  「動作確認 (headless)」セクションを持つ)。これは repo 固有の慣習なので、
+  他リポジトリへ流用するときは読み替える。
 
 ## ディレクトリレイアウト
 
 ```
 tests/
+├── setup.sh            # 依存 install (Lazy! sync)。テスト前に 1 回
 ├── run.sh              # 全テストを順に実行する entrypoint
 ├── lib.sh              # 共通ヘルパ (run_nv / assert_cmd_exists 等)
+├── 00-static.sh        # stylua + luac (リポジトリ全体に 1 回)
 └── <feature>.sh        # feature ごとに 1 ファイル
 ```
 
-`tests/` が無ければ skill 起動時に `lib.sh` と `run.sh` を生成する。雛形は
-本ファイル末尾の「Templates」を参照。
+`tests/` が無ければ skill 起動時に `lib.sh` / `run.sh` / `setup.sh` を生成
+する。雛形は本ファイル末尾の「Templates」を参照。
 
 ## Test patterns (使うものを 1〜複数選ぶ)
 
@@ -53,8 +64,21 @@ tests/
 リポジトリ全体に対して 1 回だけ走らせる。`tests/00-static.sh` に集約。
 
 ```sh
-stylua --check .
+stylua --check .config/nvim/lua .config/nvim/init.lua
 find .config/nvim -name '*.lua' -print0 | xargs -0 -n1 luac -p
+```
+
+`stylua --check` は対象を config ツリーに絞る。リポジトリ全体 (`.`) だと
+vendored / 生成物の Lua まで巻き込んで、設定と無関係な理由で落ちうる。
+
+`luac -p` は parse-only の安価なチェックだが、システムの `luac` は通常
+Lua 5.4、Neovim は LuaJIT (5.1 相当) なので方言差に注意。純粋な parse なら
+ほぼ問題ないが、もし valid な LuaJIT 構文を luac が誤検知するなら、
+副作用に注意しつつ nvim 側 parse に切り替える:
+
+```sh
+find .config/nvim -name '*.lua' -print0 \
+  | xargs -0 -I{} nvim --headless --clean -c 'luafile {}' -c qa
 ```
 
 ### 2. モジュールが require できる
@@ -69,20 +93,28 @@ run_nv -c 'lua local ok, m = pcall(require, "plugins.configs.worktree"); \
 ### 3. user command が登録されている
 
 ```sh
-run_nv -c 'Lazy load git_worktree.nvim' \
-  -c 'lua if vim.fn.exists(":GitWorktreeReview") ~= 2 then vim.cmd("cquit") end' \
+run_nv -c 'silent! Lazy load git_worktree.nvim' \
+  -c 'lua if vim.fn.exists(":GitWorktreeReview") ~= 2 then print("GitWorktreeReview not registered (load failed?)"); vim.cmd("cquit") end' \
   -c qa
 ```
 
 `exists(":Cmd")` の戻り値は **2** が「コマンド登録済み」。`!= 2` で fail。
+`Lazy load` が失敗した場合も後続の exists で落ちるので、メッセージに
+「load failed?」と添えて原因を追いやすくする。`lib.sh` の
+`assert_cmd_exists GitWorktreeReview` を使えば 1 行で書ける (ただし
+`Lazy load` は別途呼ぶ)。
 
 ### 4. keymap が登録されている
 
 ```sh
-run_nv -c 'Lazy load git_worktree.nvim' \
-  -c 'lua if vim.fn.maparg("<leader>gws", "n") == "" then vim.cmd("cquit") end' \
+run_nv -c 'silent! Lazy load git_worktree.nvim' \
+  -c 'lua if vim.fn.maparg("<leader>gws", "n") == "" then print("missing keymap: n <leader>gws"); vim.cmd("cquit") end' \
   -c qa
 ```
+
+単純な存在チェックなら `lib.sh` の `assert_keymap_exists n '<leader>gws'`
+で済む。ただし `<lhs>` に quote / backslash が混じると shell quoting が
+壊れやすいので、複雑なものは上の直書きのほうが安全。
 
 prefix 衝突を疑うときは `verbose nmap <leader>gw` を `:redir` で拾って
 内容を assert する。`<leader>gw` 単独が **無い** ことを確認するパターンも
@@ -127,14 +159,17 @@ run_nv -c 'lua \
 
 1. **変更面の特定**: 直近のコミット / 作業ツリーから、触ったモジュール、
    公開した関数、追加した user command / keymap を列挙する。
-2. **`tests/` の存在確認**: 無ければ `Templates` の `lib.sh` と `run.sh` を
-   生成し、`tests/00-static.sh` (stylua + luac) も入れる。
-3. **feature ファイル追加**: `tests/<feature>.sh` を作るか既存に追記。
+2. **`tests/` の存在確認**: 無ければ `Templates` の `lib.sh` / `run.sh` /
+   `setup.sh` を生成し、`tests/00-static.sh` (stylua + luac) も入れる。
+   `.gitignore` に repo-local XDG dir (`.local/` `.cache/`) を足す。
+3. **依存 install**: repo-local data が空なら一度だけ `bash tests/setup.sh`
+   (`Lazy! sync`) を走らせてプラグインを入れる。以後は install 済み前提。
+4. **feature ファイル追加**: `tests/<feature>.sh` を作るか既存に追記。
    2〜6 のパターンから「その変更で壊れたら気付けるもの」を選ぶ。
    壊れていたはずの過去バグ (例: `<leader>gw` prefix 衝突) を再現する
    assertion を 1 行入れると価値が高い。
-4. **ローカル実行**: `bash tests/run.sh` が exit 0 で抜けることを確認。
-5. **`tmp_task.md` への反映**: 該当セクションの「動作確認」を、
+5. **ローカル実行**: `bash tests/run.sh` が exit 0 で抜けることを確認。
+6. **`tmp_task.md` への反映**: 該当セクションの「動作確認」を、
    `bash tests/<feature>.sh` を貼る形に置き換える。
 
 ## Don't
@@ -144,8 +179,9 @@ run_nv -c 'lua \
 - ネットワーク・`gh auth`・実 telescope picker など対話的・外部依存に
   踏み込まない。`fetch_prs_by_branch` のような外部呼び出しは
   「`shell_error != 0` で空テーブルを返す退化パス」だけ assert する。
-- `Lazy install` をテスト中に走らせない。CI で必要なら別 step で先に
-  `nvim --headless -c "Lazy! sync" -c qa` を済ませる。
+- `Lazy install` をテスト中に走らせない。install は `tests/setup.sh`
+  (`Lazy! sync`) に分離し、CI でも本テストの前段で 1 回だけ実行する。
+  `run.sh` 自体はネットワークに触れない。
 - 失敗時のメッセージを省略しない。`print("expected X got Y")` を入れ、
   `cquit` で exit code を立てる。
 
@@ -158,6 +194,10 @@ run_nv -c 'lua \
 ```sh
 #!/usr/bin/env bash
 # Common helpers for nvim headless tests.
+#
+# run_nv runs the repo's own init.lua but pins every XDG dir inside the repo,
+# so tests read the real config without touching/depending on the host's
+# ~/.local/share/nvim. Plugins must be installed first via tests/setup.sh.
 
 set -euo pipefail
 
@@ -165,15 +205,47 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 run_nv() {
   XDG_CONFIG_HOME="$REPO_ROOT/.config" \
-    nvim --headless --clean -u "$REPO_ROOT/.config/nvim/init.lua" "$@"
+  XDG_DATA_HOME="$REPO_ROOT/.local/share" \
+  XDG_STATE_HOME="$REPO_ROOT/.local/state" \
+  XDG_CACHE_HOME="$REPO_ROOT/.cache" \
+    nvim --headless -u "$REPO_ROOT/.config/nvim/init.lua" "$@"
 }
-export -f run_nv
+
+# assert_cmd_exists <Command>          # no leading ':'
+# assert_keymap_exists <mode> <lhs>
+# For richer checks (desc/callback/prefix collisions) use inline `-c 'lua ...'`;
+# shell quoting here breaks once <lhs> has quotes/backslashes.
+assert_cmd_exists() {
+  local cmd="$1"
+  run_nv -c "lua if vim.fn.exists(':$cmd') ~= 2 then print('missing command: $cmd'); vim.cmd('cquit') end" -c qa
+}
+assert_keymap_exists() {
+  local mode="$1" lhs="$2"
+  run_nv -c "lua if vim.fn.maparg('$lhs', '$mode') == '' then print('missing keymap: $mode $lhs'); vim.cmd('cquit') end" -c qa
+}
+
+export -f run_nv assert_cmd_exists assert_keymap_exists
 export REPO_ROOT
 ```
 
-`--clean` で `$HOME/.config/nvim` の symlink ではなく、`-u` で指定した
-リポジトリ内 init.lua を直接読ませる。`XDG_CONFIG_HOME` は lazy.nvim の
-`stdpath("config")` を repo 側に向ける役割。
+`-u` で指定したリポジトリ内 init.lua を直接読み、XDG 系を repo 配下に
+閉じることで「実起動に近いが host を汚さない／host に依存しない」を作る。
+`--clean` は付けない (runtimepath / plugin 読み込みが普段と乖離するため)。
+完全にホストから隔離したいだけなら `--clean` 路線もあるが、設定リポジトリ
+の回帰テストとしては実起動に寄せる方を採る。
+
+### `tests/setup.sh`
+
+```sh
+#!/usr/bin/env bash
+# One-time/CI prep: install plugins into the repo-local data dir so run.sh can
+# load them without depending on ~/.local/share/nvim. Safe to re-run.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+source "$(dirname "$0")/lib.sh"
+
+run_nv -c 'Lazy! sync' -c qa
+```
 
 ### `tests/run.sh`
 
@@ -186,6 +258,8 @@ fail=0
 for t in tests/[0-9]*-*.sh tests/[a-z]*.sh; do
   [ -f "$t" ] || continue
   [ "$t" = "tests/lib.sh" ] && continue
+  [ "$t" = "tests/run.sh" ] && continue
+  [ "$t" = "tests/setup.sh" ] && continue
   printf '== %s ==\n' "$t"
   if ! bash "$t"; then
     echo "FAIL: $t"
@@ -195,6 +269,10 @@ done
 exit "$fail"
 ```
 
+glob は `[0-9]*-*.sh` (連番) と `[a-z]*.sh` (feature) を拾い、`lib.sh` /
+`run.sh` / `setup.sh` だけ除外する。運用を単純化したいなら feature も
+`NN-name.sh` に寄せて `for t in tests/[0-9][0-9]-*.sh` の 1 glob にしてもよい。
+
 ### `tests/00-static.sh`
 
 ```sh
@@ -202,7 +280,7 @@ exit "$fail"
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-stylua --check .
+stylua --check .config/nvim/lua .config/nvim/init.lua
 find .config/nvim -name '*.lua' -print0 | xargs -0 -n1 luac -p
 ```
 

@@ -7,6 +7,7 @@ for t in tests/[0-9]*-*.sh tests/[a-z]*.sh; do
   [ -f "$t" ] || continue
   [ "$t" = "tests/lib.sh" ] && continue
   [ "$t" = "tests/run.sh" ] && continue
+  [ "$t" = "tests/setup.sh" ] && continue
   printf '== %s ==\n' "$t"
   if ! bash "$t"; then
     echo "FAIL: $t"

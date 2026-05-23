@@ -250,8 +250,7 @@ function M.close_tabs()
 				results = list_open_tabs(),
 				entry_maker = function(entry)
 					local prefix = entry.is_current and "* " or "  "
-					local display =
-						string.format("%s%2d  %-24s %s", prefix, entry.tabnr, entry.branch, entry.basename)
+					local display = string.format("%s%2d  %-24s %s", prefix, entry.tabnr, entry.branch, entry.basename)
 					return {
 						value = entry,
 						display = display,
@@ -329,7 +328,7 @@ local DEFAULT_WORKFLOW_PROMPT = table.concat({
 	"   curl / status code / ログ出力 のいずれかで確認してください (UI なら",
 	"   describe するだけでも可)。",
 	"3. テストコマンドがあれば走らせて pass を確認してください。",
-	"4. `git add -A && git commit -m \"<concise message>\"` → `git push -u origin HEAD` →",
+	'4. `git add -A && git commit -m "<concise message>"` → `git push -u origin HEAD` →',
 	"   `gh pr create --fill` で PR を作成し、URL を出力してユーザに伝えてください。",
 	"",
 	"途中で判断に迷ったら勝手に進めず、何が分からないかをユーザに質問してください。",
@@ -385,7 +384,7 @@ function M.review_pr_with_claude()
 end
 
 local function sanitize_branch(name)
-	name = name:gsub('^["`\']+', ""):gsub('["`\']+$', "")
+	name = name:gsub("^[\"`']+", ""):gsub("[\"`']+$", "")
 	name = name:gsub("^%s+", ""):gsub("%s+$", "")
 	-- git refs forbid spaces and many specials; keep only the safe set.
 	name = name:gsub("[^A-Za-z0-9_/%-]+", "-")
@@ -433,8 +432,7 @@ local function suggest_branch_name(task, on_done)
 end
 
 local function create_from_task(from_default)
-	local prompt = from_default and "Task (claude picks branch, from default): "
-		or "Task (claude picks branch): "
+	local prompt = from_default and "Task (claude picks branch, from default): " or "Task (claude picks branch): "
 	input(prompt, function(task)
 		suggest_branch_name(task, function(branch)
 			vim.ui.input({

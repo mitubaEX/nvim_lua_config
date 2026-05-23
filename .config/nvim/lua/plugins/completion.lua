@@ -26,20 +26,20 @@ return {
 					{ name = "path", priority = 700 },
 				}, {
 					{
-					name = "buffer",
-					priority = 600,
-					option = {
-						get_bufnrs = function()
-							local bufs = {}
-							for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-								if vim.api.nvim_buf_is_loaded(buf) then
-									table.insert(bufs, buf)
+						name = "buffer",
+						priority = 600,
+						option = {
+							get_bufnrs = function()
+								local bufs = {}
+								for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+									if vim.api.nvim_buf_is_loaded(buf) then
+										table.insert(bufs, buf)
+									end
 								end
-							end
-							return bufs
-						end,
+								return bufs
+							end,
+						},
 					},
-				},
 				}),
 				formatting = {
 					format = function(entry, vim_item)
