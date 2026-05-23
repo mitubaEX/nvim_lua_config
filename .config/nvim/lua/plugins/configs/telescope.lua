@@ -22,17 +22,6 @@ local function pick_terminal_buffers(opts)
 		return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
 	end)
 
-	-- gen_from_buffer reads opts.bufnr_width to align the bufnr column;
-	-- telescope.builtin.buffers precomputes it, so a standalone picker must too
-	-- or the finder dies with "bufnr_width (a nil value)".
-	if not opts.bufnr_width then
-		local max_bufnr = 0
-		for _, b in ipairs(bufnrs) do
-			max_bufnr = math.max(max_bufnr, b)
-		end
-		opts.bufnr_width = #tostring(max_bufnr)
-	end
-
 	local current = vim.api.nvim_get_current_buf()
 	local alternate = vim.fn.bufnr("#")
 	local buffers = {}
@@ -155,12 +144,12 @@ return function()
 		"<cmd>lua Snacks.picker.grep({ hidden = true })<CR>",
 		{ noremap = true, silent = false }
 	)
-	-- `;` lists only the current tab's buffers. Each tab is :tcd-pinned to its
-	-- worktree, so cwd_only (filtered against the tab's effective cwd) scopes
-	-- the list per worktree using telescope's builtin — no custom state.
-	vim.keymap.set("n", ";", function()
-		require("telescope.builtin").buffers({ cwd_only = true, sort_mru = true })
-	end, { noremap = true, silent = true, desc = "Buffers in current tab cwd" })
+	vim.keymap.set(
+		"n",
+		";",
+		"<cmd>Telescope buffers<CR>",
+		{ noremap = true, silent = false, desc = "Telescope: buffers" }
+	)
 	vim.api.nvim_create_user_command("TelescopeTerminals", function()
 		pick_terminal_buffers()
 	end, { desc = "Telescope picker over terminal buffers only" })
