@@ -136,62 +136,67 @@ function M.switch_to(path, branch)
 end
 
 function M.switch()
-	local pickers = require("telescope.pickers")
-	local finders = require("telescope.finders")
-	local conf = require("telescope.config").values
-	local actions = require("telescope.actions")
-	local action_state = require("telescope.actions.state")
-
 	-- One synchronous `gh` call per picker invocation; misses (no gh, offline)
 	-- degrade to an empty map and an empty PR column rather than failing.
 	local prs = fetch_prs_by_branch()
+	local worktrees = list_worktrees()
+	if #worktrees == 0 then
+		vim.notify("No worktrees found", vim.log.levels.INFO)
+		return
+	end
 
-	pickers
-		.new({}, {
-			prompt_title = "Git Worktrees (tab-aware)",
-			finder = finders.new_table({
-				results = list_worktrees(),
-				entry_maker = function(entry)
-					local has_tab = find_tab_for(entry.path) ~= nil
-					local prefix
-					if entry.is_current then
-						prefix = "* "
-					elseif has_tab then
-						prefix = "T "
-					else
-						prefix = "  "
-					end
-					local pr_label = format_pr_label(prs[entry.branch])
-					local display = string.format("%s%-24s %-8s %s", prefix, entry.branch, pr_label, entry.path)
-					return {
-						value = entry,
-						display = display,
-						ordinal = entry.branch .. " " .. pr_label .. " " .. entry.path,
-					}
-				end,
-			}),
-			sorter = conf.generic_sorter({}),
-			attach_mappings = function(prompt_bufnr, map)
-				actions.select_default:replace(function()
-					actions.close(prompt_bufnr)
-					local entry = action_state.get_selected_entry()
-					if entry then
-						M.switch_to(entry.value.path, entry.value.branch)
-					end
-				end)
-				map("i", "<C-d>", function()
-					local entry = action_state.get_selected_entry()
-					if entry and not entry.value.is_current then
-						actions.close(prompt_bufnr)
-						require("git_worktree").delete_worktree(entry.value.branch)
-					else
-						vim.notify("Cannot delete current worktree")
-					end
-				end)
-				return true
-			end,
+	local items = {}
+	for _, wt in ipairs(worktrees) do
+		local has_tab = find_tab_for(wt.path) ~= nil
+		local prefix
+		if wt.is_current then
+			prefix = "* "
+		elseif has_tab then
+			prefix = "T "
+		else
+			prefix = "  "
+		end
+		local pr_label = format_pr_label(prs[wt.branch])
+		table.insert(items, {
+			text = wt.branch .. " " .. pr_label .. " " .. wt.path,
+			display = string.format("%s%-24s %-8s %s", prefix, wt.branch, pr_label, wt.path),
+			worktree = wt,
 		})
-		:find()
+	end
+
+	Snacks.picker.pick({
+		source = "worktrees",
+		title = "Git Worktrees (tab-aware)",
+		items = items,
+		format = function(item)
+			return { { item.display } }
+		end,
+		confirm = function(picker, item)
+			picker:close()
+			if item then
+				M.switch_to(item.worktree.path, item.worktree.branch)
+			end
+		end,
+		actions = {
+			-- <C-d> deletes the worktree from disk via the git_worktree core API
+			-- (the custom picker never used telescope's git_worktree extension).
+			delete_worktree = function(picker, item)
+				if item and not item.worktree.is_current then
+					picker:close()
+					require("git_worktree").delete_worktree(item.worktree.branch)
+				else
+					vim.notify("Cannot delete current worktree")
+				end
+			end,
+		},
+		win = {
+			input = {
+				keys = {
+					["<C-d>"] = { "delete_worktree", mode = { "i", "n" } },
+				},
+			},
+		},
+	})
 end
 
 function M.delete()
@@ -229,7 +234,7 @@ local function list_open_tabs()
 	return result
 end
 
---- Telescope picker that closes selected tabs (multi-select with <Tab>).
+--- Snacks picker that closes selected tabs (multi-select with <Tab>).
 --- Leaves the worktree on disk; use `<leader>gwd` for actual deletion.
 function M.close_tabs()
 	if #vim.api.nvim_list_tabpages() <= 1 then
@@ -237,68 +242,53 @@ function M.close_tabs()
 		return
 	end
 
-	local pickers = require("telescope.pickers")
-	local finders = require("telescope.finders")
-	local conf = require("telescope.config").values
-	local actions = require("telescope.actions")
-	local action_state = require("telescope.actions.state")
-
-	pickers
-		.new({}, {
-			prompt_title = "Close Tabs (<Tab>: multi-select, <CR>: close)",
-			finder = finders.new_table({
-				results = list_open_tabs(),
-				entry_maker = function(entry)
-					local prefix = entry.is_current and "* " or "  "
-					local display = string.format("%s%2d  %-24s %s", prefix, entry.tabnr, entry.branch, entry.basename)
-					return {
-						value = entry,
-						display = display,
-						ordinal = entry.branch .. " " .. entry.cwd,
-					}
-				end,
-			}),
-			sorter = conf.generic_sorter({}),
-			attach_mappings = function(prompt_bufnr, _)
-				actions.select_default:replace(function()
-					local picker = action_state.get_current_picker(prompt_bufnr)
-					local selections = picker:get_multi_selection()
-					if #selections == 0 then
-						local entry = action_state.get_selected_entry()
-						if entry then
-							selections = { entry }
-						end
-					end
-					actions.close(prompt_bufnr)
-
-					-- Close from largest tabnr to smallest so earlier closes
-					-- don't shift the numbers of tabs still queued.
-					local tabnrs = {}
-					for _, sel in ipairs(selections) do
-						table.insert(tabnrs, sel.value.tabnr)
-					end
-					table.sort(tabnrs, function(a, b)
-						return a > b
-					end)
-
-					local closed = 0
-					for _, tnr in ipairs(tabnrs) do
-						if #vim.api.nvim_list_tabpages() <= 1 then
-							break
-						end
-						local ok = pcall(vim.cmd, tnr .. "tabclose")
-						if ok then
-							closed = closed + 1
-						end
-					end
-					if closed > 0 then
-						vim.notify(string.format("Closed %d tab%s", closed, closed == 1 and "" or "s"))
-					end
-				end)
-				return true
-			end,
+	local items = {}
+	for _, t in ipairs(list_open_tabs()) do
+		local prefix = t.is_current and "* " or "  "
+		table.insert(items, {
+			text = t.branch .. " " .. t.cwd,
+			display = string.format("%s%2d  %-24s %s", prefix, t.tabnr, t.branch, t.basename),
+			tab = t,
 		})
-		:find()
+	end
+
+	Snacks.picker.pick({
+		source = "close_tabs",
+		title = "Close Tabs (<Tab>: multi-select, <CR>: close)",
+		items = items,
+		format = function(item)
+			return { { item.display } }
+		end,
+		confirm = function(picker, item)
+			-- `selected` honours <Tab> multi-select; falls back to the focused
+			-- item when nothing is explicitly marked.
+			local selected = picker:selected({ fallback = true })
+			picker:close()
+
+			-- Close from largest tabnr to smallest so earlier closes don't shift
+			-- the numbers of tabs still queued.
+			local tabnrs = {}
+			for _, sel in ipairs(selected) do
+				table.insert(tabnrs, sel.tab.tabnr)
+			end
+			table.sort(tabnrs, function(a, b)
+				return a > b
+			end)
+
+			local closed = 0
+			for _, tnr in ipairs(tabnrs) do
+				if #vim.api.nvim_list_tabpages() <= 1 then
+					break
+				end
+				if pcall(vim.cmd, tnr .. "tabclose") then
+					closed = closed + 1
+				end
+			end
+			if closed > 0 then
+				vim.notify(string.format("Closed %d tab%s", closed, closed == 1 and "" or "s"))
+			end
+		end,
+	})
 end
 
 function M.review_pr()

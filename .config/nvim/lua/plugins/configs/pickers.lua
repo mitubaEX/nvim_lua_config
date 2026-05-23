@@ -1,11 +1,11 @@
 -- Snacks-based pickers, registered at startup.
 --
 -- The file/grep pickers and the `;` / terminal buffer pickers all run on
--- Snacks.picker now; telescope is left with only the worktree pickers
--- (plugins.configs.worktree) and the git_worktree / server extensions and so
--- loads lazily. These keymaps must be bound at startup, which is why they live
--- here rather than in telescope's (now lazy) config. Snacks is `lazy = false`,
--- so `Snacks.picker.*` is always available by the time a key is pressed.
+-- Snacks.picker. telescope has been fully removed; the worktree
+-- (plugins.configs.worktree) and server (plugins.configs.server_picker) pickers
+-- are on Snacks too. These keymaps must be bound at startup, which is why they
+-- live here. Snacks is `lazy = false`, so `Snacks.picker.*` is always available
+-- by the time a key is pressed.
 local tab_buffers = require("plugins.configs.tab_buffers")
 
 local M = {}

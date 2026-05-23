@@ -101,7 +101,7 @@ return {
 					["<C-u>"] = "actions.preview_scroll_up",
 					["<leader>ff"] = {
 						function()
-							require("telescope.builtin").find_files({
+							Snacks.picker.files({
 								cwd = require("oil").get_current_dir(),
 							})
 						end,

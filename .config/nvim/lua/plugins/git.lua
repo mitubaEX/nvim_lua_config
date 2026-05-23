@@ -30,7 +30,9 @@ return {
 	},
 	{
 		"mitubaEX/git_worktree.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim" },
+		-- No telescope dependency: the worktree switch/close-tabs pickers run on
+		-- Snacks (plugins.configs.worktree) and only call the git_worktree core
+		-- API (e.g. delete_worktree), not its telescope extension.
 		config = function()
 			require("git_worktree").setup({
 				cleanup_buffers = true, -- Clean up old buffers when switching
@@ -67,7 +69,7 @@ return {
 				function()
 					require("plugins.configs.worktree").switch()
 				end,
-				desc = "Worktree: switch (Telescope)",
+				desc = "Worktree: switch (Snacks)",
 			},
 			{
 				"<leader>gwd",
@@ -125,7 +127,7 @@ return {
 				function()
 					require("plugins.configs.worktree").close_tabs()
 				end,
-				desc = "Worktree: close tabs (Telescope, multi-select)",
+				desc = "Worktree: close tabs (Snacks, multi-select)",
 			},
 			{ "<leader>gwX", "<cmd>GitWorktreeCleanup<CR>", desc = "Worktree: cleanup all" },
 		},

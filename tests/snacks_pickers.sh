@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
-# Telescope -> Snacks.picker migration (issue #49).
+# Telescope -> Snacks.picker migration, completed (issues #49 + remove_telescope).
 #
 # The `;` (current-tab buffers) and `<Leader>;` / :TerminalBuffers (terminal
-# buffers) pickers run on Snacks.picker now, scoped by handing Snacks an
-# explicit bufnr allowlist via its `filter.filter` predicate. telescope keeps
-# only the worktree pickers + git_worktree/server extensions and loads lazily.
+# buffers) pickers run on Snacks.picker, scoped by handing Snacks an explicit
+# bufnr allowlist via its `filter.filter` predicate. telescope is now removed
+# entirely: file/grep/buffer, worktree, and server pickers are all on Snacks.
 # Guard the spec (static greps) and the runtime registration so the pickers
 # can't silently revert to telescope.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
-PICKERS="$REPO_ROOT/.config/nvim/lua/plugins/configs/pickers.lua"
-TELESCOPE="$REPO_ROOT/.config/nvim/lua/plugins/configs/telescope.lua"
-EDITOR="$REPO_ROOT/.config/nvim/lua/plugins/editor.lua"
+CONFIG="$REPO_ROOT/.config/nvim/lua"
+PICKERS="$CONFIG/plugins/configs/pickers.lua"
 
 # --- static guards -----------------------------------------------------------
 # Snacks-backed pickers, scoped via the tab-buffer allowlist + Snacks filter.
@@ -23,19 +22,17 @@ grep -q 'current_tab_bufnrs' "$PICKERS" \
 grep -q 'filter' "$PICKERS" \
 	|| { echo "pickers.lua dropped the Snacks filter (scoping is gone)" >&2; exit 1; }
 
-# The custom telescope buffer picker must be gone from telescope.lua.
-if grep -qE 'telescope\.(pickers|finders)|pick_buffers|pick_tab_buffers|pick_terminal_buffers' "$TELESCOPE"; then
-	echo "telescope.lua still hand-rolls a telescope buffer picker" >&2; exit 1
+# telescope must be gone from the config tree: no leftover config module and no
+# `require("telescope")` / telescope.* picker building blocks anywhere.
+if [ -e "$CONFIG/plugins/configs/telescope.lua" ]; then
+	echo "telescope.lua still present (telescope not fully removed)" >&2; exit 1
 fi
-# telescope is kept only for the extensions with no Snacks equivalent.
-grep -q 'load_extension("git_worktree")' "$TELESCOPE" \
-	&& grep -q 'load_extension("server")' "$TELESCOPE" \
-	|| { echo "telescope.lua no longer loads the git_worktree/server extensions" >&2; exit 1; }
-
-# telescope must be lazy now (no `lazy = false` on its spec). Scope the grep to
-# the telescope spec block so snacks' own `lazy = false` doesn't mask a regression.
-if awk '/"nvim-telescope\/telescope.nvim"/{f=1} f&&/lazy = false/{print; exit} /folke\/snacks.nvim/{f=0}' "$EDITOR" | grep -q 'lazy = false'; then
-	echo "telescope.nvim spec is still lazy = false (migration incomplete)" >&2; exit 1
+if grep -rqE 'require\(["'\'']telescope|telescope\.(pickers|finders|actions|config|builtin)|load_extension' "$CONFIG"; then
+	echo "config still references telescope (require/pickers/extensions)" >&2; exit 1
+fi
+# No telescope plugin spec / dependency / :Telescope keymap left behind.
+if grep -rqE 'nvim-telescope/telescope|<cmd>Telescope|Telescope server' "$CONFIG"; then
+	echo "a telescope plugin spec or :Telescope keymap is still wired up" >&2; exit 1
 fi
 
 # --- headless behavior -------------------------------------------------------
@@ -56,8 +53,8 @@ run_nv -c 'lua local d = vim.fn.maparg(" ;", "n", false, true); if not (type(d) 
 # Command renamed off "Telescope": :TerminalBuffers exists, the old name is gone.
 run_nv -c 'lua if vim.fn.exists(":TerminalBuffers") ~= 2 then print("TerminalBuffers command not registered"); vim.cmd("cquit") end; if vim.fn.exists(":TelescopeTerminals") == 2 then print("stale TelescopeTerminals command still registered"); vim.cmd("cquit") end' -c qa
 
-# telescope is lazy: nothing at startup should have loaded it.
-run_nv -c 'lua if package.loaded["telescope"] ~= nil then print("telescope loaded at startup (should be lazy)"); vim.cmd("cquit") end' -c qa
+# telescope is removed: it must never end up loaded, even after startup.
+run_nv -c 'lua if package.loaded["telescope"] ~= nil then print("telescope is loaded (should be fully removed)"); vim.cmd("cquit") end' -c qa
 
 # Terminal picker degrades cleanly when there are no terminal buffers: it must
 # notify and return without opening a picker (so this is safe to call headless).
