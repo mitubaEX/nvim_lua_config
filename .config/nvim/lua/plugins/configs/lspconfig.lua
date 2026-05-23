@@ -26,8 +26,14 @@ return function()
 			vim.keymap.set("n", "ga", vim.lsp.buf.code_action, bufopts)
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
 
-			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, bufopts)
-			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, bufopts)
+			-- goto_next/goto_prev were deprecated in 0.11 in favor of jump();
+			-- float = true keeps the old behavior of showing the diagnostic.
+			vim.keymap.set("n", "]d", function()
+				vim.diagnostic.jump({ count = 1, float = true })
+			end, bufopts)
+			vim.keymap.set("n", "[d", function()
+				vim.diagnostic.jump({ count = -1, float = true })
+			end, bufopts)
 		end,
 	})
 
