@@ -25,26 +25,13 @@ return {
 		end,
 	},
 	{
-		"nvim-telescope/telescope.nvim",
-		-- Lazy now: only the worktree pickers + git_worktree/server extensions
-		-- still use telescope. The worktree pickers `require` telescope modules
-		-- on demand and the extensions load via :Telescope, so there is no need
-		-- to load it at startup. File/grep/buffer pickers are on Snacks.
-		cmd = "Telescope",
-		keys = {
-			{ "<Leader>fs", "<cmd>Telescope server servers<CR>", desc = "Server list" },
-			{ "<Leader>fsl", "<cmd>Telescope server logs<CR>", desc = "Server logs" },
-		},
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = require("plugins.configs.telescope"),
-	},
-	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
 		-- Snacks is loaded at startup, so the Snacks-backed pickers and the
-		-- per-tab buffer tracking they rely on are registered here (telescope is
-		-- lazy now and can no longer host these startup keymaps).
+		-- per-tab buffer tracking they rely on are registered here. telescope is
+		-- fully removed: every picker (files/grep/buffers, worktrees, server) now
+		-- runs on Snacks.picker.
 		config = function(_, opts)
 			require("snacks").setup(opts)
 			require("plugins.configs.pickers").setup()

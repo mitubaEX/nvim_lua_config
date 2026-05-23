@@ -62,6 +62,25 @@ return {
 	{
 		"mitubaEX/server.nvim",
 		event = "BufReadPost",
+		-- Server list/logs run on Snacks now (plugins.configs.server_picker),
+		-- driving server.nvim's core API directly instead of its telescope
+		-- extension. These keys also lazy-load the plugin so the picker can.
+		keys = {
+			{
+				"<Leader>fs",
+				function()
+					require("plugins.configs.server_picker").servers()
+				end,
+				desc = "Server list",
+			},
+			{
+				"<Leader>fsl",
+				function()
+					require("plugins.configs.server_picker").logs()
+				end,
+				desc = "Server logs",
+			},
+		},
 		config = function()
 			require("server").setup({
 				servers = {
