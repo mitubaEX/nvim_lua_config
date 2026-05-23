@@ -1,58 +1,61 @@
 return {
 	{
-		"hrsh7th/nvim-cmp",
+		"saghen/blink.cmp",
 		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp",
-			"rafamadriz/friendly-snippets",
-		},
-		config = function()
-			local cmp = require("cmp")
-
-			cmp.setup({
-				mapping = cmp.mapping.preset.insert({
-					["<C-k>"] = cmp.mapping.select_prev_item(),
-					["<C-j>"] = cmp.mapping.select_next_item(),
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp", priority = 900 },
-					{ name = "path", priority = 700 },
-				}, {
-					{
-						name = "buffer",
-						priority = 600,
-						option = {
+		-- A versioned tag pulls the prebuilt Rust fuzzy matcher from the release
+		-- instead of requiring a local `cargo build`.
+		version = "1.*",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		opts = {
+			-- Keep the muscle memory from the old nvim-cmp setup: <C-j>/<C-k>
+			-- cycle items and <CR> confirms. Everything else (<C-n>/<C-p>,
+			-- <C-b>/<C-f> doc scroll, <C-Space> show, <C-e> hide) comes from
+			-- blink's "default" preset, so we only override what differs.
+			keymap = {
+				preset = "default",
+				["<C-j>"] = { "select_next", "fallback" },
+				["<C-k>"] = { "select_prev", "fallback" },
+				["<CR>"] = { "accept", "fallback" },
+			},
+			appearance = {
+				nerd_font_variant = "mono",
+			},
+			completion = {
+				documentation = { auto_show = true },
+				menu = {
+					draw = {
+						-- Mirror the old [LSP]/[Path]/[Buffer] menu labels via the
+						-- provider `name`s set below.
+						columns = {
+							{ "kind_icon", "label", gap = 1 },
+							{ "source_name" },
+						},
+					},
+				},
+			},
+			-- blink's default source list is already { lsp, path, snippets,
+			-- buffer }, so we leave sources.default untouched and only relabel
+			-- the providers ([LSP]/[Path]/…) and widen the buffer source.
+			sources = {
+				providers = {
+					lsp = { name = "[LSP]" },
+					path = { name = "[Path]" },
+					snippets = { name = "[Snippet]" },
+					buffer = {
+						name = "[Buffer]",
+						-- The old config completed across every loaded buffer, not
+						-- just the visible ones; keep that wider reach.
+						opts = {
 							get_bufnrs = function()
-								local bufs = {}
-								for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-									if vim.api.nvim_buf_is_loaded(buf) then
-										table.insert(bufs, buf)
-									end
-								end
-								return bufs
+								return vim.tbl_filter(function(bufnr)
+									return vim.api.nvim_buf_is_loaded(bufnr)
+								end, vim.api.nvim_list_bufs())
 							end,
 						},
 					},
-				}),
-				formatting = {
-					format = function(entry, vim_item)
-						vim_item.menu = ({
-							nvim_lsp = "[LSP]",
-							buffer = "[Buffer]",
-							path = "[Path]",
-						})[entry.source.name]
-						return vim_item
-					end,
 				},
-			})
-		end,
+			},
+		},
 	},
 	{
 		"windwp/nvim-autopairs",
