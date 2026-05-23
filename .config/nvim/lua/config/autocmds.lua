@@ -7,7 +7,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 -- yank highlight
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	pattern = { "*" },
-	command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=700}",
+	callback = function()
+		-- on_yank moved to the vim.hl namespace in 0.11; fall back for older nvim.
+		pcall((vim.hl or vim.highlight).on_yank, { higroup = "IncSearch", timeout = 700 })
+	end,
 })
 
 -- restore cursor shape
