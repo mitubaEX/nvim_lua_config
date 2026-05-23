@@ -147,6 +147,10 @@ return {
 			options = {
 				mode = "tabs",
 				style_preset = "default",
+				-- Prefix each tab with its ordinal (1., 2., …) so it doubles as
+				-- the `<n>gt` target. In tabs mode the ordinal equals the tab's
+				-- position, i.e. the number Vim uses for `:tabnext`.
+				numbers = "ordinal",
 				diagnostics = "nvim_lsp",
 				show_buffer_close_icons = false,
 				show_close_icon = false,
