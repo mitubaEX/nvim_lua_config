@@ -155,6 +155,28 @@ run_nv -c 'lua \
 `lua/plugins/configs/<mod>.lua` 側で `M._test = { format_pr_label = ... }` の
 ように underscore 接頭の test seam を露出させる。
 
+### 7. tabline / statusline のレンダリング確認
+
+見た目そのものは追わないが、「ordinal が出る」程度の文字列なら
+`nvim_eval_statusline` で拾って assert できる。
+
+```sh
+run_nv -c 'lua vim.o.columns = 200' \
+  -c 'lua require("lazy").load({ plugins = { "bufferline.nvim" } })' \
+  -c 'lua vim.schedule(function()
+        local r = vim.api.nvim_eval_statusline(vim.o.tabline, { use_tabline = true }).str
+        if not r:find("1.", 1, true) then print("no ordinal, got: "..r); vim.cmd("cquit") end
+        vim.cmd("qa")
+      end)'
+```
+
+**幅の罠**: headless はデフォルト 80 桁。要素が増えると bufferline /
+lualine 等が truncate し、`1.` が `1` に縮むなどして literal 比較が
+誤検知する。レンダリングを assert する前に `vim.o.columns` を広げる
+(実ターミナルが tab bar に与える幅に寄せる)。プラグインのレイアウトは
+`columns` 基準で組まれるので、`nvim_eval_statusline` の `maxwidth` だけ
+広げても遅い。
+
 ## How to apply (skill 起動時の手順)
 
 1. **変更面の特定**: 直近のコミット / 作業ツリーから、触ったモジュール、
