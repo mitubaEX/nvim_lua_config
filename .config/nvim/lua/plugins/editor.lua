@@ -187,27 +187,6 @@ return {
 		},
 	},
 	{
-		"stevearc/aerial.nvim",
-		event = "BufReadPost",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
-		opts = {
-			layout = {
-				min_width = 30,
-				default_direction = "prefer_right",
-			},
-			attach_mode = "global",
-			filter_kind = false,
-			show_guides = true,
-		},
-		keys = {
-			{ "<Leader>ae", "<cmd>AerialToggle!<CR>", desc = "Toggle Aerial outline" },
-			-- { "<Leader>fo", "<cmd>AerialNavToggle<CR>", desc = "Aerial nav float" },
-		},
-	},
-	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		init = function()
@@ -218,13 +197,12 @@ return {
 			preset = "modern",
 			spec = {
 				{ "<leader>f", group = "find" },
-				{ "<leader>fs", group = "server" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>gw", group = "worktree" },
-				{ "<leader>s", group = "server / flash" },
+				{ "<leader>s", group = "flash" },
 				{ "<leader>t", group = "test" },
 				{ "<leader>x", group = "trouble" },
-				{ "<leader>a", group = "aerial / any-jump" },
+				{ "<leader>a", group = "any-jump" },
 			},
 		},
 		keys = {
