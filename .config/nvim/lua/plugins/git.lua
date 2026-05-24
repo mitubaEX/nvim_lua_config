@@ -138,15 +138,4 @@ return {
 		"mitubaEX/blame_open.nvim",
 		event = "VeryLazy",
 	},
-	{
-		"mitubaEX/to_github_target_pull_request_from_commit_hash.nvim",
-		event = "VeryLazy",
-		opts = {},
-	},
-	{
-		"akinsho/git-conflict.nvim",
-		event = "VeryLazy",
-		version = "*",
-		opts = {},
-	},
 }

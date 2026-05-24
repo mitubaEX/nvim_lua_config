@@ -50,29 +50,6 @@ return {
 			})
 		end,
 	},
-	{
-		"rcarriga/nvim-dap-ui",
-		event = "BufReadPost",
-		dependencies = {
-			"mfussenegger/nvim-dap",
-			"nvim-neotest/nvim-nio",
-			"leoluz/nvim-dap-go",
-			"jay-babu/mason-nvim-dap.nvim",
-		},
-		config = function()
-			require("dapui").setup()
-			require("dap-go").setup()
-
-			-- デバッグ実行はこれ
-			-- local dap = require('dap')
-			-- dap.listerners.after.event_initialized['dapui_config'] = dapui.open
-			-- dap.listerners.after.event_terminated['dapui_config'] = dapui.close
-
-			-- 単体テストはこれ
-			-- lua require('dap-go').debug_test()
-		end,
-	},
-
 	-- ## each langauge
 	-- js
 	{
@@ -84,7 +61,6 @@ return {
 	{
 		"tpope/vim-rails",
 		ft = "ruby",
-		dependencies = { "tpope/vim-bundler", "tpope/vim-dispatch" },
 	},
 
 	-- markdown

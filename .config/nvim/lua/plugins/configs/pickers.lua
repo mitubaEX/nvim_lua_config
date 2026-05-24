@@ -2,10 +2,9 @@
 --
 -- The file/grep pickers and the `;` / terminal buffer pickers all run on
 -- Snacks.picker. telescope has been fully removed; the worktree
--- (plugins.configs.worktree) and server (plugins.configs.server_picker) pickers
--- are on Snacks too. These keymaps must be bound at startup, which is why they
--- live here. Snacks is `lazy = false`, so `Snacks.picker.*` is always available
--- by the time a key is pressed.
+-- (plugins.configs.worktree) picker is on Snacks too. These keymaps must be
+-- bound at startup, which is why they live here. Snacks is `lazy = false`, so
+-- `Snacks.picker.*` is always available by the time a key is pressed.
 local tab_buffers = require("plugins.configs.tab_buffers")
 
 local M = {}

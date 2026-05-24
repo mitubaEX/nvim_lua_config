@@ -4,7 +4,7 @@
 # The `;` (current-tab buffers) and `<Leader>;` / :TerminalBuffers (terminal
 # buffers) pickers run on Snacks.picker, scoped by handing Snacks an explicit
 # bufnr allowlist via its `filter.filter` predicate. telescope is now removed
-# entirely: file/grep/buffer, worktree, and server pickers are all on Snacks.
+# entirely: file/grep/buffer and worktree pickers are all on Snacks.
 # Guard the spec (static greps) and the runtime registration so the pickers
 # can't silently revert to telescope.
 set -euo pipefail
