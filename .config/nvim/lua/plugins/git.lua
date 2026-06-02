@@ -36,6 +36,7 @@ return {
 		config = function()
 			require("git_worktree").setup({
 				cleanup_buffers = true, -- Clean up old buffers when switching
+        gh_cmd = "~/bin/gh",
 				worktreeinclude_file = ".worktreeinclude", -- Copy paths listed here into new worktrees
 			})
 		end,
