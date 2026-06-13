@@ -66,6 +66,12 @@ function M.setup()
 		Snacks.picker.grep({ hidden = true })
 	end, { noremap = true, silent = true, desc = "Live grep" })
 
+	-- Open the current file/line on the git host (snacks gitbrowse is enabled but
+	-- previously had no keymap).
+	vim.keymap.set({ "n", "v" }, "<Leader>go", function()
+		Snacks.gitbrowse()
+	end, { noremap = true, silent = true, desc = "Git: open in browser" })
+
 	-- `;` lists only the current tab's buffers (own per-tab tracking, not
 	-- telescope's path-based cwd_only) so worktree tabs don't bleed into each
 	-- other even when they share a cwd.

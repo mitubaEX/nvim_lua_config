@@ -28,41 +28,10 @@ return {
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
-		-- Snacks is loaded at startup, so the Snacks-backed pickers and the
-		-- per-tab buffer tracking they rely on are registered here. telescope is
-		-- fully removed: every picker (files/grep/buffers, worktrees, server) now
-		-- runs on Snacks.picker.
-		config = function(_, opts)
-			require("snacks").setup(opts)
-			require("plugins.configs.pickers").setup()
-		end,
-		opts = {
-			bufdelete = { enabled = true },
-			dashboard = { enabled = false },
-			gh = { enabled = true },
-			git = { enabled = true },
-			gitbrowse = { enabled = true },
-			indent = { enabled = true },
-			input = { enabled = true },
-			picker = {
-				enabled = true,
-				win = {
-					input = {
-						keys = {
-							["<C-p>"] = { "history_back", mode = { "i", "n" } },
-							["<C-n>"] = { "history_forward", mode = { "i", "n" } },
-						},
-					},
-				},
-			},
-			notifier = { enabled = true },
-			quickfile = { enabled = true },
-			scope = { enabled = true },
-			-- scroll = { enabled = true },
-			statuscolumn = { enabled = true },
-			terminal = { enabled = true },
-			words = { enabled = true },
-		},
+		-- opts + config (including the Snacks-backed picker registration) live in
+		-- plugins.configs.snacks to keep this spec thin.
+		opts = require("plugins.configs.snacks").opts,
+		config = require("plugins.configs.snacks").config,
 	},
 	{
 		"kylechui/nvim-surround",
@@ -196,6 +165,7 @@ return {
 		opts = {
 			preset = "modern",
 			spec = {
+				{ "<leader>c", group = "claude" },
 				{ "<leader>f", group = "find" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>gw", group = "worktree" },

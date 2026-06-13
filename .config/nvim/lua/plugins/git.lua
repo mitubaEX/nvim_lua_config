@@ -1,7 +1,13 @@
 return {
 	{
 		"NeogitOrg/neogit",
-		event = "VeryLazy",
+		-- Loaded on demand: the `:Neogit` command or the <leader>gg keymap. It was
+		-- previously `event = "VeryLazy"` (eager at startup) with no keymap, so the
+		-- only way to open it was typing `:Neogit`.
+		cmd = "Neogit",
+		keys = {
+			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Git: Neogit status" },
+		},
 		version = "*",
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
@@ -36,7 +42,7 @@ return {
 		config = function()
 			require("git_worktree").setup({
 				cleanup_buffers = true, -- Clean up old buffers when switching
-        gh_cmd = "~/bin/gh",
+				gh_cmd = "~/bin/gh",
 				worktreeinclude_file = ".worktreeinclude", -- Copy paths listed here into new worktrees
 			})
 		end,
