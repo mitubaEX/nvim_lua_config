@@ -59,4 +59,14 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = require("plugins.configs.bufferline"),
 	},
+	{
+		"mitubaEX/midori.nvim",
+		ft = "markdown",
+		cmd = { "MidoriView", "MidoriToggle", "MidoriClose" },
+		keys = {
+			{ "<leader>mv", "<cmd>MidoriView<cr>", desc = "Midori: view markdown" },
+			{ "<leader>mt", "<cmd>MidoriToggle<cr>", desc = "Midori: toggle reader" },
+		},
+		opts = {},
+	},
 }
