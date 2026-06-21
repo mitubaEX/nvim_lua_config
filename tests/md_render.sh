@@ -7,15 +7,22 @@
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
-# 1. The three normal-mode keymaps registered via lazy `keys` exist.
+# 1. The vsplit-preview keymap registered via lazy `keys` exists, and the
+#    previously-removed keymaps (mp/mt/md) are NOT present.
 run_nv \
   -c 'lua local want = {
-        ["Markdown preview (toggle)"] = false,
-        ["Markdown preview in tab (toggle)"] = false,
-        ["Markdown render demo"] = false,
+        ["Markdown preview (vsplit)"] = false,
       }
+       local forbidden = {
+         ["Markdown preview (toggle)"] = true,
+         ["Markdown preview in tab (toggle)"] = true,
+         ["Markdown render demo"] = true,
+       }
        for _, m in ipairs(vim.api.nvim_get_keymap("n")) do
          if m.desc and want[m.desc] == false then want[m.desc] = true end
+         if m.desc and forbidden[m.desc] then
+           print("unexpected keymap still present: " .. m.desc); vim.cmd("cquit")
+         end
        end
        for d, found in pairs(want) do
          if not found then print("missing keymap with desc: " .. d); vim.cmd("cquit") end
