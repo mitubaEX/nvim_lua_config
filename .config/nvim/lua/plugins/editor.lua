@@ -169,6 +169,7 @@ return {
 				{ "<leader>f", group = "find" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>gw", group = "worktree" },
+				{ "<leader>m", group = "midori" },
 				{ "<leader>s", group = "flash" },
 				{ "<leader>t", group = "test" },
 				{ "<leader>x", group = "trouble" },
