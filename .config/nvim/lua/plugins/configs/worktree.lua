@@ -453,4 +453,55 @@ function M.create_from_default_with_task()
 	create_from_task(true)
 end
 
+-- edaha 経路: ローカル ollama (qwen3.5:4b) で命名 → worktree → claude にタスク注入。
+-- claude -p 課金を避けたいときの代替。本物の ollama 呼び出しはテストから差し替え
+-- できるよう M._namer_edaha 経由にしておく。
+local function default_namer_edaha(task)
+	local ok, edaha = pcall(require, "edaha")
+	if not ok then
+		return nil, "edaha.nvim not installed"
+	end
+	return edaha.name(task)
+end
+
+M._namer_edaha = default_namer_edaha
+
+local function create_from_task_edaha(from_default)
+	local prompt = from_default and "Task (edaha picks branch, from default): " or "Task (edaha picks branch): "
+	input(prompt, function(task)
+		-- ollama は同期 (vim.system():wait()) なので呼び出し中は UI が止まる。
+		-- 既知トレードオフ — claude -p 経路 (gwt/gwT) を使えば async。
+		vim.notify("edaha: choosing a branch name…")
+		local branch, err = M._namer_edaha(task)
+		if not branch or branch == "" then
+			vim.notify("edaha failed: " .. (err or "no name"), vim.log.levels.ERROR)
+			return
+		end
+		vim.ui.input({
+			prompt = "Create worktree with branch: ",
+			default = branch,
+		}, function(confirmed)
+			if not confirmed or confirmed == "" then
+				return
+			end
+			local create_cmd = "GitWorktreeCreate " .. confirmed
+			if from_default then
+				create_cmd = create_cmd .. " --from-default"
+			end
+			in_new_tab(function()
+				vim.cmd(create_cmd)
+				claude().open(with_workflow({ prompt = task, no_split = true }))
+			end)
+		end)
+	end)
+end
+
+function M.create_with_edaha_task()
+	create_from_task_edaha(false)
+end
+
+function M.create_from_default_with_edaha_task()
+	create_from_task_edaha(true)
+end
+
 return M
