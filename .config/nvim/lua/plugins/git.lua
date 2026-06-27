@@ -130,6 +130,20 @@ return {
 				desc = "Worktree: task (from default) -> claude picks branch + opens claude",
 			},
 			{
+				"<leader>gwe",
+				function()
+					require("plugins.configs.worktree").create_with_edaha_task()
+				end,
+				desc = "Worktree: task -> edaha (ollama) picks branch + opens claude",
+			},
+			{
+				"<leader>gwE",
+				function()
+					require("plugins.configs.worktree").create_from_default_with_edaha_task()
+				end,
+				desc = "Worktree: task (from default) -> edaha picks branch + opens claude",
+			},
+			{
 				"<leader>gwq",
 				function()
 					require("plugins.configs.worktree").close_tabs()
