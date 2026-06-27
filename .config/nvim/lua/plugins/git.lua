@@ -139,6 +139,14 @@ return {
 			{ "<leader>gwX", "<cmd>GitWorktreeCleanup<CR>", desc = "Worktree: cleanup all" },
 		},
 	},
+	{
+		-- Ollama (qwen3.5:4b) で日本語の作業内容から英語 kebab-case ブランチ名を
+		-- 生成して `git worktree add` まで一発で実行する。AI クラウド課金なし。
+		-- 公開コマンド: :Edaha <desc> / :EdahaName <desc> / :EdahaList
+		"mitubaEX/edaha.nvim",
+		cmd = { "Edaha", "EdahaName", "EdahaList" },
+		opts = {},
+	},
 
 	-- utils
 	{
