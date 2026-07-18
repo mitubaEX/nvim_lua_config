@@ -80,4 +80,13 @@ return {
 			{ "<leader>ms", "<cmd>vert MdRender split<cr>", desc = "Markdown preview (vsplit)" },
 		},
 	},
+	{
+		"mitubaEX/leaf.nvim",
+		ft = "markdown",
+		cmd = "LeafToggle",
+		keys = {
+			{ "<leader>ml", "<cmd>LeafToggle<cr>", desc = "Leaf: toggle preview" },
+		},
+		opts = {},
+	},
 }
